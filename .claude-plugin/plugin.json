@@ -1,6 +1,7 @@
 {
   "name": "demon-agent-skill",
   "skills": [
+    "./skills/setup/setup-demon-agent-skill",
     "./skills/unreal/unreal-blueprint-analyzer"
   ]
 }
