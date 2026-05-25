@@ -1,0 +1,6 @@
+{
+  "name": "personal-agent-skills",
+  "skills": [
+    "./skills/unreal/unreal-blueprint-analyzer"
+  ]
+}
