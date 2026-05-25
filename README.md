@@ -12,7 +12,15 @@
 https://github.com/Demon673/demon-agent-skill
 ```
 
-如果仓库保持 private，推荐先 clone 到本地，再运行安装脚本：
+仓库公开后，推荐通过 skills.sh 流程安装：
+
+```bash
+npx skills@latest add Demon673/demon-agent-skill
+```
+
+随后选择需要安装的 skill。
+
+如果需要手动安装，也可以先 clone 到本地，再运行安装脚本：
 
 ```powershell
 git clone https://github.com/Demon673/demon-agent-skill.git "$env:USERPROFILE\demon-agent-skill"
@@ -20,14 +28,6 @@ cd "$env:USERPROFILE\demon-agent-skill"
 .\scripts\list-skills.ps1
 .\scripts\link-skills.ps1
 ```
-
-如果仓库改为 public，也可以通过 skills.sh 流程安装：
-
-```bash
-npx skills@latest add Demon673/demon-agent-skill
-```
-
-随后选择需要安装的 skill。
 
 ## Windows 本地安装
 
@@ -85,3 +85,7 @@ skills/<category>/<skill-name>/SKILL.md
 ## 当前 Skills
 
 - `skills/unreal/unreal-blueprint-analyzer`：用于只读分析 Unreal Engine 蓝图资产，例如 `.uasset`、`.umap`、Widget Blueprint、Animation Blueprint、Behavior Tree 资产、Data Asset，以及插件或游戏项目自定义的蓝图文件。
+
+## License
+
+MIT License. See [LICENSE](LICENSE).
