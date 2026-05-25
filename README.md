@@ -6,10 +6,25 @@
 
 ## 快速开始
 
-仓库上传到 GitHub 后，可通过 skills.sh 流程安装：
+当前仓库地址：
+
+```text
+https://github.com/Demon673/demon-agent-skill
+```
+
+如果仓库保持 private，推荐先 clone 到本地，再运行安装脚本：
+
+```powershell
+git clone https://github.com/Demon673/demon-agent-skill.git "$env:USERPROFILE\demon-agent-skill"
+cd "$env:USERPROFILE\demon-agent-skill"
+.\scripts\list-skills.ps1
+.\scripts\link-skills.ps1
+```
+
+如果仓库改为 public，也可以通过 skills.sh 流程安装：
 
 ```bash
-npx skills@latest add <github-user>/demon-agent-skill
+npx skills@latest add Demon673/demon-agent-skill
 ```
 
 随后选择需要安装的 skill。
