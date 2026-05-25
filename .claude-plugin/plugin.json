@@ -1,6 +1,9 @@
 {
   "name": "demon-agent-skill",
   "skills": [
+    "./skills/roblox/roblox-gameplay-debugger",
+    "./skills/roblox/roblox-luau-developer",
+    "./skills/roblox/roblox-rojo-workflow",
     "./skills/unreal/unreal-blueprint-analyzer"
   ]
 }

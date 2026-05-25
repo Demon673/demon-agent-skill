@@ -89,6 +89,9 @@ skills/<category>/<skill-name>/SKILL.md
 
 ## Skills
 
+- `skills/roblox/roblox-gameplay-debugger`：Roblox 玩法、复制、性能和运行时问题诊断流程。
+- `skills/roblox/roblox-luau-developer`：Roblox Luau 脚本、服务端/客户端分层、Remote、DataStore 和 ModuleScript 开发流程。
+- `skills/roblox/roblox-rojo-workflow`：Rojo/Wally/Aftman 管理的 Roblox 项目结构、同步和本地验证流程。
 - `skills/unreal/unreal-blueprint-analyzer`：用于只读分析 Unreal Engine 蓝图资产，例如 `.uasset`、`.umap`、Widget Blueprint、Animation Blueprint、Behavior Tree 资产、Data Asset，以及插件或游戏项目自定义的蓝图文件。
 
 ## License
