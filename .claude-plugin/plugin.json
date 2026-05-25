@@ -1,5 +1,5 @@
 {
-  "name": "personal-agent-skills",
+  "name": "demon-agent-skill",
   "skills": [
     "./skills/unreal/unreal-blueprint-analyzer"
   ]

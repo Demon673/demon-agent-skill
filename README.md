@@ -1,4 +1,4 @@
-# Personal Agent Skills
+# Demon Agent Skill
 
 Personal reusable skills for Codex-compatible agents.
 
@@ -9,7 +9,7 @@ This repository follows the same broad shape as `mattpocock/skills`: skills live
 After this repository is on GitHub, install with the skills.sh flow:
 
 ```bash
-npx skills@latest add <github-user>/personal-agent-skills
+npx skills@latest add <github-user>/demon-agent-skill
 ```
 
 Then select the skills you want to install.
