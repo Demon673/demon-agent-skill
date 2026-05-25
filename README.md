@@ -1,60 +1,60 @@
 # Demon Agent Skill
 
-Personal reusable skills for Codex-compatible agents.
+个人可复用 agent skills 仓库，面向 Codex 兼容的 agent 工作流。
 
-This repository follows the same broad shape as `mattpocock/skills`: skills live under `skills/`, installable skill paths are declared in `.claude-plugin/plugin.json`, and helper scripts can list or link skills into the local agent skills directory.
+本仓库参考 `mattpocock/skills` 的组织方式：所有 skill 放在 `skills/` 下，可安装的 skill 路径声明在 `.claude-plugin/plugin.json` 中，辅助脚本负责列出或链接 skill 到本机 agent skills 安装目录。
 
-## Quickstart
+## 快速开始
 
-After this repository is on GitHub, install with the skills.sh flow:
+仓库上传到 GitHub 后，可通过 skills.sh 流程安装：
 
 ```bash
 npx skills@latest add <github-user>/demon-agent-skill
 ```
 
-Then select the skills you want to install.
+随后选择需要安装的 skill。
 
-## Local Install On Windows
+## Windows 本地安装
 
-From a cloned checkout:
+在已 clone 的仓库目录中运行：
 
 ```powershell
 .\scripts\list-skills.ps1
 .\scripts\link-skills.ps1
 ```
 
-By default, `link-skills.ps1` creates Junctions in:
+默认情况下，`link-skills.ps1` 会在以下目录创建 Junction：
 
 ```text
 %USERPROFILE%\.agents\skills
 ```
 
-That keeps this Git repository as the source of truth while the agent reads the normal installed-skill location.
+这样可以让本 Git 仓库继续作为源文件，而 agent 仍从标准已安装 skill 目录读取。
 
-To install physical copies instead of Junctions:
+如果想安装为真实文件副本，而不是 Junction：
 
 ```powershell
 .\scripts\link-skills.ps1 -Copy
 ```
 
-To replace an existing non-link installed skill:
+如果要替换已经存在的非链接 skill：
 
 ```powershell
 .\scripts\link-skills.ps1 -Force
 ```
 
-## Local Install On macOS / Linux / WSL
+## macOS / Linux / WSL 本地安装
 
 ```bash
 ./scripts/list-skills.sh
 ./scripts/link-skills.sh
 ```
 
-The Bash script links skills into `${AGENT_SKILLS_DIR:-$HOME/.agents/skills}`.
+Bash 脚本会把 skill 链接到 `${AGENT_SKILLS_DIR:-$HOME/.agents/skills}`。
 
-Use `--copy` to copy instead of symlink, or `--force` to replace an existing non-link target.
+使用 `--copy` 可改为复制安装；使用 `--force` 可替换已经存在的非链接目标。
 
-## Repository Layout
+## 仓库结构
 
 ```text
 .claude-plugin/plugin.json
@@ -65,8 +65,8 @@ scripts/link-skills.sh
 skills/<category>/<skill-name>/SKILL.md
 ```
 
-Each directory containing a `SKILL.md` file is one installable skill.
+每个包含 `SKILL.md` 的目录都是一个可安装 skill。
 
-## Current Skills
+## 当前 Skills
 
-- `skills/unreal/unreal-blueprint-analyzer`: Read-only analysis workflow for Unreal Engine Blueprint assets such as `.uasset`, `.umap`, widget blueprints, animation blueprints, behavior tree assets, data assets, and plugin/game-specific Blueprint files.
+- `skills/unreal/unreal-blueprint-analyzer`：用于只读分析 Unreal Engine 蓝图资产，例如 `.uasset`、`.umap`、Widget Blueprint、Animation Blueprint、Behavior Tree 资产、Data Asset，以及插件或游戏项目自定义的蓝图文件。
