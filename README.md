@@ -12,12 +12,7 @@ Demon Agent Skill 是一个可复用的 agent skills 集合，面向 Codex 兼�
 npx skills@latest add Demon673/demon-agent-skill
 ```
 
-安装时建议选择：
-
-- `setup-demon-agent-skill`
-- `unreal-blueprint-analyzer`
-
-安装后重启或刷新 agent 会话，然后先运行/触发 `setup-demon-agent-skill` 查看安装状态和使用方式。
+安装后重启或刷新 agent 会话，让新 skill 进入可用列表。
 
 ## 手动安装
 
@@ -94,7 +89,6 @@ skills/<category>/<skill-name>/SKILL.md
 
 ## Skills
 
-- `skills/setup/setup-demon-agent-skill`：安装后的引导和自检流程，帮助确认 skill 是否可用，并说明如何更新或触发本库中的 skill。
 - `skills/unreal/unreal-blueprint-analyzer`：用于只读分析 Unreal Engine 蓝图资产，例如 `.uasset`、`.umap`、Widget Blueprint、Animation Blueprint、Behavior Tree 资产、Data Asset，以及插件或游戏项目自定义的蓝图文件。
 
 ## License
