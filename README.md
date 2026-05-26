@@ -92,6 +92,7 @@ skills/<category>/<skill-name>/SKILL.md
 - `skills/roblox/roblox-gameplay-debugger`：Roblox 玩法、复制、性能和运行时问题诊断流程。
 - `skills/roblox/roblox-luau-developer`：Roblox Luau 脚本、服务端/客户端分层、Remote、DataStore 和 ModuleScript 开发流程。
 - `skills/roblox/roblox-rojo-workflow`：Rojo/Wally/Aftman 管理的 Roblox 项目结构、同步和本地验证流程。
+- `skills/dota2/dota2-custom-game-dev`：DOTA2 自定义游戏开发流程，覆盖服务端 Lua、TypeScriptToLua/TSTL、SolidJS Panorama UI、Panorama JS/TS、CSS/XML、KV、NetTables、事件通信，并使用 `BigCiba/vscode-dota2-tools` 的 API references 快照。
 - `skills/unreal/unreal-blueprint-analyzer`：用于只读分析 Unreal Engine 蓝图资产，例如 `.uasset`、`.umap`、Widget Blueprint、Animation Blueprint、Behavior Tree 资产、Data Asset，以及插件或游戏项目自定义的蓝图文件。
 
 ## License

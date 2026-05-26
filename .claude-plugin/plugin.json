@@ -4,6 +4,7 @@
     "./skills/roblox/roblox-gameplay-debugger",
     "./skills/roblox/roblox-luau-developer",
     "./skills/roblox/roblox-rojo-workflow",
+    "./skills/dota2/dota2-custom-game-dev",
     "./skills/unreal/unreal-blueprint-analyzer"
   ]
 }
