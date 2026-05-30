@@ -12,7 +12,6 @@ Use this skill for DOTA2 custom game addon work across Lua, TypeScriptToLua/TSTL
 Primary API reference data comes from `BigCiba/vscode-dota2-tools`.
 
 - Upstream repo: `https://github.com/BigCiba/vscode-dota2-tools`
-- Preview docs: `https://bigciba.github.io/`
 - Local source map: `references/upstream-source-map.md`
 - TSTL DOTA2 guide: `references/tstl-dota2.md`
 - SolidJS Panorama guide: `references/solid-panorama-ui.md`

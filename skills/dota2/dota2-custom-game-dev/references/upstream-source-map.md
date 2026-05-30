@@ -3,7 +3,6 @@
 The DOTA2 API references in this skill are derived from:
 
 - Repository: `https://github.com/BigCiba/vscode-dota2-tools`
-- Preview docs: `https://bigciba.github.io/`
 - License: MIT, matching the upstream repository license at the time this source map was created.
 
 The upstream README describes DOTA2 documentation support for Lua API, JS API, CSS document, and panel document browsing. It also includes KV editor, completion, icon browser, localization, and KV conversion tools.
