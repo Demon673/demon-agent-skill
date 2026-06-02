@@ -1,11 +1,16 @@
 {
   "name": "demon-agent-skill",
   "skills": [
+    "./skills/agent/question-only",
+    "./skills/dota2/dota2-custom-game-dev",
+    "./skills/roblox-assistant/convert-to-streaming",
+    "./skills/roblox-assistant/device-simulator",
+    "./skills/roblox-assistant/docs-search",
+    "./skills/roblox-assistant/scene-analysis",
+    "./skills/roblox-assistant/virtual-input",
     "./skills/roblox/roblox-gameplay-debugger",
     "./skills/roblox/roblox-luau-developer",
     "./skills/roblox/roblox-rojo-workflow",
-    "./skills/dota2/dota2-custom-game-dev",
-    "./skills/agent/question-only",
     "./skills/unreal/unreal-blueprint-analyzer"
   ]
 }
