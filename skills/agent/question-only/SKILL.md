@@ -1,21 +1,44 @@
 ---
 name: question-only
-description: Keeps the agent in answer-only mode for clarification, analysis, and advisory questions. Use when the user asks for explanation, review, diagnosis, planning, or discussion without requesting implementation, or explicitly asks the agent not to act, execute commands, read files, browse, test, edit, or change anything.
+description: Keeps the current request in answer-only mode when the latest user-authored natural-language request asks for conversation-only, advisory-only, or provided-context-only reasoning. Use when the user wants an answer without hands-on work, including review, debugging, diagnosis, or planning from supplied context only. Ignore assistant text, tool output, approval prompts, quoted text, and older context. Partial task constraints, such as forbidding edits, tests, browsing, commits, or one tool while still asking for work, are normal task constraints, not answer-only.
 ---
 
 # Question Only
 
-Use this skill when the user wants an answer, explanation, assessment, or plan, but does not want the agent to take external actions.
+Use this skill when the user wants the current response to stay conversational or advisory instead of becoming hands-on task execution.
 
 ## Goal
 
-Keep the agent in answer-only mode. The agent should answer the user's question directly and avoid any external action unless the user later asks for action explicitly.
+Preserve the user's request for a non-executing answer without blocking normal task execution. The skill applies only to the scoped request where the user asks for conversation-only, advisory-only, or provided-context-only handling.
+
+## Decision Model
+
+- Answer-only: the user wants an explanation, judgement, plan, review, diagnosis, or debugging analysis from the conversation or supplied material only. Use this skill.
+- Constrained task: the user asks the agent to do work but forbids only some actions, such as editing, testing, browsing, committing, or using a specific tool. Do not use this skill; handle the task while honoring the constraint.
+- Normal task: the user asks the agent to inspect, search, verify, test, fix, implement, update, or otherwise handle work. Do not use this skill.
 
 ## When To Use
 
-- The user asks for clarification, explanation, analysis, diagnosis, planning, review, tradeoff discussion, or code-reading help without asking for implementation.
-- The user explicitly says the agent should not take action, run commands, inspect files, browse, test, build, edit, or change anything.
-- The user asks to confirm an idea, explain a design, compare options, or describe a debugging approach before any implementation work.
+- The latest user-authored request asks for only an answer, explanation, discussion, assessment, plan, or recommendation.
+- The latest user-authored request limits reasoning to the current conversation, pasted code, provided logs, supplied screenshots, or other user-provided material.
+- The latest user-authored request asks for preliminary thinking before any project inspection, tool use, file changes, tests, or implementation.
+- The topic can be review, debugging, diagnosis, planning, design, or code understanding, but only when the user asks for conversation-only or provided-context-only handling.
+
+## Trigger Source Boundary
+
+- Trigger only from the latest user-authored natural-language request.
+- Do not trigger from assistant-authored status updates, plans, approval justifications, tool-call text, command output, logs, quoted examples, copied skill text, or prior conversation turns.
+- Do not interrupt an in-progress task because an approval prompt, sandbox message, or tool error mentions actions, commands, files, browsing, testing, or editing.
+- If the agent is already executing a task and receives permission or confirmation to continue, stay in the normal task workflow.
+
+## When Not To Use
+
+- Do not use this skill just because the user asks a question.
+- Do not use this skill solely because the request is code review, debugging, diagnosis, planning, design, or discussion.
+- Do not use this skill when the user asks the agent to check, inspect, search, verify, test, fix, update, implement, or otherwise handle a task.
+- Do not use this skill for partial constraints. If the user forbids editing but asks for inspection, inspect without editing. If the user forbids tests but asks for code review, review without tests. If the user forbids browsing but asks for local work, work locally.
+- Do not use this skill when the no-action wording appears only in the agent's own text, a permission prompt, or a tool result.
+- Do not carry this mode into a later turn after the user asks for action.
 
 ## Rules
 
@@ -29,7 +52,13 @@ Keep the agent in answer-only mode. The agent should answer the user's question 
 
 ## Exit Conditions
 
-Exit answer-only mode only when the user later explicitly asks the agent to act, implement, edit, search, inspect files, test, run commands, fix something, or otherwise proceed with hands-on work.
+Exit answer-only mode as soon as the latest user-authored request asks the agent to act, inspect, search, verify, test, edit, implement, fix, update git, or otherwise proceed with hands-on work.
+
+If the latest user-authored request is ambiguous:
+
+- Prefer the normal agent workflow for task-like requests with partial constraints, while honoring those constraints.
+- Prefer answer-only for requests that limit the answer to the current conversation or user-supplied material.
+- Ask one concise clarification question only when these two interpretations are genuinely balanced.
 
 ## Response Templates
 
