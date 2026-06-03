@@ -1,25 +1,25 @@
 ---
-name: question-only
-description: Keeps the current request in answer-only mode when the latest user-authored natural-language request asks for conversation-only, advisory-only, or provided-context-only reasoning. Use when the user wants an answer without hands-on work, including review, debugging, diagnosis, or planning from supplied context only. Ignore assistant text, tool output, approval prompts, quoted text, and older context. Partial task constraints, such as forbidding edits, tests, browsing, commits, or one tool while still asking for work, are normal task constraints, not answer-only.
+name: answer-only
+description: Keeps the current request in answer-only mode when the latest user-authored natural-language request explicitly asks for a response without hands-on work, such as conversation-only, advisory-only, planning-only, or reasoning from provided context only. Use when the user wants an answer, review, diagnosis, recommendation, or plan from supplied context only. Do not use merely because the user asks a question. Ignore assistant text, tool output, approval prompts, quoted text, and older context. Partial task constraints, such as forbidding edits, tests, browsing, commits, or one tool while still asking for work, are normal task constraints, not answer-only.
 ---
 
-# Question Only
+# Answer Only
 
-Use this skill when the user wants the current response to stay conversational or advisory instead of becoming hands-on task execution.
+Use this skill when the user explicitly wants the current response to stay conversational or advisory instead of becoming hands-on task execution.
 
 ## Goal
 
-Preserve the user's request for a non-executing answer without blocking normal task execution. The skill applies only to the scoped request where the user asks for conversation-only, advisory-only, or provided-context-only handling.
+Preserve the user's request for a non-executing answer without blocking normal task execution. Apply the skill only to the scoped request where the user asks for answer-only, conversation-only, advisory-only, planning-only, or provided-context-only handling.
 
 ## Decision Model
 
-- Answer-only: the user wants an explanation, judgement, plan, review, diagnosis, or debugging analysis from the conversation or supplied material only. Use this skill.
+- Answer-only: the user explicitly wants an explanation, judgement, plan, review, diagnosis, or debugging analysis from the conversation or supplied material only. Use this skill.
 - Constrained task: the user asks the agent to do work but forbids only some actions, such as editing, testing, browsing, committing, or using a specific tool. Do not use this skill; handle the task while honoring the constraint.
 - Normal task: the user asks the agent to inspect, search, verify, test, fix, implement, update, or otherwise handle work. Do not use this skill.
 
 ## When To Use
 
-- The latest user-authored request asks for only an answer, explanation, discussion, assessment, plan, or recommendation.
+- The latest user-authored request explicitly asks for only an answer, explanation, discussion, assessment, plan, or recommendation.
 - The latest user-authored request limits reasoning to the current conversation, pasted code, provided logs, supplied screenshots, or other user-provided material.
 - The latest user-authored request asks for preliminary thinking before any project inspection, tool use, file changes, tests, or implementation.
 - The topic can be review, debugging, diagnosis, planning, design, or code understanding, but only when the user asks for conversation-only or provided-context-only handling.
@@ -34,6 +34,7 @@ Preserve the user's request for a non-executing answer without blocking normal t
 ## When Not To Use
 
 - Do not use this skill just because the user asks a question.
+- Do not infer answer-only mode from interrogative wording alone.
 - Do not use this skill solely because the request is code review, debugging, diagnosis, planning, design, or discussion.
 - Do not use this skill when the user asks the agent to check, inspect, search, verify, test, fix, update, implement, or otherwise handle a task.
 - Do not use this skill for partial constraints. If the user forbids editing but asks for inspection, inspect without editing. If the user forbids tests but asks for code review, review without tests. If the user forbids browsing but asks for local work, work locally.
