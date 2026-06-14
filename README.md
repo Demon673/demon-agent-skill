@@ -126,6 +126,7 @@ Descriptions should define language-neutral trigger conditions instead of relyin
 - `skills/roblox-assistant/*`：从 `Roblox/creator-docs/skills` 手动同步的 Roblox Assistant 官方 skills。
 - `skills/dota2/dota2-custom-game-dev`：DOTA2 自定义游戏开发流程，覆盖服务端 Lua、TypeScriptToLua/TSTL、SolidJS Panorama UI、Panorama JS/TS、CSS/XML、KV、NetTables、事件通信，并使用 `BigCiba/vscode-dota2-tools` 的 API references 快照。
 - `skills/agent/answer-only`: Answer-only mode for conversation-only, advisory-only, or provided-context-only requests, with safeguards against assistant/tool/approval text accidentally interrupting active tasks.
+- `skills/agent/context-curator`: Context curation workflow for capturing, confirming, storing, updating, and forgetting reusable user, project, workflow, decision, and learning context.
 - `skills/unreal/unreal-blueprint-analyzer`：用于只读分析 Unreal Engine 蓝图资产，例如 `.uasset`、`.umap`、Widget Blueprint、Animation Blueprint、Behavior Tree 资产、Data Asset，以及插件或游戏项目自定义的蓝图文件。
 
 ## License

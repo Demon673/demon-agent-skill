@@ -1,7 +1,8 @@
 {
   "name": "demon-agent-skill",
   "skills": [
-    "./skills/agent/question-only",
+    "./skills/agent/answer-only",
+    "./skills/agent/context-curator",
     "./skills/dota2/dota2-custom-game-dev",
     "./skills/roblox-assistant/convert-to-streaming",
     "./skills/roblox-assistant/device-simulator",

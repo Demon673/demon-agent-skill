@@ -1,0 +1,56 @@
+# Context Curator Core Spec
+
+This is the platform-neutral behavior contract for the `context-curator` skill. Use it when an Agent does not support `SKILL.md` directly, or when adapting the workflow to another runtime.
+
+## Purpose
+
+Turn useful conversation context into durable, user-confirmed records without saving noise, secrets, or unverified assumptions.
+
+## Operating Loop
+
+1. Detect reusable context candidates.
+2. Classify each candidate as temporary, preference, fact, decision, flow, learning record, session state, or summary.
+3. Reject unsafe, vague, one-off, or low-reuse candidates.
+4. Rewrite accepted candidates into concise durable records.
+5. Ask the user to confirm the exact wording and destination.
+6. Save only confirmed records.
+7. Read the smallest relevant context set on future tasks.
+8. Update, supersede, compress, or delete context when it becomes stale.
+
+## Storage Layout
+
+Use a skill-owned directory at the workspace root:
+
+```text
+context-curator/
+  INDEX.md
+  FACTS.md
+  DECISIONS.md
+  FLOWS.md
+  PREFS.md
+  SESSION.md
+  SUMMARIES.md
+```
+
+`INDEX.md` is the entry point. Other files contain the durable context body. Platform entry files such as `AGENTS.md` should point to `context-curator/INDEX.md` instead of duplicating context.
+
+## Record Shape
+
+```md
+- Statement: The durable fact, preference, decision, or workflow rule.
+  Scope: global | project | learning | current-workspace
+  Source: user-confirmed YYYY-MM-DD, or file/path if derived from repo evidence
+  Status: active | stale | superseded
+  Applies when: concrete trigger or situation
+  Does not apply when: known exception, if any
+```
+
+## Compression Rule
+
+Save distilled lessons, not raw material. `SESSION.md` preserves current-task continuity. `SUMMARIES.md` preserves stage-level context that remains useful after the task ends.
+
+Compression must preserve goals, active preferences, decisions, rationale, durable constraints, verified facts, evidence pointers, open risks, exceptions, and next actions.
+
+## Conflict Rule
+
+Follow the newest explicit user instruction first. Saved context is advisory unless it is also required by current task constraints, repository instructions, or safety rules.
