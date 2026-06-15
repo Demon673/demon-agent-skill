@@ -9,13 +9,13 @@ Use this reference when a DOTA2 custom game addon builds Panorama UI with SolidJ
 - SolidJS createSignal: `https://docs.solidjs.com/reference/basic-reactivity/create-signal`
 - SolidJS createEffect: `https://docs.solidjs.com/reference/basic-reactivity/create-effect`
 - SolidJS fine-grained reactivity: `https://docs.solidjs.com/advanced-concepts/fine-grained-reactivity`
-- Local case study: `C:\Repositories\tui12`
+- Local case study: `tui12-style SolidJS Panorama project`
 
 Use official SolidJS docs for core reactivity semantics, but use the project build/runtime for Panorama-specific behavior.
 
 ## tui12 Case Study
 
-`C:\Repositories\tui12` is the reference project for this skill's SolidJS Panorama conventions.
+`tui12` was the local reference project used to distill this skill's SolidJS Panorama conventions; keep this reference path-free so the skill remains portable across machines.
 
 Observed structure:
 

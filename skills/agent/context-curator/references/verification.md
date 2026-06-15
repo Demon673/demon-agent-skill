@@ -17,6 +17,16 @@ Expected behavior:
 - The Agent asks for confirmation before saving.
 - The Agent suggests `context-curator/PREFS.md` or an explicitly user-approved destination.
 
+## Non-Trigger Test
+
+Setup: a repository contains a `context-curator/` directory or an entrypoint mentions `context-curator/INDEX.md`. The user asks for an unrelated implementation task and does not ask to restore, reuse, remember, save, organize, compress, or update context.
+
+Expected behavior:
+
+- The Agent does not trigger `context-curator` just because the directory or pointer exists.
+- The Agent does not read or write `context-curator/` files for the unrelated task.
+- The Agent follows the normal task workflow unless the user later asks to use durable context.
+
 ## Read Test
 
 Prompt:

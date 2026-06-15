@@ -32,7 +32,7 @@ context-curator/
   SUMMARIES.md
 ```
 
-`INDEX.md` is the entry point. Other files contain the durable context body. Platform entry files such as `AGENTS.md` should point to `context-curator/INDEX.md` instead of duplicating context.
+`INDEX.md` is the entry point. Other files contain the durable context body. Do not require platform entry files such as `AGENTS.md` to point to `context-curator/INDEX.md`. Add a neutral pointer only when the user explicitly wants non-skill-aware agents to discover the context store. Never duplicate durable context in an agent entrypoint.
 
 ## Record Shape
 

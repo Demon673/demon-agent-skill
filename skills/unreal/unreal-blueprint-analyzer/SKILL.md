@@ -46,7 +46,8 @@ description: 只读分析 Unreal Engine Blueprint 资产，例如 .uasset、.uma
 ## 本地命令示例
 
 ```powershell
-python C:\Users\MAC\.agents\skills\unreal-blueprint-analyzer\scripts\extract_uasset_strings.py Content\Blueprints\BP_Door.uasset --json
+# From this skill directory, or replace .\scripts with the resolved skill directory.
+python .\scripts\extract_uasset_strings.py <path-to-asset>.uasset --json
 rg "BP_Door|Door_C|OpenDoor|Interact|BeginOverlap" Source Content Config Plugins docs
 ```
 

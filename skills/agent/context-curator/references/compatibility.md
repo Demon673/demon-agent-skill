@@ -4,7 +4,7 @@ Use this guide to adapt `context-curator` to common Agent environments. No Agent
 
 ## General Rule
 
-If an Agent cannot load skills automatically, give it this instruction:
+If an Agent cannot load skills automatically and the user wants it to reuse the context store, give it this instruction:
 
 ```text
 Use the context-curator protocol. First read context-curator/INDEX.md if it exists, then read only the relevant files under context-curator/. Before saving durable context, propose the exact record and ask for confirmation.
@@ -19,10 +19,12 @@ Use the context-curator protocol. First read context-curator/INDEX.md if it exis
 
 ## Claude Code Style Repositories
 
-- Add or update `AGENTS.md` or `CLAUDE.md` only as a pointer:
+- Prefer not to add `AGENTS.md` or `CLAUDE.md` pointers by default. Add one only when the user explicitly wants non-skill-aware agents to discover durable context.
+
+- If a pointer is requested, keep it neutral:
 
 ```md
-For reusable context managed by the context-curator skill, read context-curator/INDEX.md first.
+For reusable workspace context, read context-curator/INDEX.md first.
 ```
 
 - Keep durable records under `context-curator/`, not inside the agent instruction file.
@@ -30,7 +32,7 @@ For reusable context managed by the context-curator skill, read context-curator/
 ## Cursor, Copilot, And IDE Agents
 
 - Prefer a visible project directory: `context-curator/`.
-- Add a short pointer in the IDE's project rules file if one exists.
+- Add a short pointer in the IDE's project rules file only when the user explicitly wants that IDE Agent to discover durable context.
 - Ask the Agent to report which context files it read before acting on durable context.
 
 ## Agents Without File Write Access

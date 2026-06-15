@@ -43,24 +43,22 @@ For SolidJS Panorama projects, inspect generated JS/XML/CSS but edit the Solid T
 
 ## API Lookup Workflow
 
-Prefer targeted lookup through the bundled script instead of reading large JSON files directly.
+Prefer targeted lookup through the bundled script instead of reading large JSON files directly. Run examples from this skill directory, or replace `.\scripts` with the resolved path to the skill directory when working from another current directory.
 
 ```powershell
-python C:\Users\MAC\.agents\skills\dota2-custom-game-dev\scripts\search_dota2_api.py --kind lua --query CustomGameEventManager
-python C:\Users\MAC\.agents\skills\dota2-custom-game-dev\scripts\search_dota2_api.py --kind js --query SendCustomGameEventToServer
-python C:\Users\MAC\.agents\skills\dota2-custom-game-dev\scripts\search_dota2_api.py --kind css --query flow-children
-python C:\Users\MAC\.agents\skills\dota2-custom-game-dev\scripts\search_dota2_api.py --kind panel --query DOTAAbilityImage
-python C:\Users\MAC\.agents\skills\dota2-custom-game-dev\scripts\detect_tstl_project.py C:\path\to\addon
-python C:\Users\MAC\.agents\skills\dota2-custom-game-dev\scripts\detect_solid_panorama_project.py C:\path\to\addon
+python .\scripts\search_dota2_api.py --kind lua --query CustomGameEventManager
+python .\scripts\search_dota2_api.py --kind js --query SendCustomGameEventToServer
+python .\scripts\search_dota2_api.py --kind css --query flow-children
+python .\scripts\search_dota2_api.py --kind panel --query DOTAAbilityImage
+python .\scripts\detect_tstl_project.py <path-to-addon>
+python .\scripts\detect_solid_panorama_project.py <path-to-addon>
 ```
 
-When references are missing or stale, refresh them:
+When references are missing or stale, refresh them from this skill directory:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File C:\Users\MAC\.agents\skills\dota2-custom-game-dev\scripts\update_references.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\update_references.ps1
 ```
-
-If the skill is used from a cloned source repo, run the script from the repo path instead.
 
 ## Boundaries
 

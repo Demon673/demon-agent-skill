@@ -1,6 +1,6 @@
 ---
 name: context-curator
-description: Curate reusable user, project, and learning context from conversation into durable records with explicit user confirmation. Use when the latest user request asks Codex to remember, save, collect, organize, update, forget, or reuse context, preferences, decisions, recurring workflows, project facts, or learning progress across sessions. Also use when a stable long-term context candidate appears during conversation and the user has invited proactive context collection.
+description: Curate reusable user, project, and learning context from conversation into durable records with explicit user confirmation. Use when the latest user request asks Codex to remember, save, collect, organize, update, forget, restore, compress, or reuse context, preferences, decisions, recurring workflows, project facts, or learning progress across sessions. Also use when the latest user request explicitly invites proactive context collection or asks to review durable context candidates.
 ---
 
 # Context Curator
@@ -9,7 +9,7 @@ Use this skill to turn daily conversation into reliable reusable context without
 
 ## Core Rule
 
-Never write durable context from ordinary conversation without explicit user confirmation. Detect candidates proactively only when the user has asked for context collection or when the latest request is about remembering, forgetting, organizing, or reusing context.
+Never write durable context from ordinary conversation without explicit user confirmation. Detect candidates proactively only when the latest user request explicitly asks for context collection, remembering, forgetting, organizing, restoring, compression, or reuse. Do not infer consent or trigger this skill from the existence of a `context-curator/` directory, from a project entry file that mentions the directory, or from older conversation alone.
 
 ## Context Types
 
@@ -137,7 +137,8 @@ Use the most local durable store available:
   - `learning-records/NNNN-slug.md`: demonstrated learning, prior knowledge, corrected misconceptions, or mission shifts.
 - Project or repo workspace:
   - Prefer existing local convention only when the user names it or when the repo already has a clear agent-context convention.
-  - If adding an agent entrypoint is appropriate, use `AGENTS.md` or the platform's equivalent only as a pointer to `context-curator/INDEX.md`; do not store the durable context body there.
+  - Do not add or update `AGENTS.md`, `CLAUDE.md`, or the platform's equivalent just to advertise this skill-owned store.
+  - Add a neutral pointer to `context-curator/INDEX.md` only when the user explicitly wants non-skill-aware agents to discover durable context. Do not store the durable context body in an agent entrypoint.
 - Global memory:
   - Use only when the user explicitly asks to remember a stable cross-project preference or fact.
   - Follow the platform memory rules for where and how global memory updates are written.
@@ -226,6 +227,7 @@ When the user asks to forget context:
 
 When a task relates to known durable context:
 
+0. Read context only after this skill is triggered or the latest request asks to restore or reuse context. Do not read `context-curator/` merely because the directory exists or an entrypoint lists it.
 1. Read `context-curator/INDEX.md` first when it exists.
 2. Read the smallest relevant context file set.
 3. Briefly state what context is being used.
