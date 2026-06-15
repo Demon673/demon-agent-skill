@@ -35,6 +35,16 @@ For a whole-repository pass, run:
 
 The default whole-repository pass may skip known upstream exceptions. Use `-Strict` only when intentionally cleaning those exceptions.
 
+## Quality Gate
+
+When creating or updating a skill, inspect the changed skill for local paths, platform-specific metadata, runtime branding, and strong cross-skill dependencies before finishing:
+
+```powershell
+rg -n "C:\\|C:/|Users/|Users\\|\.agents|\.codex|OpenAI|Codex|Claude|Cursor|openai\.yaml|agents/openai|must use|must install|requires? .*skill|requires? .*installed|depends? on .*skill" "skills\<category>\<skill-name>"
+```
+
+If a match is legitimate, explain why it remains. Otherwise remove or neutralize it before validation.
+
 ## Installation
 
 List skills:
