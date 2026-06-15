@@ -1,6 +1,6 @@
 ---
 name: workflow-capture
-description: Capture a repeated or user-requested workflow into the right reusable artifact. Use when the latest user-authored request asks to preserve, reuse, formalize, turn into a template, turn into a checklist, turn into a skill draft, or evaluate whether a completed or repeated process should become a reusable workflow, skill, plugin idea, MCP idea, or checklist. Do not use for ordinary task completion, generic summaries, durable facts/preferences/session state, decision rationale, critique, or direct skill creation when the target skill and requirements are already clear.
+description: Capture a repeated or user-requested workflow into the right reusable artifact. Use when the latest user-authored request asks to preserve a workflow, reuse a workflow or process, formalize a repeated process, turn a process into a template, turn a process into a checklist, turn a process into a skill draft, or evaluate whether a completed or repeated process should become a reusable workflow, skill, plugin idea, MCP idea, or checklist. Do not use for ordinary task completion, generic summaries, durable facts/preferences/session state, decision rationale, critique, or direct skill creation when the target skill and requirements are already clear.
 ---
 
 # Workflow Capture
