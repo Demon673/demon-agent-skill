@@ -1,6 +1,6 @@
 ---
 name: task-intake
-description: Clarify task entry only when the latest user-authored request cannot be safely acted on because target, scope, risk, continuation state, first action, or completion criteria are unclear. Use for vague action requests, ambiguous continuation commands such as "proceed", or risk-bearing actions such as publishing, deleting, overwriting, or migration where scope or confirmation is unclear. Do not use merely because a task has multiple steps, needs normal planning, asks to inspect or optimize a named target, or mentions git; do not use for simple explicit tasks, answer-only or advisory requests, quoted examples, tool output, assistant-authored plans, or when another named skill directly covers a clear request.
+description: Clarify task entry only when the latest user-authored request cannot be safely acted on because target, scope, risk, continuation state, first action, or completion criteria are unclear. Use for vague action requests, ambiguous continuation commands such as "proceed", or risk-bearing actions such as publishing, deleting, overwriting, or migration where scope or confirmation is unclear. Do not use merely because a task has multiple steps, needs normal planning, asks to inspect or optimize a named target, or mentions git; do not use for simple explicit tasks, no-action or advisory requests, quoted examples, tool output, assistant-authored plans, or when a more specific workflow directly covers a clear request.
 ---
 
 # Task Intake
@@ -30,7 +30,7 @@ Do not trigger from:
 - assistant messages, plans, approval prompts, tool output, logs, quoted text, copied skill text, or older conversation
 - simple explicit tasks such as "run the tests", "open this file", or "rename X to Y"
 - pure explanation, recommendation, planning-only, or provided-context-only requests
-- a named skill request that already has a clear target and completion criteria
+- a more specific workflow or user instruction that already has a clear target and completion criteria
 - a normal implementation task just because it has several steps
 - a request to inspect, optimize, or publish when the target, safe first action, and completion criteria are already clear
 
@@ -69,7 +69,7 @@ Gather the smallest context needed to make the first move.
 
 - Prefer repository evidence over memory or guesses.
 - Use saved durable context only when the latest request asks to restore, reuse, or continue known context, or when another active instruction explicitly makes it relevant.
-- Do not read `context-curator/` merely because the directory exists.
+- Do not read durable context stores merely because they exist.
 - Distinguish verified facts from assumptions.
 - If the task is a continuation, inspect current state first: worktree status, relevant files, recent notes, or the user-provided artifact.
 
@@ -120,8 +120,8 @@ Clarify before staging or pushing if the worktree is mixed, private material app
 Named target with normal planning:
 
 ```text
-User: "Optimize skills/agent/context-curator/SKILL.md by shortening examples."
-Action: inspect and edit that target directly. Use normal planning if useful; no task-intake trigger needed.
+User: "Optimize path/to/target-file.md by shortening examples."
+Action: inspect and edit that target directly. Use normal planning if useful; no intake trigger needed.
 ```
 
 Non-trigger:
