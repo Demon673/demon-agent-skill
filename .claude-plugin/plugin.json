@@ -3,6 +3,7 @@
   "skills": [
     "./skills/agent/answer-only",
     "./skills/agent/context-curator",
+    "./skills/agent/task-intake",
     "./skills/dota2/dota2-custom-game-dev",
     "./skills/roblox-assistant/convert-to-streaming",
     "./skills/roblox-assistant/device-simulator",
