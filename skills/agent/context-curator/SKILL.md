@@ -1,6 +1,6 @@
 ---
 name: context-curator
-description: Curate reusable user, project, and learning context from conversation into durable records with explicit user confirmation. Use when the latest user request asks Codex to remember, save, collect, organize, update, forget, restore, compress, or reuse context, preferences, decisions, recurring workflows, project facts, or learning progress across sessions. Also use when the latest user request explicitly invites proactive context collection or asks to review durable context candidates.
+description: Curate reusable user, project, and learning context from conversation into durable records with explicit user confirmation. Use when the latest user request asks the agent to remember, save, collect, organize, update, forget, restore, compress, or reuse context, preferences, decisions, recurring workflows, project facts, or learning progress across sessions. Also use when the latest user request explicitly invites proactive context collection or asks to review durable context candidates.
 ---
 
 # Context Curator
@@ -17,7 +17,7 @@ Never write durable context from ordinary conversation without explicit user con
 - Preference: a stable user style, default behavior, language, workflow preference, or risk tolerance.
 - Fact: a durable fact about a repo, workspace, product, domain, environment, or current initiative.
 - Decision: a confirmed choice, tradeoff, or policy and the reason it was chosen.
-- Flow: a repeatable process the user wants Codex to follow again.
+- Flow: a repeatable process the user wants the agent to follow again.
 - Learning record: evidence that the user learned or already knows something that should steer future teaching.
 
 Use these exact type names when classifying candidates: Temporary, Preference, Fact, Decision, Flow, Learning record, Session, and Summary.

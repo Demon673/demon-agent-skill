@@ -1,6 +1,6 @@
 ---
 name: roblox-luau-developer
-description: Roblox Luau 开发工作流，用于实现、审查和重构 Roblox 游戏脚本、ModuleScript、ServerScript、LocalScript、RemoteEvent/RemoteFunction、DataStore 和服务端/客户端分层。Use when working on Roblox, Luau, Roblox Studio code, Rojo-synced scripts, gameplay systems, UI scripts, replication, remotes, or Roblox services.
+description: Roblox Luau development workflow for implementing, reviewing, and refactoring gameplay scripts, ModuleScripts, ServerScripts, LocalScripts, RemoteEvent/RemoteFunction code, DataStore logic, and server/client boundaries. Use when working on Roblox, Luau, Roblox Studio code, Rojo-synced scripts, gameplay systems, UI scripts, replication, remotes, or Roblox services.
 ---
 
 # Roblox Luau 开发者

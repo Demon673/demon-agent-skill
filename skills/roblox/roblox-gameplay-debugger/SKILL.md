@@ -1,6 +1,6 @@
 ---
 name: roblox-gameplay-debugger
-description: Roblox 玩法、复制、性能和运行时问题诊断流程。Use when debugging Roblox bugs, Luau errors, replication issues, RemoteEvent problems, DataStore failures, UI not updating, physics/network ownership issues, memory leaks, or performance regressions in Roblox experiences.
+description: Diagnose Roblox gameplay, replication, performance, and runtime issues. Use when debugging Roblox bugs, Luau errors, replication issues, RemoteEvent problems, DataStore failures, UI not updating, physics/network ownership issues, memory leaks, or performance regressions in Roblox experiences.
 ---
 
 # Roblox 玩法调试器

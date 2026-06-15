@@ -1,6 +1,6 @@
 ---
 name: unreal-blueprint-analyzer
-description: 只读分析 Unreal Engine Blueprint 资产，例如 .uasset、.umap、Widget Blueprint、Animation Blueprint、Behavior Tree、Data Asset 和地图资产；通过二进制字符串、编辑器导出、C++/脚本源码、项目文档、配置和资源引用推断蓝图用途。Use when the user asks to parse, inspect, explain, reverse-read, or understand any Unreal Engine Blueprint or Blueprint-related asset.
+description: Read-only analysis of Unreal Engine Blueprint assets, including .uasset, .umap, Widget Blueprint, Animation Blueprint, Behavior Tree, Data Asset, and map assets. Use binary strings, editor exports, C++ or scripting source, project docs, config, and asset references to infer Blueprint purpose. Use when the user asks to parse, inspect, explain, reverse-read, or understand any Unreal Engine Blueprint or Blueprint-related asset.
 ---
 
 # Unreal 蓝图分析器

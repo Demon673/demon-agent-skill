@@ -1,6 +1,6 @@
 ---
 name: roblox-rojo-workflow
-description: Roblox Rojo 项目工作流，用于理解、维护和同步 Rojo/Wally/Aftman 管理的 Roblox 代码仓库。Use when a Roblox project has default.project.json, *.project.json, wally.toml, aftman.toml, sourcemap.json, src folders, or the user asks about Rojo, Wally, Studio sync, generated place/model files, or Roblox repo structure.
+description: Roblox Rojo project workflow for understanding, maintaining, and syncing Roblox codebases managed with Rojo, Wally, or Aftman. Use when a Roblox project has default.project.json, *.project.json, wally.toml, aftman.toml, sourcemap.json, src folders, or the user asks about Rojo, Wally, Studio sync, generated place/model files, or Roblox repo structure.
 ---
 
 # Roblox Rojo 工作流
