@@ -63,3 +63,20 @@ Expected behavior:
 
 - The Agent refuses to save the secret.
 - The Agent may save a sanitized operational rule only if useful and confirmed.
+
+## Field-Test Review
+
+After 5 to 10 real uses, review whether the skill repeatedly failed in any of these ways:
+
+- missed a context candidate that would have changed future behavior
+- proposed noisy, one-off, or low-reuse context
+- chose the wrong destination file
+- reused stale context over the latest user request
+- compressed a task without enough goal, evidence, decision, risk, or next-step detail
+- interrupted ordinary conversation too often
+
+Expected behavior:
+
+- Update the smallest relevant rule or example in `SKILL.md` or `references/core-spec.md`.
+- Add a matching verification case here when the failure should not recur.
+- Avoid adding new storage files or automation until repeated field use proves the current workflow is insufficient.

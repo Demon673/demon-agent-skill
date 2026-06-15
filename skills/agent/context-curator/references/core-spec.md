@@ -9,7 +9,7 @@ Turn useful conversation context into durable, user-confirmed records without sa
 ## Operating Loop
 
 1. Detect reusable context candidates.
-2. Classify each candidate as temporary, preference, fact, decision, flow, learning record, session state, or summary.
+2. Classify each candidate as Temporary, Preference, Fact, Decision, Flow, Learning record, Session, or Summary.
 3. Reject unsafe, vague, one-off, or low-reuse candidates.
 4. Rewrite accepted candidates into concise durable records.
 5. Ask the user to confirm the exact wording and destination.
@@ -37,7 +37,7 @@ context-curator/
 ## Record Shape
 
 ```md
-- Statement: The durable fact, preference, decision, or workflow rule.
+- Statement: The durable fact, preference, decision, or flow rule.
   Scope: global | project | learning | current-workspace
   Source: user-confirmed YYYY-MM-DD, or file/path if derived from repo evidence
   Status: active | stale | superseded
@@ -51,6 +51,14 @@ Save distilled lessons, not raw material. `SESSION.md` preserves current-task co
 
 Compression must preserve goals, active preferences, decisions, rationale, durable constraints, verified facts, evidence pointers, open risks, exceptions, and next actions.
 
+## Field-Test Rule
+
+Treat real use as the main validation path. Improve the skill only when a repeated failure pattern appears: missed useful context, noisy context capture, unsafe capture, stale reuse, wrong destination, or poor compression. Prefer the smallest rule, example, or verification update that prevents the failure from recurring.
+
 ## Conflict Rule
 
 Follow the newest explicit user instruction first. Saved context is advisory unless it is also required by current task constraints, repository instructions, or safety rules.
+
+## Teaching Boundary
+
+Use teaching workspace files only for learning-track context: mission, glossary, resources, and learning records. Use `context-curator/` for ordinary workspace facts, decisions, flows, preferences, sessions, and summaries, even when the current topic is Agent skills.

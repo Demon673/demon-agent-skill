@@ -15,10 +15,12 @@ Never write durable context from ordinary conversation without explicit user con
 
 - Temporary: applies only to the current turn or task. Do not save.
 - Preference: a stable user style, default behavior, language, workflow preference, or risk tolerance.
-- Project context: a durable fact about a repo, workspace, product, domain, environment, or current initiative.
+- Fact: a durable fact about a repo, workspace, product, domain, environment, or current initiative.
 - Decision: a confirmed choice, tradeoff, or policy and the reason it was chosen.
-- Workflow: a repeatable process the user wants Codex to follow again.
+- Flow: a repeatable process the user wants Codex to follow again.
 - Learning record: evidence that the user learned or already knows something that should steer future teaching.
+
+Use these exact type names when classifying candidates: Temporary, Preference, Fact, Decision, Flow, Learning record, Session, and Summary.
 
 ## Useful Context Signals
 
@@ -27,8 +29,8 @@ Useful context usually changes future behavior, prevents repeated explanation, o
 Prefer saving:
 
 - stable user defaults: language, tone, verbosity, risk tolerance, implementation style, review style
-- recurring workflows: triggers, steps, required checks, completion criteria, approval points
-- project facts: repo purpose, important paths, frameworks, local commands, environment quirks, generated files, ignored noise
+- repeatable flows: triggers, steps, required checks, completion criteria, approval points
+- facts: repo purpose, important paths, frameworks, local commands, environment quirks, generated files, ignored noise
 - durable constraints: privacy boundaries, budget, platform, permissions, compatibility requirements
 - decisions: chosen direction, rejected alternatives, rationale, owner, date if relevant
 - domain language: canonical terms, aliases to avoid, project-specific meanings
@@ -69,7 +71,7 @@ Save distilled lessons, not raw material. Prefer one concise record over pasted 
 Use this shape when adding records to context files:
 
 ```md
-- Statement: The durable fact, preference, decision, or workflow rule.
+- Statement: The durable fact, preference, decision, or flow rule.
   Scope: global | project | learning | current-workspace
   Source: user-confirmed YYYY-MM-DD, or file/path if derived from repo evidence
   Status: active | stale | superseded
@@ -79,10 +81,10 @@ Use this shape when adding records to context files:
 
 For `context-curator/DECISIONS.md`, also include rejected alternatives and rationale when known. For `context-curator/FLOWS.md`, include trigger, steps, required checks, approval points, and done criteria.
 
-## Workflow
+## Curation Workflow
 
 1. Identify candidate context from the latest user-authored request and relevant conversation.
-2. Classify each candidate as Temporary, Preference, Project context, Decision, Workflow, or Learning record.
+2. Classify each candidate as Temporary, Preference, Fact, Decision, Flow, Learning record, Session, or Summary.
 3. Discard unsafe, unclear, or low-reuse candidates.
 4. Rewrite each remaining candidate into a durable one-sentence record.
 5. Ask the user to confirm the exact record before saving.
@@ -97,7 +99,7 @@ Before saving, present the proposed records plainly:
 ```text
 I found these context candidates:
 1. Preference: "Use Chinese by default for learning documents."
-2. Workflow: "For complex tasks, first summarize context, identify missing information, then propose the first action."
+2. Flow: "For complex tasks, first summarize context, identify missing information, then propose the first action."
 
 Should I save these? You can say "save both", "save only 1", "rewrite 2 as ...", or "do not save".
 ```
@@ -142,6 +144,17 @@ Use the most local durable store available:
 
 If the right file does not exist, create it only after confirmation. Keep new files short and structured.
 
+## Teaching Boundary
+
+Use teaching workspace files only when the context affects a learning track:
+
+- Use `MISSION.md` for why the user is learning a topic.
+- Use `GLOSSARY.md` for terms the user can already use correctly.
+- Use `RESOURCES.md` for trusted learning sources and communities.
+- Use `learning-records/` for demonstrated learning, prior knowledge, corrected misconceptions, or mission shifts.
+
+Use `context-curator/` for ordinary workspace facts, decisions, flows, preferences, sessions, and summaries, even when the topic being discussed is Agent skills. Do not duplicate the same durable record in both places unless the user explicitly asks for it.
+
 ## Conflict Priority
 
 When context conflicts, follow this priority order:
@@ -149,7 +162,7 @@ When context conflicts, follow this priority order:
 1. Latest explicit user instruction.
 2. Current task constraints and safety rules.
 3. Repository or workspace instructions.
-4. Project-local context files.
+4. Workspace context under `context-curator/`.
 5. Global user preferences or memory.
 6. Inferences from older conversation.
 
@@ -164,6 +177,17 @@ Treat context as living documentation:
 - Remove sensitive, mistaken, or user-requested deletions directly when permitted.
 - Prune duplicated or low-value records during updates.
 - Do not expand context files with raw evidence; link or summarize the evidence instead.
+
+## Field-Test Loop
+
+After first deployment, prefer real use over speculative expansion.
+
+- Use the skill in normal conversations before adding new storage files, automation, or cross-agent mechanisms.
+- Watch for repeated misses: useful context not proposed, noisy context proposed, unsafe context proposed, stale context reused, wrong destination chosen, or compressed summaries that fail to restore the task.
+- Treat a single awkward use as feedback, not a design mandate. Change the skill when the same failure pattern appears repeatedly or blocks real work.
+- Make the smallest durable improvement: clarify a rule, add one example, adjust a storage rule, or add a verification case.
+- Update `references/verification.md` whenever a new failure mode becomes important enough to protect against.
+- Avoid adding large abstractions until field use shows that the simpler confirmation-and-file workflow is insufficient.
 
 ## Context Compression
 
@@ -219,9 +243,9 @@ This skill should remain useful outside one Agent runtime. Keep `SKILL.md` as th
 ## Examples
 
 - "Use Chinese for teaching docs by default." -> Preference, save after confirmation.
-- "In this repo, generated `sourcemap.json` is local-only." -> `context-curator/FACTS.md`, save after confirmation.
-- "We chose single-agent workflows before multi-agent orchestration." -> Decision, save with rationale if known.
-- "For complex tasks, first summarize context, identify missing information, then propose the first action." -> Workflow.
+- "In this repo, generated `sourcemap.json` is local-only." -> Fact in `context-curator/FACTS.md`, save after confirmation.
+- "We chose single-agent flows before multi-agent orchestration." -> Decision, save with rationale if known.
+- "For complex tasks, first summarize context, identify missing information, then propose the first action." -> Flow.
 - "I already understand the difference between temporary context and durable context." -> Learning record, save only if demonstrated or explicitly stated.
 - "Here is a long error log." -> Do not save raw; extract the reusable failure pattern if one emerges.
 - "I feel tired today." -> Temporary unless the user explicitly asks to track it.

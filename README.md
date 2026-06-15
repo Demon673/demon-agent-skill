@@ -2,7 +2,7 @@
 
 Demon Agent Skill 是一个可复用的 agent skills 集合，面向 Codex 兼容的 agent 工作流。
 
-仓库参考 `mattpocock/skills` 的组织方式：所有 skill 放在 `skills/` 下，可安装的 skill 路径声明在 `.claude-plugin/plugin.json` 中，辅助脚本负责列出或链接 skill 到本机 agent skills 安装目录。
+这个仓库是 skill 的源仓库，不是最终安装目录。可安装 skill 放在 `skills/` 下，插件清单在 `.claude-plugin/plugin.json` 中，脚本负责列出、校验、同步和链接 skill。
 
 ## 快速开始
 
@@ -14,9 +14,64 @@ npx skills@latest add Demon673/demon-agent-skill
 
 安装后重启或刷新 agent 会话，让新 skill 进入可用列表。
 
-## 手动安装
+## 仓库地图
 
-也可以 clone 仓库后运行本地安装脚本：
+```text
+AGENTS.md                         Agent 进入本仓库时的工作说明
+README.md                         面向用户的仓库入口
+.claude-plugin/plugin.json        可安装 skill manifest
+requirements/skill-validation.txt skill 校验依赖
+scripts/                          仓库维护脚本
+skills/<category>/<skill-name>/   installable skill folders
+```
+
+每个包含 `SKILL.md` 的目录都是一个可安装 skill。`link-skills.ps1` 会按 skill 目录名扁平链接到 `%USERPROFILE%\.agents\skills`，所以不同分类下也不能复用同一个 skill 目录名。
+
+个人学习资料、长期上下文和 session 记录不放在这个公开仓库里。这里应只保留可公开发布的 skill 源码、维护脚本和必要说明。
+
+## Skill 分组
+
+| 路径 | 职责 |
+| --- | --- |
+| `skills/agent/` | 通用 Agent 工作流技能 |
+| `skills/roblox/` | 本仓库维护的 Roblox/Rojo/Luau 工作流技能 |
+| `skills/roblox-assistant/` | 从 `Roblox/creator-docs` 同步的官方 Roblox Assistant skills |
+| `skills/dota2/` | DOTA2 custom game 开发技能 |
+| `skills/unreal/` | Unreal Blueprint 只读分析技能 |
+
+`skills/roblox-assistant/` 是同步目标目录。同步脚本会重建该目录；修改这里的上游文件前，先确认是要保留本地 fork，还是应该改同步流程。
+
+## 常用命令
+
+列出 skill：
+
+```powershell
+.\scripts\list-skills.ps1
+```
+
+链接本地 skill 到安装目录：
+
+```powershell
+.\scripts\link-skills.ps1
+```
+
+校验单个 skill：
+
+```powershell
+.\scripts\validate-skills.ps1 -SkillPath "skills\agent\context-curator"
+```
+
+校验全仓：
+
+```powershell
+.\scripts\validate-skills.ps1
+```
+
+全仓校验默认跳过已知上游例外。使用 `-Strict` 可包含这些例外。
+
+## 安装
+
+也可以 clone 仓库后运行本地脚本：
 
 ```powershell
 git clone https://github.com/Demon673/demon-agent-skill.git "$env:USERPROFILE\demon-agent-skill"
@@ -25,24 +80,7 @@ cd "$env:USERPROFILE\demon-agent-skill"
 .\scripts\link-skills.ps1
 ```
 
-## Windows
-
-在已 clone 的仓库目录中运行：
-
-```powershell
-.\scripts\list-skills.ps1
-.\scripts\link-skills.ps1
-```
-
-默认情况下，`link-skills.ps1` 会在以下目录创建 Junction：
-
-```text
-%USERPROFILE%\.agents\skills
-```
-
-这样可以让本 Git 仓库继续作为源文件，而 agent 仍从标准已安装 skill 目录读取。
-
-安装为真实文件副本，而不是 Junction：
+默认情况下，`link-skills.ps1` 会创建 Junction，让 Git 仓库继续作为源文件。安装为真实文件副本：
 
 ```powershell
 .\scripts\link-skills.ps1 -Copy
@@ -54,29 +92,18 @@ cd "$env:USERPROFILE\demon-agent-skill"
 .\scripts\link-skills.ps1 -Force
 ```
 
-## macOS / Linux / WSL
+macOS / Linux / WSL:
 
 ```bash
 ./scripts/list-skills.sh
 ./scripts/link-skills.sh
 ```
 
-Bash 脚本会把 skill 链接到 `${AGENT_SKILLS_DIR:-$HOME/.agents/skills}`。
+Bash 脚本会把 skill 链接到 `${AGENT_SKILLS_DIR:-$HOME/.agents/skills}`。使用 `--copy` 可改为复制安装；使用 `--force` 可替换已经存在的非链接目标。
 
-使用 `--copy` 可改为复制安装；使用 `--force` 可替换已经存在的非链接目标。
+## 同步 Roblox Assistant Skills
 
-## 更新
-
-如果是通过本地 clone 安装，进入仓库后拉取最新提交，再重新运行链接脚本：
-
-```powershell
-git pull
-.\scripts\link-skills.ps1
-```
-
-## 同步 Roblox Assistant skills
-
-Roblox 官方 Assistant skills 来自 `Roblox/creator-docs` 的 `skills/` 目录。手动同步到本仓库：
+Roblox 官方 Assistant skills 来自 `Roblox/creator-docs` 的 `skills/` 目录：
 
 - 仓库：https://github.com/Roblox/creator-docs
 - Skills 目录：https://github.com/Roblox/creator-docs/tree/main/skills
@@ -86,48 +113,17 @@ Roblox 官方 Assistant skills 来自 `Roblox/creator-docs` 的 `skills/` 目录
 .\scripts\link-skills.ps1
 ```
 
-同步目标目录是：
-
-```text
-skills/roblox-assistant
-```
-
-同步脚本会重建该目录，并更新 `.claude-plugin/plugin.json` 中的 skill 列表。只同步文件但不更新插件 manifest：
+只同步文件但不更新 plugin manifest：
 
 ```powershell
 .\scripts\sync-roblox-assistant-skills.ps1 -SkipManifest
 ```
 
-## 结构
+## Skill 编写规则
 
-```text
-.claude-plugin/plugin.json
-scripts/list-skills.ps1
-scripts/link-skills.ps1
-scripts/sync-roblox-assistant-skills.ps1
-scripts/list-skills.sh
-scripts/link-skills.sh
-skills/<category>/<skill-name>/SKILL.md
-```
+New `SKILL.md` files should be written in English by default, especially the frontmatter `name` and `description`.
 
-每个包含 `SKILL.md` 的目录都是一个可安装 skill。
-
-## Skill authoring conventions
-
-New `SKILL.md` files should be written in English by default, especially the frontmatter `description`.
-
-Descriptions should define language-neutral trigger conditions instead of relying on keyword lists from one natural language. Prefer behavior-based wording, distinguish answer-only requests from constrained tasks, and state when the trigger must come from the latest user-authored request instead of assistant text, tool output, approval prompts, or older context.
-
-## Skills
-
-- `skills/roblox/roblox-gameplay-debugger`：Roblox 玩法、复制、性能和运行时问题诊断流程。
-- `skills/roblox/roblox-luau-developer`：Roblox Luau 脚本、服务端/客户端分层、Remote、DataStore 和 ModuleScript 开发流程。
-- `skills/roblox/roblox-rojo-workflow`：Rojo/Wally/Aftman 管理的 Roblox 项目结构、同步和本地验证流程。
-- `skills/roblox-assistant/*`：从 `Roblox/creator-docs/skills` 手动同步的 Roblox Assistant 官方 skills。
-- `skills/dota2/dota2-custom-game-dev`：DOTA2 自定义游戏开发流程，覆盖服务端 Lua、TypeScriptToLua/TSTL、SolidJS Panorama UI、Panorama JS/TS、CSS/XML、KV、NetTables、事件通信，并使用 `BigCiba/vscode-dota2-tools` 的 API references 快照。
-- `skills/agent/answer-only`: Answer-only mode for conversation-only, advisory-only, or provided-context-only requests, with safeguards against assistant/tool/approval text accidentally interrupting active tasks.
-- `skills/agent/context-curator`: Context curation workflow for capturing, confirming, storing, updating, and forgetting reusable user, project, workflow, decision, and learning context.
-- `skills/unreal/unreal-blueprint-analyzer`：用于只读分析 Unreal Engine 蓝图资产，例如 `.uasset`、`.umap`、Widget Blueprint、Animation Blueprint、Behavior Tree 资产、Data Asset，以及插件或游戏项目自定义的蓝图文件。
+Descriptions should define behavior-based trigger conditions instead of relying on keyword lists from one natural language. Prefer concise skills; move detailed, conditional, or platform-specific material into directly linked files under `references/`.
 
 ## License
 
