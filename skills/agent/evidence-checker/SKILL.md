@@ -1,6 +1,6 @@
 ---
 name: evidence-checker
-description: Track evidence status for important claims, risks, recommendations, reviews, diagnoses, and decisions. Use when the latest user-authored request asks for deep thinking, reliability, confidence, evidence, certainty, risk assessment, technical judgement, review conclusions, or whether something has problems; also use when the answer depends on repository state, command output, source material, external facts, prior context, or an inference chain that could affect decisions. Do not use for low-risk implementation, simple factual answers, formatting, translation, brainstorming, subjective preference, or when a more specific workflow should own the task.
+description: Track evidence status for important claims, risks, recommendations, reviews, diagnoses, and decisions. Use when the latest user-authored request asks for deep thinking, reliability, confidence, evidence, certainty, risk assessment, technical judgement, review conclusions, or whether something has problems; also use when a decision-relevant conclusion depends on repository state, command output, source material, external facts, prior context, or an inference chain. Do not use for low-risk implementation, simple factual answers, formatting, translation, brainstorming, subjective preference, or when a more specific workflow should own the task.
 ---
 
 # Evidence Checker
@@ -28,7 +28,7 @@ Apply evidence checking when the user asks for:
 - "is this a problem?", "are you sure?", "what is the evidence?", or similar confidence checks
 - code, architecture, skill, process, security, release, or migration risk assessment
 - technical recommendations or tradeoff decisions
-- conclusions that depend on current repository state, command output, external facts, prior context, or inference
+- decision-relevant conclusions that depend on current repository state, command output, external facts, prior context, or inference
 
 Do not apply merely because an answer contains facts. Use normal answering for low-risk or obvious claims.
 
