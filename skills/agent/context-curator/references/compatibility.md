@@ -7,7 +7,7 @@ Use this guide to adapt `context-curator` to common Agent environments. No Agent
 If an Agent cannot load skills automatically and the user wants it to reuse the context store, give it this instruction:
 
 ```text
-Use the context-curator protocol. First read context-curator/INDEX.md if it exists, then read only the relevant files under context-curator/. Before saving durable context, propose the exact record and ask for confirmation.
+Use the context-curator protocol. First read context-curator/INDEX.md if it exists, then read only the relevant files under context-curator/. Before saving durable context, propose the exact record, destination, and reason, then ask for confirmation with choices such as save all, save selected IDs, rewrite then save, change destination, or do not save.
 ```
 
 ## Codex And Skills-Compatible Agents
@@ -15,6 +15,7 @@ Use the context-curator protocol. First read context-curator/INDEX.md if it exis
 - Use `SKILL.md` as the trigger and workflow entry.
 - Keep trigger conditions in the frontmatter `description`.
 - Use `references/core-spec.md` only when adapting or auditing behavior.
+- Use structured choice UI when the runtime provides it; otherwise use the numbered text menu from `SKILL.md`.
 - If the Agent supports workspace files, write durable context under `context-curator/`.
 
 ## Claude Code Style Repositories
@@ -38,7 +39,7 @@ For reusable workspace context, read context-curator/INDEX.md first.
 ## Agents Without File Write Access
 
 - Use the protocol in memory or chat only.
-- Ask the user to approve the proposed record.
+- Ask the user to approve the proposed record through the same structured choices.
 - Return the exact markdown block and destination path for the user or another tool to save.
 
 ## Agents With Cloud Memory
