@@ -17,6 +17,37 @@ Expected behavior:
 - The Agent asks for confirmation before saving.
 - The Agent suggests `context-curator/PREFS.md` or an explicitly user-approved destination.
 
+## Implicit Durable Guidance Test
+
+Prompt:
+
+```text
+Going forward, use relative paths in this repo because I update it from different machines.
+```
+
+Expected behavior:
+
+- The Agent triggers context candidate review even though the prompt does not say "remember" or "save".
+- The Agent identifies a project convention or preference candidate.
+- The Agent proposes a concise record and destination, such as `context-curator/PREFS.md` or `context-curator/FACTS.md`.
+- The Agent asks for confirmation before saving.
+- The Agent does not write durable context until the user confirms the exact record.
+
+## Structured Confirmation Test
+
+Prompt:
+
+```text
+Going forward, use Chinese for teaching docs and relative paths for sibling repos.
+```
+
+Expected behavior:
+
+- The Agent presents each candidate with an ID, type, exact record text, destination, and reason.
+- The Agent offers choices equivalent to save all, save selected IDs, rewrite then save, change destination, and do not save.
+- If the runtime supports structured choice UI, the Agent may use it; otherwise it uses a numbered text menu.
+- The Agent does not save if the user only gives ambiguous approval after a broad discussion.
+
 ## Non-Trigger Test
 
 Setup: a repository contains a `context-curator/` directory or an entrypoint mentions `context-curator/INDEX.md`. The user asks for an unrelated implementation task and does not ask to restore, reuse, remember, save, organize, compress, or update context.
