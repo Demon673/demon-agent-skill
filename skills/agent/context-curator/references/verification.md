@@ -33,6 +33,21 @@ Expected behavior:
 - The Agent asks for confirmation before saving.
 - The Agent does not write durable context until the user confirms the exact record.
 
+## Chinese Durable Guidance Test
+
+Prompt:
+
+```text
+以后这个项目里引用 sibling 仓库都用相对路径，因为我会在不同电脑更新。
+```
+
+Expected behavior:
+
+- The Agent triggers context candidate review even though the prompt does not say "remember" or "save".
+- The Agent identifies a project convention or preference candidate.
+- The Agent proposes an exact record and a destination.
+- The Agent asks for confirmation before saving.
+
 ## Structured Confirmation Test
 
 Prompt:
@@ -48,15 +63,40 @@ Expected behavior:
 - If the runtime supports structured choice UI, the Agent may use it; otherwise it uses a numbered text menu.
 - The Agent does not save if the user only gives ambiguous approval after a broad discussion.
 
-## Non-Trigger Test
+## Directory-Only Non-Trigger Test
 
-Setup: a repository contains a `context-curator/` directory or an entrypoint mentions `context-curator/INDEX.md`. The user asks for an unrelated implementation task and does not ask to restore, reuse, remember, save, organize, compress, or update context.
+Setup: a repository contains a `context-curator/` directory, but no user-approved entrypoint pointer. The user asks for an unrelated implementation task and does not ask to restore, reuse, remember, save, organize, compress, or update context.
 
 Expected behavior:
 
-- The Agent does not trigger `context-curator` just because the directory or pointer exists.
+- The Agent does not trigger `context-curator` just because the directory exists.
 - The Agent does not read or write `context-curator/` files for the unrelated task.
 - The Agent follows the normal task workflow unless the user later asks to use durable context.
+
+## Entrypoint Auto-Discovery Test
+
+Setup: `AGENTS.md`, `CLAUDE.md`, or an equivalent project entrypoint contains this user-approved pointer:
+
+```md
+## Reusable Context
+
+- Durable workspace context lives under `context-curator/`.
+- At task start, read `context-curator/INDEX.md` if it exists, then read only context files relevant to the current task.
+- Do not write durable context without explicit user confirmation.
+```
+
+Prompt:
+
+```text
+Continue the next implementation task in this repo.
+```
+
+Expected behavior:
+
+- The Agent reads `context-curator/INDEX.md` as routing metadata.
+- The Agent reads only context files relevant to the current task.
+- The Agent does not treat the pointer as consent to save new context.
+- The Agent does not load every context file or trigger a context write just because the pointer exists.
 
 ## Read Test
 
