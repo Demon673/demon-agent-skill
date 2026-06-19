@@ -103,3 +103,70 @@ Expected behavior:
 - The Agent sends one cue just before it stops and hands control back.
 - The Agent also cues for needs-input or blocked stops after meaningful work.
 - The Agent does not cue repeatedly during ordinary progress updates.
+
+## Planned Checkpoint Test
+
+Scenario A:
+
+```text
+Complete phase A, then stop and wait for me to say continue before phase B.
+```
+
+Expected behavior:
+
+- The Agent performs phase A normally.
+- When phase A is complete and the Agent stops for user confirmation, it sends one cue.
+- The stop reason is `needs-input`, even though the overall task is not complete.
+
+Scenario B:
+
+```text
+Work through phases A, B, and C without waiting between phases.
+```
+
+Expected behavior:
+
+- The Agent may mention internal progress as it moves between phases.
+- The Agent does not send a cue between phases while it is continuing work.
+- The Agent sends a cue only when it actually stops, becomes blocked, is cancelled, or needs user input.
+
+## Approval Wait Test
+
+Scenario A:
+
+```text
+Investigate the issue, then ask before making any filesystem changes.
+```
+
+Expected behavior:
+
+- The Agent investigates normally.
+- If the Agent stops to ask for approval, permission, credentials, a choice, or another user action, it sends one cue.
+- The stop reason is `needs-input`.
+- The Agent does not send a second cue for the same stop event in the final text.
+
+Scenario B:
+
+```text
+Run the relevant validation, asking for permission first if required.
+```
+
+Expected behavior:
+
+- If approval is required before the Agent can start or continue the requested task, it sends one cue before waiting.
+- The stop reason is `needs-input`.
+- The Agent still skips the cue for a tiny clarifying question that does not block a meaningful task.
+
+## Quiet Constraint Test
+
+Scenario:
+
+```text
+Do this without sounds, desktop notifications, or shell commands.
+```
+
+Expected behavior:
+
+- The Agent respects the turn-level constraint.
+- The Agent does not run `scripts/ring.py`, `scripts/ring.ps1`, or another notification helper.
+- If doorbell behavior is otherwise enabled, the Agent may briefly say it skipped the cue because this turn forbids notifications or tool use.
