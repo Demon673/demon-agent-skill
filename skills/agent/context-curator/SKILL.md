@@ -1,6 +1,6 @@
 ---
 name: context-curator
-description: Curate reusable user, project, and learning context from conversation into durable records with explicit user confirmation. Use when the latest user request asks the agent to remember, save, collect, organize, update, forget, restore, compress, or reuse context, preferences, decisions, recurring workflows, project facts, or learning progress across sessions. Also use when the latest user request explicitly invites proactive context collection or asks to review durable context candidates.
+description: Curate reusable user, project, and learning context from conversation into durable records with explicit user confirmation. Use when the latest user request asks to remember, save, collect, organize, update, forget, restore, compress, or reuse context, preferences, decisions, workflows, project facts, or learning progress. Also use when the latest user request gives durable guidance for future turns, defaults, project conventions, repeated workflows, corrections, or cross-session continuity; trigger on phrases like going forward, from now on, next time, always, by default, do not do this again, 以后, 后续, 之后, 默认, 一直, 每次, 下次, 不要再, or 这个项目以后.
 ---
 
 # Context Curator
@@ -9,7 +9,7 @@ Use this skill to turn daily conversation into reliable reusable context without
 
 ## Core Rule
 
-Never write durable context from ordinary conversation without explicit user confirmation. Detect candidates proactively only when the latest user request explicitly asks for context collection, remembering, forgetting, organizing, restoring, compression, or reuse. Do not infer consent or trigger this skill from the existence of a `context-curator/` directory, from a project entry file that mentions the directory, or from older conversation alone.
+Never write durable context from ordinary conversation without explicit user confirmation. Detect candidates proactively when the latest user request either asks for context management or gives durable future-facing guidance that appears meant to affect later turns, sessions, projects, or learning. Casual phrasing still counts when it changes future behavior: "next time", "always", "by default", "do not do this again", "以后", "后续", "默认", "下次", and similar wording are trigger-worthy. Candidate detection is not consent to save: propose the exact record and ask for confirmation before writing. Do not infer consent or trigger this skill from the existence of a `context-curator/` directory, from older conversation alone, or from an entrypoint pointer alone.
 
 ## Context Types
 
@@ -36,6 +36,15 @@ Prefer saving:
 - domain language: canonical terms, aliases to avoid, project-specific meanings
 - repeated failure patterns: common tool errors, diagnostic noise, known setup traps, workaround policy
 - learning state: prior knowledge, demonstrated understanding, corrected misconceptions, current learning mission
+
+Proactively propose a context candidate when the latest user-authored request gives future-facing guidance, even if it does not say "remember" or "save":
+
+- stable defaults: "use this by default", "always prefer...", "do not do this again"
+- project conventions: "in this repo/workspace/project, use..."
+- repeated workflow rules: "next time, follow this process"
+- durable corrections: "when this happens, treat it as..."
+- cross-session intent: "I will continue this on another machine/session"
+- Chinese durable cues: "以后", "后续", "之后", "默认", "一直", "每次", "下次", "不要再", "这个项目以后"
 
 Do not save by default:
 
@@ -83,7 +92,7 @@ For `context-curator/DECISIONS.md`, also include rejected alternatives and ratio
 
 ## Curation Workflow
 
-1. Identify candidate context from the latest user-authored request and relevant conversation.
+1. Identify candidate context from the latest user-authored request and relevant conversation. Include implicit durable guidance when it is future-facing, repeated, or cross-session.
 2. Classify each candidate as Temporary, Preference, Fact, Decision, Flow, Learning record, Session, or Summary.
 3. Discard unsafe, unclear, or low-reuse candidates.
 4. Rewrite each remaining candidate into a durable one-sentence record.
@@ -94,17 +103,53 @@ For `context-curator/DECISIONS.md`, also include rejected alternatives and ratio
 
 ## Confirmation Format
 
-Before saving, present the proposed records plainly:
+Before saving, use a structured confirmation protocol. If the Agent runtime offers a choice UI, present the same choices through that UI. If it only supports text, present a numbered menu.
+
+Each candidate must show:
+
+- ID: a stable number for this confirmation round
+- Type: Preference, Fact, Decision, Flow, Learning record, Session, or Summary
+- Record: the exact text that would be saved
+- Destination: the suggested file or memory store
+- Reason: why this is durable enough to keep
+
+For multiple candidates, use this shape:
 
 ```text
 I found these context candidates:
-1. Preference: "Use Chinese by default for learning documents."
-2. Flow: "For complex tasks, first summarize context, identify missing information, then propose the first action."
 
-Should I save these? You can say "save both", "save only 1", "rewrite 2 as ...", or "do not save".
+1. Preference
+   Record: "Use Chinese by default for learning documents."
+   Destination: context-curator/PREFS.md
+   Reason: This changes future teaching and documentation behavior.
+
+2. Flow
+   Record: "For complex tasks, first summarize context, identify missing information, then propose the first action."
+   Destination: context-curator/FLOWS.md
+   Reason: This is a repeatable workflow rule.
+
+Choose one:
+- save all
+- save selected IDs
+- rewrite then save
+- change destination
+- do not save
 ```
 
-Do not save if the user only says "ok" ambiguously after a broad discussion. Save when the user clearly says to remember, save, write, record, update, forget, delete, or apply a specific item.
+For one high-value candidate, use a compact version:
+
+```text
+I found one context candidate:
+- ID: 1
+- Type: Preference
+- Record: "Use relative paths when referencing sibling repositories in this workspace."
+- Destination: context-curator/PREFS.md
+- Reason: You update this repository from different machines.
+
+Save this record?
+```
+
+Do not save if the user only says "ok" ambiguously after a broad discussion. Save when the user clearly chooses a save action, names candidate IDs to save, provides replacement wording, or directly says to remember, save, write, record, update, forget, delete, or apply a specific item.
 
 For ordinary conversation, batch context capture instead of interrupting repeatedly. Prefer a brief end-of-topic prompt such as:
 
@@ -137,8 +182,18 @@ Use the most local durable store available:
   - `learning-records/NNNN-slug.md`: demonstrated learning, prior knowledge, corrected misconceptions, or mission shifts.
 - Project or repo workspace:
   - Prefer existing local convention only when the user names it or when the repo already has a clear agent-context convention.
-  - Do not add or update `AGENTS.md`, `CLAUDE.md`, or the platform's equivalent just to advertise this skill-owned store.
-  - Add a neutral pointer to `context-curator/INDEX.md` only when the user explicitly wants non-skill-aware agents to discover durable context. Do not store the durable context body in an agent entrypoint.
+  - Do not add or update `AGENTS.md`, `CLAUDE.md`, or the platform's equivalent by default.
+  - When the user wants automatic discovery by non-skill-aware agents, proactively offer to add a neutral entrypoint pointer. After confirmation, add or update only a small section like:
+
+```md
+## Reusable Context
+
+- Durable workspace context lives under `context-curator/`.
+- At task start, read `context-curator/INDEX.md` if it exists, then read only context files relevant to the current task.
+- Do not write durable context without explicit user confirmation.
+```
+
+  - Keep durable records under `context-curator/`, not inside the agent entrypoint.
 - Global memory:
   - Use only when the user explicitly asks to remember a stable cross-project preference or fact.
   - Follow the platform memory rules for where and how global memory updates are written.
@@ -227,7 +282,7 @@ When the user asks to forget context:
 
 When a task relates to known durable context:
 
-0. Read context only after this skill is triggered or the latest request asks to restore or reuse context. Do not read `context-curator/` merely because the directory exists or an entrypoint lists it.
+0. Read context when this skill is triggered, when the latest request asks to restore or reuse context, or when a user-approved project entrypoint tells agents to read `context-curator/INDEX.md`. A directory alone is not enough. An entrypoint pointer may justify reading `INDEX.md` as routing metadata, but it is not consent to write context or load every context file.
 1. Read `context-curator/INDEX.md` first when it exists.
 2. Read the smallest relevant context file set.
 3. Briefly state what context is being used.
@@ -257,10 +312,18 @@ This skill should remain useful outside one Agent runtime. Keep `SKILL.md` as th
 Context capture:
 
 ```text
-I found one durable context candidate:
-- Preference: "..."
+I found one context candidate:
+- ID: 1
+- Type: Preference
+- Record: "..."
+- Destination: context-curator/PREFS.md
+- Reason: ...
 
-Should I save it to context-curator/PREFS.md?
+Choose one:
+- save selected IDs: 1
+- rewrite then save
+- change destination
+- do not save
 ```
 
 Context use:

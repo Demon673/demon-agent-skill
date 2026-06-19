@@ -2,6 +2,7 @@
   "name": "demon-agent-skill",
   "skills": [
     "./skills/agent/answer-only",
+    "./skills/agent/agent-doorbell",
     "./skills/agent/context-curator",
     "./skills/agent/evidence-checker",
     "./skills/agent/task-intake",
