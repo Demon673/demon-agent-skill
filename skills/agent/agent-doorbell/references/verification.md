@@ -89,6 +89,51 @@ Expected behavior:
 - If no native player is available, it falls back to terminal bell or text output.
 - `scripts/ring.ps1` remains a Windows/PowerShell helper, not the only implementation.
 
+## Hook Runner Dry Run Test
+
+From the skill directory:
+
+```bash
+printf '{"hook_event_name":"Stop","last_assistant_message":"All done."}' | python scripts/hook-runner.py --mode none --dry-run
+printf '{"hook_event_name":"PermissionRequest","tool_name":"Bash"}' | python scripts/hook-runner.py --mode none --dry-run
+printf '{"hook_event_name":"StopFailure","error":"rate_limit"}' | python scripts/hook-runner.py --mode none --dry-run
+```
+
+```powershell
+'{"hook_event_name":"Stop","last_assistant_message":"All done."}' | python scripts/hook-runner.py --mode none --dry-run
+'{"hook_event_name":"PermissionRequest","tool_name":"Bash"}' | python scripts/hook-runner.py --mode none --dry-run
+'{"hook_event_name":"StopFailure","error":"rate_limit"}' | python scripts/hook-runner.py --mode none --dry-run
+```
+
+Expected behavior:
+
+- Each command exits successfully.
+- The output identifies the event, agent, reason, summary, and helper command.
+- `Stop` maps to `done` unless the final message implies blocked, cancelled, or needs-input.
+- `PermissionRequest` maps to `needs-input`.
+- `StopFailure` maps to `blocked`.
+- No sound or desktop notification is emitted in dry-run mode.
+
+## Claude Code Hook Installer Test
+
+From the skill directory:
+
+```bash
+python scripts/install-claude-hook.py --dry-run --scope user --mode none
+python scripts/install-claude-hook.py --dry-run --scope project-local --project-root . --mode none
+python scripts/install-claude-hook.py --dry-run --scope user --remove
+```
+
+Expected behavior:
+
+- Each command exits successfully and prints JSON.
+- Dry runs do not write or modify Claude Code settings files.
+- Install output includes async command hooks for the selected events.
+- The default event list includes `Stop`, `StopFailure`, `SubagentStop`, `TeammateIdle`, `PermissionRequest`, and `Elicitation`.
+- Re-running install is idempotent: existing Agent Doorbell hooks are removed before replacement.
+- Remove mode targets only hooks identified as Agent Doorbell hooks.
+- Real installs write only local user or project-local settings, not shareable project settings with machine-specific paths.
+
 ## Agent-Stop Boundary Test
 
 Prompt:
@@ -101,8 +146,10 @@ Expected behavior:
 
 - The Agent performs work normally.
 - The Agent sends one cue just before it stops and hands control back.
-- The Agent also cues for needs-input or blocked stops after meaningful work.
-- The Agent does not cue repeatedly during ordinary progress updates.
+- The Agent also cues for needs-input or blocked stops whenever it stops and hands control back.
+- The Agent also cues for tiny clarification stops because the Agent is waiting for the user.
+- The Agent does not cue repeatedly during ordinary progress updates while it continues working.
+- If a runtime stop hook owns doorbells for the current Agent surface, the hook sends the cue and the Agent does not also run the manual helper for the same final response.
 
 ## Planned Checkpoint Test
 
@@ -155,7 +202,20 @@ Expected behavior:
 
 - If approval is required before the Agent can start or continue the requested task, it sends one cue before waiting.
 - The stop reason is `needs-input`.
-- The Agent still skips the cue for a tiny clarifying question that does not block a meaningful task.
+
+## Tiny Clarification Stop Test
+
+Scenario:
+
+```text
+Build the thing.
+```
+
+Expected behavior:
+
+- If the Agent must stop to ask a tiny clarifying question before it can proceed, it sends one cue.
+- The stop reason is `needs-input`.
+- The Agent does not send a cue if it asks a rhetorical or inline question but continues working without waiting.
 
 ## Quiet Constraint Test
 
