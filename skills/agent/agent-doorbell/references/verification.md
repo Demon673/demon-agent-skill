@@ -65,6 +65,87 @@ Expected behavior:
 - Dry runs do not write or modify Claude Code or Gemini CLI settings files.
 - The PowerShell installer enforces the same runtime-specific event allowlist as the Node convenience installer.
 
+## PowerShell Settings Preservation Test
+
+From the skill directory on Windows PowerShell 5.1:
+
+```powershell
+$root = Join-Path $env:TEMP ("agent-doorbell-settings-preservation-" + [guid]::NewGuid().ToString("N"))
+if (Test-Path -LiteralPath $root) { Remove-Item -LiteralPath $root -Recurse -Force }
+New-Item -ItemType Directory -Path (Join-Path $root ".claude") -Force | Out-Null
+'{"permissions":{"defaultMode":"default","allow":["mcp__codegraph__*"],"deny":["a","b"]}}' |
+    Set-Content -Encoding UTF8 -LiteralPath (Join-Path $root ".claude\settings.local.json")
+.\scripts\install-hooks.ps1 -Runtime claude -Scope project-local -ProjectRoot $root -Mode none | Out-Null
+$settings = Get-Content -Raw -Encoding UTF8 -LiteralPath (Join-Path $root ".claude\settings.local.json") | ConvertFrom-Json
+if ($settings.permissions.allow[0] -ne "mcp__codegraph__*") { throw "permissions.allow was not preserved" }
+if ($settings.permissions.deny[0] -ne "a" -or $settings.permissions.deny[1] -ne "b") { throw "permissions.deny was not preserved" }
+$bytes = [System.IO.File]::ReadAllBytes((Join-Path $root ".claude\settings.local.json"))
+if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) { throw "settings file was written with a UTF-8 BOM" }
+```
+
+Expected behavior:
+
+- Existing settings fields remain present after a real project-local install.
+- Single-item and multi-item string arrays remain JSON arrays of strings.
+- No string array is rewritten as objects such as `{ "Length": 17 }`.
+- PowerShell writes settings as UTF-8 without a BOM so the Node installer can parse the file later.
+
+## Installer Shape Safety Test
+
+From the skill directory:
+
+```powershell
+$root = Join-Path $env:TEMP ("agent-doorbell-shape-safety-" + [guid]::NewGuid().ToString("N"))
+New-Item -ItemType Directory -Path (Join-Path $root ".claude") -Force | Out-Null
+[System.IO.File]::WriteAllText((Join-Path $root ".claude\settings.local.json"), '{"hooks":[]}', (New-Object System.Text.UTF8Encoding($false)))
+.\scripts\install-hooks.ps1 -Runtime claude -Scope project-local -ProjectRoot $root -Mode none
+node scripts/install-hooks.js --runtime claude --scope project-local --project-root $root --mode none
+
+$root = Join-Path $env:TEMP ("agent-doorbell-event-shape-safety-" + [guid]::NewGuid().ToString("N"))
+New-Item -ItemType Directory -Path (Join-Path $root ".claude") -Force | Out-Null
+[System.IO.File]::WriteAllText((Join-Path $root ".claude\settings.local.json"), '{"hooks":{"OtherEvent":{}}}', (New-Object System.Text.UTF8Encoding($false)))
+.\scripts\install-hooks.ps1 -Runtime claude -Events Stop -Scope project-local -ProjectRoot $root -Mode none
+node scripts/install-hooks.js --runtime claude --events Stop --scope project-local --project-root $root --mode none
+```
+
+Expected behavior:
+
+- Both installers reject malformed `hooks` shapes instead of replacing, ignoring, or partially rewriting them.
+- Existing malformed `hooks.<event>` values that are not arrays are rejected before writing.
+- Non-target malformed events, such as `hooks.OtherEvent`, are rejected even when installing only `Stop`.
+
+## Hook Removal Scope Test
+
+From the skill directory:
+
+```powershell
+$root = Join-Path $env:TEMP ("agent-doorbell-removal-scope-" + [guid]::NewGuid().ToString("N"))
+New-Item -ItemType Directory -Path (Join-Path $root ".claude") -Force | Out-Null
+$json = '{"hooks":{"Stop":[{"hooks":[{"type":"command","command":"powershell.exe","args":["-File","C:\\Tools\\other\\scripts\\hook-runner.ps1"],"statusMessage":"Other Hook"},{"type":"command","command":"powershell.exe","args":["-File","C:\\Users\\Me\\.agents\\skills\\agent-doorbell\\scripts\\hook-runner.ps1"]}]}]}}'
+[System.IO.File]::WriteAllText((Join-Path $root ".claude\settings.local.json"), $json, (New-Object System.Text.UTF8Encoding($false)))
+.\scripts\install-hooks.ps1 -Action uninstall -Runtime claude -Scope project-local -ProjectRoot $root | Out-Null
+```
+
+Expected behavior:
+
+- Hooks named `Agent Doorbell` or pointing to `agent-doorbell/scripts/hook-runner.*` are removable.
+- Unrelated hooks that happen to use a file named `hook-runner.ps1`, `hook-runner.sh`, `hook-runner.js`, or `hook-runner.py` are preserved.
+
+## Node BOM Compatibility Test
+
+From the skill directory:
+
+```powershell
+$root = Join-Path $env:TEMP ("agent-doorbell-node-bom-" + [guid]::NewGuid().ToString("N"))
+New-Item -ItemType Directory -Path (Join-Path $root ".claude") -Force | Out-Null
+'{"permissions":{"allow":["x"]}}' | Set-Content -Encoding UTF8 -LiteralPath (Join-Path $root ".claude\settings.local.json")
+node scripts/install-hooks.js --runtime claude --scope project-local --project-root $root --mode none --dry-run
+```
+
+Expected behavior:
+
+- The Node installer accepts existing UTF-8 BOM settings files produced by Windows PowerShell 5.1.
+
 ## Ring Helper Dry Run
 
 From the skill directory:

@@ -136,11 +136,22 @@ function settingsPath(runtime, scope, projectRoot) {
 function loadSettings(filePath) {
   if (!fs.existsSync(filePath)) return {};
   try {
-    const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    const text = fs.readFileSync(filePath, "utf8").replace(/^\uFEFF/, "");
+    const data = JSON.parse(text);
     if (!data || Array.isArray(data) || typeof data !== "object") fail(`Settings top-level JSON must be an object: ${filePath}`);
     return data;
   } catch (error) {
     fail(`Cannot update invalid JSON settings file: ${filePath} (${error.message})`);
+  }
+}
+
+function assertHooksShape(settings) {
+  if (!Object.prototype.hasOwnProperty.call(settings, "hooks")) return;
+  if (!settings.hooks || typeof settings.hooks !== "object" || Array.isArray(settings.hooks)) {
+    fail("Cannot update hooks: expected an object");
+  }
+  for (const [event, groups] of Object.entries(settings.hooks)) {
+    if (!Array.isArray(groups)) fail(`Cannot update hooks.${event}: expected a list`);
   }
 }
 
@@ -231,22 +242,27 @@ function buildHookEntry(args, event) {
 function isDoorbellHook(hook) {
   if (!hook || typeof hook !== "object" || Array.isArray(hook)) return false;
   if (hook.statusMessage === STATUS_MESSAGE || hook.name === STATUS_MESSAGE) return true;
-  if (Array.isArray(hook.args) && hook.args.some((arg) => /hook-runner\.(js|py|ps1|sh)$/.test(String(arg)))) {
+  if (Array.isArray(hook.args) && hook.args.some(isDoorbellRunnerReference)) {
     return true;
   }
-  return typeof hook.command === "string" && /hook-runner\.(js|py|ps1|sh)/.test(hook.command);
+  return typeof hook.command === "string" && isDoorbellRunnerReference(hook.command);
+}
+
+function isDoorbellRunnerReference(value) {
+  const text = String(value).replace(/\\/g, "/");
+  return /(^|\/)agent-doorbell\/scripts\/hook-runner\.(js|py|ps1|sh)(["'\s]|$)/.test(text);
 }
 
 function removeDoorbellHooks(settings) {
   const updated = structuredClone(settings);
   let removed = 0;
-  if (!updated.hooks || typeof updated.hooks !== "object" || Array.isArray(updated.hooks)) {
+  assertHooksShape(updated);
+  if (!updated.hooks) {
     return { settings: updated, removed };
   }
 
   for (const event of Object.keys(updated.hooks)) {
     const groups = updated.hooks[event];
-    if (!Array.isArray(groups)) continue;
     const keptGroups = [];
     for (const group of groups) {
       if (!group || typeof group !== "object" || !Array.isArray(group.hooks)) {

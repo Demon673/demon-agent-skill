@@ -19,10 +19,23 @@ param(
 $ErrorActionPreference = "Stop"
 $StatusMessage = "Agent Doorbell"
 
+function Test-JsonLeaf {
+    param($Value)
+
+    return ($null -eq $Value -or $Value -is [System.IConvertible] -or $Value -is [guid])
+}
+
+function Test-JsonArray {
+    param($Value)
+
+    return ($Value -is [array] -or $Value -is [System.Collections.IList])
+}
+
 function ConvertTo-Hashtable {
     param($Value)
 
     if ($null -eq $Value) { return $null }
+    if (Test-JsonLeaf $Value) { return $Value }
     if ($Value -is [System.Collections.IDictionary]) {
         $hash = @{}
         foreach ($key in $Value.Keys) {
@@ -30,15 +43,19 @@ function ConvertTo-Hashtable {
         }
         return $hash
     }
+    if ($Value -is [System.Collections.IEnumerable] -and $Value -isnot [string]) {
+        $array = @()
+        foreach ($item in $Value) {
+            $array += ,(ConvertTo-Hashtable $item)
+        }
+        return ,$array
+    }
     if ($Value -is [pscustomobject]) {
         $hash = @{}
         foreach ($property in $Value.PSObject.Properties) {
             $hash[$property.Name] = ConvertTo-Hashtable $property.Value
         }
         return $hash
-    }
-    if ($Value -is [System.Collections.IEnumerable] -and $Value -isnot [string]) {
-        return @($Value | ForEach-Object { ConvertTo-Hashtable $_ })
     }
     return $Value
 }
@@ -130,6 +147,38 @@ function Read-Settings {
     return ConvertTo-Hashtable ($text | ConvertFrom-Json)
 }
 
+function Write-Settings {
+    param(
+        [string]$Path,
+        $Settings
+    )
+
+    $json = ($Settings | ConvertTo-Json -Depth 50) + [Environment]::NewLine
+    $encoding = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($Path, $json, $encoding)
+}
+
+function Assert-HooksShape {
+    param($Settings)
+
+    if (-not $Settings.Contains("hooks")) { return }
+    if (-not ($Settings.hooks -is [System.Collections.IDictionary])) {
+        throw "Cannot update hooks: expected an object"
+    }
+    foreach ($event in @($Settings.hooks.Keys)) {
+        if (-not (Test-JsonArray $Settings.hooks[$event])) {
+            throw "Cannot update hooks.$($event): expected a list"
+        }
+    }
+}
+
+function Test-DoorbellRunnerReference {
+    param([string]$Value)
+
+    $normalized = $Value.Replace("\", "/")
+    return ($normalized -match '(^|/)agent-doorbell/scripts/hook-runner\.(js|py|ps1|sh)(["''\s]|$)')
+}
+
 function Test-DoorbellHook {
     param($Hook)
 
@@ -137,10 +186,10 @@ function Test-DoorbellHook {
     if ($Hook.statusMessage -eq $StatusMessage -or $Hook.name -eq $StatusMessage) { return $true }
     if ($Hook.args -is [System.Collections.IEnumerable] -and $Hook.args -isnot [string]) {
         foreach ($arg in $Hook.args) {
-            if ([string]$arg -match 'hook-runner\.(js|py|ps1|sh)$') { return $true }
+            if (Test-DoorbellRunnerReference -Value ([string]$arg)) { return $true }
         }
     }
-    if ($Hook.command -is [string] -and $Hook.command -match 'hook-runner\.(js|py|ps1|sh)') { return $true }
+    if ($Hook.command -is [string] -and (Test-DoorbellRunnerReference -Value $Hook.command)) { return $true }
     return $false
 }
 
@@ -148,7 +197,8 @@ function Remove-DoorbellHooks {
     param($Settings)
 
     $removed = 0
-    if (-not ($Settings.hooks -is [System.Collections.IDictionary])) {
+    Assert-HooksShape -Settings $Settings
+    if (-not $Settings.Contains("hooks")) {
         return @{ Settings = $Settings; Removed = $removed }
     }
 
@@ -156,7 +206,7 @@ function Remove-DoorbellHooks {
         $groups = @($Settings.hooks[$event])
         $keptGroups = @()
         foreach ($group in $groups) {
-            if (-not ($group -is [System.Collections.IDictionary]) -or -not ($group.hooks -is [System.Collections.IEnumerable])) {
+            if (-not ($group -is [System.Collections.IDictionary]) -or -not (Test-JsonArray $group.hooks)) {
                 $keptGroups += $group
                 continue
             }
@@ -252,10 +302,13 @@ function Install-DoorbellHooks {
 
     $removedResult = Remove-DoorbellHooks -Settings $Settings
     $updated = $removedResult.Settings
-    if (-not ($updated.hooks -is [System.Collections.IDictionary])) { $updated.hooks = @{} }
+    if (-not $updated.Contains("hooks")) {
+        $updated.hooks = @{}
+    }
 
     foreach ($eventName in $EventNames) {
         if (-not $updated.hooks.Contains($eventName)) { $updated.hooks[$eventName] = @() }
+        elseif (-not (Test-JsonArray $updated.hooks[$eventName])) { throw "Cannot update hooks.$($eventName): expected a list" }
         $updated.hooks[$eventName] = @($updated.hooks[$eventName]) + @{ hooks = @(New-HookEntry -RuntimeName $Runtime -EventName $eventName) }
     }
 
@@ -274,7 +327,7 @@ $changed = ($originalJson -ne ($result.Settings | ConvertTo-Json -Depth 50 -Comp
 if (-not $DryRun -and $changed) {
     $parent = Split-Path -Parent $settingsPath
     New-Item -ItemType Directory -Path $parent -Force | Out-Null
-    $result.Settings | ConvertTo-Json -Depth 50 | Set-Content -Encoding utf8 -LiteralPath $settingsPath
+    Write-Settings -Path $settingsPath -Settings $result.Settings
 }
 
 [pscustomobject]@{
