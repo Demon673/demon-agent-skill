@@ -1,0 +1,290 @@
+param(
+    [ValidateSet("install", "uninstall", "remove")]
+    [string]$Action = "install",
+    [ValidateSet("claude", "gemini")]
+    [string]$Runtime = "claude",
+    [ValidateSet("user", "project-local", "project")]
+    [string]$Scope = "user",
+    [string]$ProjectRoot = (Get-Location).Path,
+    [AllowEmptyString()]
+    [string]$Events = $null,
+    [ValidateSet("auto", "toast", "sound", "both", "none")]
+    [string]$Mode = "both",
+    [ValidateSet("quiet", "normal", "loud")]
+    [string]$Intensity = "normal",
+    [int]$Timeout = 10,
+    [switch]$DryRun
+)
+
+$ErrorActionPreference = "Stop"
+$StatusMessage = "Agent Doorbell"
+
+function ConvertTo-Hashtable {
+    param($Value)
+
+    if ($null -eq $Value) { return $null }
+    if ($Value -is [System.Collections.IDictionary]) {
+        $hash = @{}
+        foreach ($key in $Value.Keys) {
+            $hash[$key] = ConvertTo-Hashtable $Value[$key]
+        }
+        return $hash
+    }
+    if ($Value -is [pscustomobject]) {
+        $hash = @{}
+        foreach ($property in $Value.PSObject.Properties) {
+            $hash[$property.Name] = ConvertTo-Hashtable $property.Value
+        }
+        return $hash
+    }
+    if ($Value -is [System.Collections.IEnumerable] -and $Value -isnot [string]) {
+        return @($Value | ForEach-Object { ConvertTo-Hashtable $_ })
+    }
+    return $Value
+}
+
+function Get-DefaultEvents {
+    param([string]$Name)
+
+    if ($Name -eq "claude") {
+        return @("Elicitation", "PermissionRequest", "Stop", "StopFailure")
+    }
+    return @("AfterAgent", "Notification")
+}
+
+function Get-AllowedEvents {
+    param([string]$Name)
+
+    if ($Name -eq "claude") {
+        return @("Stop", "StopFailure", "SubagentStop", "TeammateIdle", "PermissionRequest", "Elicitation")
+    }
+
+    return @(
+        "SessionStart",
+        "SessionEnd",
+        "BeforeAgent",
+        "AfterAgent",
+        "BeforeModel",
+        "AfterModel",
+        "BeforeToolSelection",
+        "BeforeTool",
+        "AfterTool",
+        "PreCompress",
+        "Notification"
+    )
+}
+
+function Assert-AllowedEvents {
+    param(
+        [string]$RuntimeName,
+        [string[]]$EventNames
+    )
+
+    $events = @($EventNames)
+    if ($events.Count -eq 0) { throw "At least one event is required" }
+
+    $allowed = @(Get-AllowedEvents -Name $RuntimeName)
+    $invalid = @($events | Where-Object { $allowed -notcontains $_ })
+    if ($invalid.Count -gt 0) {
+        $valid = ($allowed | Sort-Object) -join ", "
+        throw "Unsupported $RuntimeName event(s): $($invalid -join ', '). Valid: $valid"
+    }
+}
+
+function Get-ReasonForEvent {
+    param([string]$Name)
+
+    switch ($Name) {
+        "AfterAgent" { return "done" }
+        "Elicitation" { return "needs-input" }
+        "Notification" { return "needs-input" }
+        "PermissionRequest" { return "needs-input" }
+        "StopFailure" { return "blocked" }
+        default { return "done" }
+    }
+}
+
+function Get-SettingsPath {
+    param(
+        [string]$RuntimeName,
+        [string]$ScopeName,
+        [string]$Root
+    )
+
+    if ($RuntimeName -eq "claude") {
+        if ($ScopeName -eq "user") { return Join-Path $HOME ".claude\settings.json" }
+        if ($ScopeName -eq "project-local") { return Join-Path $Root ".claude\settings.local.json" }
+        return Join-Path $Root ".claude\settings.json"
+    }
+
+    if ($ScopeName -eq "user") { return Join-Path $HOME ".gemini\settings.json" }
+    return Join-Path $Root ".gemini\settings.json"
+}
+
+function Read-Settings {
+    param([string]$Path)
+
+    if (-not (Test-Path -LiteralPath $Path)) { return @{} }
+    $text = Get-Content -Raw -Encoding utf8 -LiteralPath $Path
+    if ([string]::IsNullOrWhiteSpace($text)) { return @{} }
+    return ConvertTo-Hashtable ($text | ConvertFrom-Json)
+}
+
+function Test-DoorbellHook {
+    param($Hook)
+
+    if ($null -eq $Hook -or $Hook -isnot [System.Collections.IDictionary]) { return $false }
+    if ($Hook.statusMessage -eq $StatusMessage -or $Hook.name -eq $StatusMessage) { return $true }
+    if ($Hook.args -is [System.Collections.IEnumerable] -and $Hook.args -isnot [string]) {
+        foreach ($arg in $Hook.args) {
+            if ([string]$arg -match 'hook-runner\.(js|py|ps1|sh)$') { return $true }
+        }
+    }
+    if ($Hook.command -is [string] -and $Hook.command -match 'hook-runner\.(js|py|ps1|sh)') { return $true }
+    return $false
+}
+
+function Remove-DoorbellHooks {
+    param($Settings)
+
+    $removed = 0
+    if (-not ($Settings.hooks -is [System.Collections.IDictionary])) {
+        return @{ Settings = $Settings; Removed = $removed }
+    }
+
+    foreach ($event in @($Settings.hooks.Keys)) {
+        $groups = @($Settings.hooks[$event])
+        $keptGroups = @()
+        foreach ($group in $groups) {
+            if (-not ($group -is [System.Collections.IDictionary]) -or -not ($group.hooks -is [System.Collections.IEnumerable])) {
+                $keptGroups += $group
+                continue
+            }
+            $keptHooks = @()
+            foreach ($hook in @($group.hooks)) {
+                if (Test-DoorbellHook $hook) {
+                    $removed += 1
+                }
+                else {
+                    $keptHooks += $hook
+                }
+            }
+            if ($keptHooks.Count -gt 0) {
+                $updatedGroup = @{}
+                foreach ($key in $group.Keys) { $updatedGroup[$key] = $group[$key] }
+                $updatedGroup["hooks"] = $keptHooks
+                $keptGroups += $updatedGroup
+            }
+        }
+        if ($keptGroups.Count -gt 0) {
+            $Settings.hooks[$event] = $keptGroups
+        }
+        else {
+            $Settings.hooks.Remove($event)
+        }
+    }
+
+    if ($Settings.hooks.Count -eq 0) {
+        $Settings.Remove("hooks")
+    }
+
+    return @{ Settings = $Settings; Removed = $removed }
+}
+
+function Quote-CommandArg {
+    param([string]$Value)
+
+    if ($Value -notmatch '[\s"]') { return $Value }
+    return '"' + $Value.Replace('"', '\"') + '"'
+}
+
+function New-HookEntry {
+    param(
+        [string]$RuntimeName,
+        [string]$EventName
+    )
+
+    $runner = Join-Path $PSScriptRoot "hook-runner.ps1"
+    $reason = Get-ReasonForEvent -Name $EventName
+    $args = @(
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        $runner,
+        "-Event",
+        $EventName,
+        "-Reason",
+        $reason,
+        "-Mode",
+        $Mode,
+        "-Intensity",
+        $Intensity,
+        "-Output",
+        $(if ($RuntimeName -eq "gemini") { "gemini" } else { "none" })
+    )
+
+    if ($RuntimeName -eq "gemini") {
+        return @{
+            name = $StatusMessage
+            type = "command"
+            command = (@("powershell.exe") + $args | ForEach-Object { Quote-CommandArg $_ }) -join " "
+            timeout = $Timeout * 1000
+            description = "Ring a non-blocking Agent Doorbell cue when the agent stops or needs attention."
+        }
+    }
+
+    return @{
+        type = "command"
+        command = "powershell.exe"
+        args = $args
+        async = $true
+        timeout = $Timeout
+        statusMessage = $StatusMessage
+    }
+}
+
+function Install-DoorbellHooks {
+    param(
+        $Settings,
+        [string[]]$EventNames
+    )
+
+    $removedResult = Remove-DoorbellHooks -Settings $Settings
+    $updated = $removedResult.Settings
+    if (-not ($updated.hooks -is [System.Collections.IDictionary])) { $updated.hooks = @{} }
+
+    foreach ($eventName in $EventNames) {
+        if (-not $updated.hooks.Contains($eventName)) { $updated.hooks[$eventName] = @() }
+        $updated.hooks[$eventName] = @($updated.hooks[$eventName]) + @{ hooks = @(New-HookEntry -RuntimeName $Runtime -EventName $eventName) }
+    }
+
+    return @{ Settings = $updated; Removed = $removedResult.Removed }
+}
+
+if ($Action -eq "remove") { $Action = "uninstall" }
+$eventList = @(if (-not $PSBoundParameters.ContainsKey("Events")) { Get-DefaultEvents -Name $Runtime } else { $Events.Split(",") | ForEach-Object { $_.Trim() } | Where-Object { $_ } })
+Assert-AllowedEvents -RuntimeName $Runtime -EventNames $eventList
+$settingsPath = Get-SettingsPath -RuntimeName $Runtime -ScopeName $Scope -Root (Resolve-Path -LiteralPath $ProjectRoot).ProviderPath
+$original = Read-Settings -Path $settingsPath
+$originalJson = $original | ConvertTo-Json -Depth 50 -Compress
+$result = if ($Action -eq "uninstall") { Remove-DoorbellHooks -Settings $original } else { Install-DoorbellHooks -Settings $original -EventNames $eventList }
+$changed = ($originalJson -ne ($result.Settings | ConvertTo-Json -Depth 50 -Compress))
+
+if (-not $DryRun -and $changed) {
+    $parent = Split-Path -Parent $settingsPath
+    New-Item -ItemType Directory -Path $parent -Force | Out-Null
+    $result.Settings | ConvertTo-Json -Depth 50 | Set-Content -Encoding utf8 -LiteralPath $settingsPath
+}
+
+[pscustomobject]@{
+    action = $Action
+    runtime = $Runtime
+    runner = "powershell"
+    scope = $Scope
+    settings_path = $settingsPath
+    events = $eventList
+    removed_existing_hooks = $result.Removed
+    changed = $changed
+    dry_run = [bool]$DryRun
+} | ConvertTo-Json -Depth 20
