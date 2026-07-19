@@ -1,15 +1,15 @@
 ---
 name: dota2-custom-game-dev
-description: Use when working on DOTA2 custom game addons, including server Lua, TypeScriptToLua/TSTL vscripts, SolidJS Panorama UI, TypeScript Panorama, Panorama JavaScript, Panorama CSS/XML, KV files, abilities, modifiers, custom game events, net tables, and API lookup against BigCiba/vscode-dota2-tools references.
+description: Use when working on DOTA2 custom game addons, including server Lua, TypeScriptToLua/TSTL vscripts, SolidJS Panorama UI, TypeScript Panorama, Panorama JavaScript, Panorama CSS/XML, KV files, abilities, modifiers, custom game events, net tables, Dota2 MCP live status/testing, and API lookup against Dota 2 runtime or BigCiba/vscode-dota2-tools references.
 ---
 
 # DOTA2 Custom Game Dev
 
-Use this skill for DOTA2 custom game addon work across Lua, TypeScriptToLua/TSTL, SolidJS Panorama UI, Panorama JS/TS, Panorama CSS/XML, and KV files.
+Use this skill for DOTA2 custom game addon work across Lua, TypeScriptToLua/TSTL, SolidJS Panorama UI, Panorama JS/TS, Panorama CSS/XML, KV files, and live Dota 2 runtime inspection when Dota2 MCP tools are available.
 
 ## Reference Source
 
-Primary API reference data comes from `BigCiba/vscode-dota2-tools`.
+Prefer live Dota2 MCP tools when the runtime exposes them. Use bundled `BigCiba/vscode-dota2-tools` snapshots when MCP tools are unavailable, Dota 2 is not running, or the user only needs offline source work.
 
 - Upstream repo: `https://github.com/BigCiba/vscode-dota2-tools`
 - Local source map: `references/upstream-source-map.md`
@@ -21,6 +21,16 @@ Primary API reference data comes from `BigCiba/vscode-dota2-tools`.
 - SolidJS Panorama detector: `scripts/detect_solid_panorama_project.py`
 
 Do not treat the bundled references as permanent truth. They are snapshots and should be refreshed from upstream when the user asks for latest API behavior or when API accuracy matters.
+
+## Dota2 MCP Workflow
+
+Use Dota2 MCP only when live game evidence helps: testing an addon, checking in-game behavior, reading console errors, launching a map, or inspecting current runtime state. Do not make MCP a prerequisite for ordinary source edits.
+
+Call `dota_status` first for live testing/debugging. It reports connection, addon/map state, and the next useful step. If the client exposes `project_info` instead of `dota_status`, use `project_info` as the status fallback.
+
+Prefer the fast runtime loop: edit source, let the repo build/watch command compile, reload in the live game, then verify with MCP. Do not call `dota_restart` just to pick up routine code edits; use `console_send` with project reload commands such as `reload_script` when the addon supports them.
+
+Do not mutate live game state, send destructive console commands, or run arbitrary server Lua unless the user asked for live debugging/testing. For ordinary source edits, read project files first and use MCP output only as evidence.
 
 ## Project Model
 
@@ -43,7 +53,7 @@ For SolidJS Panorama projects, inspect generated JS/XML/CSS but edit the Solid T
 
 ## API Lookup Workflow
 
-Prefer targeted lookup through the bundled script instead of reading large JSON files directly. Run examples from this skill directory, or replace `.\scripts` with the resolved path to the skill directory when working from another current directory.
+Prefer Dota2 MCP API tools for live/current API behavior. If MCP is unavailable, prefer targeted lookup through the bundled script instead of reading large JSON files directly. Run examples from this skill directory, or replace `.\scripts` with the resolved path to the skill directory when working from another current directory.
 
 ```powershell
 python .\scripts\search_dota2_api.py --kind lua --query CustomGameEventManager
@@ -78,7 +88,7 @@ For Lua ability or modifier work:
 
 1. Find the KV entry and `ScriptFile`.
 2. Inspect Lua class names, `LinkLuaModifier`, intrinsic modifiers, and special value reads.
-3. Search the Lua API reference for engine calls.
+3. Use Dota2 MCP API/runtime tools when available; otherwise search the Lua API snapshot for engine calls.
 4. Validate server/client boundary and authority.
 
 For TSTL vscripts work:
@@ -87,7 +97,8 @@ For TSTL vscripts work:
 2. Read `references/tstl-dota2.md` before changing TypeScript semantics.
 3. Trace from KV `ScriptFile` to generated Lua and then back to `src/vscripts/**/*.ts`.
 4. Prefer source edits in TypeScript and validate with the repository's scripts such as `npm run build`, `npm run build:vscripts`, `npm run dev`, or `npx tstl -p tsconfig.json`, depending on what exists.
-5. If build commands need dependencies or network, ask for permission or report the missing dependency clearly.
+5. For live verification, prefer watch/build plus `console_send(commands="reload_script")` and `console_output(channel="VScript", level=3)` before restarting the map.
+6. If build commands need dependencies or network, ask for permission or report the missing dependency clearly.
 
 For Panorama UI work:
 
@@ -95,6 +106,7 @@ For Panorama UI work:
 2. Search JS APIs for `GameEvents`, `CustomNetTables`, `Players`, `Entities`, or `Abilities`.
 3. Search CSS and panel references for unsupported properties or wrong panel attributes.
 4. Trace event flow between JS and Lua through `CustomGameEventManager` and `GameEvents`.
+5. When live MCP tools are available, use `console_output` with `PanoramaScript` and the Panorama API/CSS/event tools to confirm runtime errors and supported UI APIs.
 
 For SolidJS Panorama UI work:
 
@@ -109,7 +121,8 @@ For synchronization bugs:
 1. Identify whether state should be push event, net table, or local-only UI state.
 2. In Lua, inspect `CustomGameEventManager:RegisterListener`, `CustomNetTables:SetTableValue`, and player validation.
 3. In JS, inspect `GameEvents.Subscribe`, `GameEvents.SendCustomGameEventToServer`, and `CustomNetTables.SubscribeNetTableListener`.
-4. Report stale state, trust boundary, and lifecycle risks separately.
+4. When live MCP tools are available, inspect console output, entities/modifiers, and safe Lua expressions to confirm actual runtime state.
+5. Report stale state, trust boundary, and lifecycle risks separately.
 
 ## Output
 
@@ -120,4 +133,5 @@ When explaining an API or fixing code, include:
 - Any server/client trust boundary.
 - Whether the code is source TypeScript or generated Lua/JS.
 - Whether SolidJS Panorama source or generated Panorama assets were changed.
+- Whether Dota2 MCP live evidence was used, or why the work fell back to bundled/offline references.
 - Any reference freshness caveat if the bundled snapshot was not refreshed in the current turn.
