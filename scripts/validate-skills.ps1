@@ -4,9 +4,7 @@ param(
     [string[]] $SkillPath,
     [string] $Python = 'python',
     [string] $SkillCreatorRoot,
-    [switch] $NoInstall,
-    [string[]] $SkipSkillPath = @('skills\roblox-assistant\docs-search'),
-    [switch] $Strict
+    [switch] $NoInstall
 )
 
 $ErrorActionPreference = 'Stop'
@@ -191,28 +189,6 @@ else {
     $skillDirs = @(Get-SkillDirectories -RepoRoot $RepoRoot)
     Test-UniqueInstallNames -RepoRoot $RepoRoot -SkillDirs $skillDirs
     Test-PluginManifest -RepoRoot $RepoRoot -SkillDirs $skillDirs
-
-    if (!$Strict -and $SkipSkillPath -and $SkipSkillPath.Count -gt 0) {
-        $skipDirs = @{}
-        foreach ($skipPath in $SkipSkillPath) {
-            $fullSkipPath = $skipPath
-            if (!(Split-Path -Path $fullSkipPath -IsAbsolute)) {
-                $fullSkipPath = Join-Path $RepoRoot $fullSkipPath
-            }
-            if (Test-Path -LiteralPath $fullSkipPath) {
-                $skipDirs[(Resolve-Path -LiteralPath $fullSkipPath).Path] = $true
-            }
-        }
-
-        $skillDirs = $skillDirs | Where-Object {
-            if ($skipDirs.ContainsKey($_)) {
-                $relativeSkip = $_.Substring($RepoRoot.Length) -replace '^[\\/]+', ''
-                Write-Host "[skip] $relativeSkip (known upstream validation exception; use -Strict to include)"
-                return $false
-            }
-            return $true
-        }
-    }
 }
 
 $failed = @()

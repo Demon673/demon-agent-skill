@@ -2,7 +2,7 @@
 
 Demon Agent Skill 是一个可复用的 agent skills 集合，面向 Codex 兼容的 agent 工作流。
 
-这个仓库是 skill 的源仓库，不是最终安装目录。可安装 skill 放在 `skills/` 下，插件清单在 `.claude-plugin/plugin.json` 中，脚本负责列出、校验、同步和链接 skill。
+这个仓库是 skill 的源仓库，不是最终安装目录。可安装 skill 放在 `skills/` 下，插件清单在 `.claude-plugin/plugin.json` 中，脚本负责列出、校验和链接 skill。
 
 ## 快速开始
 
@@ -35,11 +35,8 @@ skills/<category>/<skill-name>/   installable skill folders
 | --- | --- |
 | `skills/agent/` | 通用 Agent 工作流技能 |
 | `skills/roblox/` | 本仓库维护的 Roblox/Rojo/Luau 工作流技能 |
-| `skills/roblox-assistant/` | 从 `Roblox/creator-docs` 同步的官方 Roblox Assistant skills |
 | `skills/dota2/` | DOTA2 custom game 开发技能 |
 | `skills/unreal/` | Unreal Blueprint 只读分析技能 |
-
-`skills/roblox-assistant/` 是同步目标目录。同步脚本会重建该目录；修改这里的上游文件前，先确认是要保留本地 fork，还是应该改同步流程。
 
 ## 常用命令
 
@@ -66,8 +63,6 @@ skills/<category>/<skill-name>/   installable skill folders
 ```powershell
 .\scripts\validate-skills.ps1
 ```
-
-全仓校验默认跳过已知上游例外。使用 `-Strict` 可包含这些例外。
 
 ## 安装
 
@@ -100,24 +95,6 @@ macOS / Linux / WSL:
 ```
 
 Bash 脚本会把 skill 链接到 `${AGENT_SKILLS_DIR:-$HOME/.agents/skills}`。使用 `--copy` 可改为复制安装；使用 `--force` 可替换已经存在的非链接目标。
-
-## 同步 Roblox Assistant Skills
-
-Roblox 官方 Assistant skills 来自 `Roblox/creator-docs` 的 `skills/` 目录：
-
-- 仓库：https://github.com/Roblox/creator-docs
-- Skills 目录：https://github.com/Roblox/creator-docs/tree/main/skills
-
-```powershell
-.\scripts\sync-roblox-assistant-skills.ps1
-.\scripts\link-skills.ps1
-```
-
-只同步文件但不更新 plugin manifest：
-
-```powershell
-.\scripts\sync-roblox-assistant-skills.ps1 -SkipManifest
-```
 
 ## Skill 编写规则
 
