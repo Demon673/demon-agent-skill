@@ -1,7 +1,7 @@
 param(
     [ValidateSet("install", "uninstall", "remove")]
     [string]$Action = "install",
-    [ValidateSet("claude", "gemini")]
+    [ValidateSet("claude", "gemini", "codex")]
     [string]$Runtime = "claude",
     [ValidateSet("user", "project-local", "project")]
     [string]$Scope = "user",
@@ -66,6 +66,7 @@ function Get-DefaultEvents {
     if ($Name -eq "claude") {
         return @("Elicitation", "PermissionRequest", "Stop", "StopFailure")
     }
+    if ($Name -eq "codex") { return @("Stop") }
     return @("AfterAgent", "Notification")
 }
 
@@ -75,6 +76,7 @@ function Get-AllowedEvents {
     if ($Name -eq "claude") {
         return @("Stop", "StopFailure", "SubagentStop", "TeammateIdle", "PermissionRequest", "Elicitation")
     }
+    if ($Name -eq "codex") { return @("Stop", "SubagentStop", "PermissionRequest") }
 
     return @(
         "SessionStart",
@@ -132,6 +134,12 @@ function Get-SettingsPath {
         if ($ScopeName -eq "user") { return Join-Path $HOME ".claude\settings.json" }
         if ($ScopeName -eq "project-local") { return Join-Path $Root ".claude\settings.local.json" }
         return Join-Path $Root ".claude\settings.json"
+    }
+
+    if ($RuntimeName -eq "codex") {
+        if ($ScopeName -eq "project-local") { throw "Codex does not have a project-local hooks file; use user or project scope" }
+        if ($ScopeName -eq "user") { return Join-Path $HOME ".codex\hooks.json" }
+        return Join-Path $Root ".codex\hooks.json"
     }
 
     if ($ScopeName -eq "user") { return Join-Path $HOME ".gemini\settings.json" }
@@ -274,14 +282,20 @@ function New-HookEntry {
         $(if ($RuntimeName -eq "gemini") { "gemini" } else { "none" })
     )
 
-    if ($RuntimeName -eq "gemini") {
-        return @{
-            name = $StatusMessage
+    if ($RuntimeName -eq "gemini" -or $RuntimeName -eq "codex") {
+        $entry = @{
             type = "command"
             command = (@("powershell.exe") + $args | ForEach-Object { Quote-CommandArg $_ }) -join " "
-            timeout = $Timeout * 1000
-            description = "Ring a non-blocking Agent Doorbell cue when the agent stops or needs attention."
+            timeout = $(if ($RuntimeName -eq "gemini") { $Timeout * 1000 } else { $Timeout })
         }
+        if ($RuntimeName -eq "gemini") {
+            $entry.name = $StatusMessage
+            $entry.description = "Ring a non-blocking Agent Doorbell cue when the agent stops or needs attention."
+        }
+        else {
+            $entry.statusMessage = $StatusMessage
+        }
+        return $entry
     }
 
     return @{

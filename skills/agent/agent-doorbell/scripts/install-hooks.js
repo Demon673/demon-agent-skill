@@ -4,7 +4,9 @@ const path = require("path");
 
 const CLAUDE_DEFAULT_EVENTS = ["Elicitation", "PermissionRequest", "Stop", "StopFailure"];
 const GEMINI_DEFAULT_EVENTS = ["AfterAgent", "Notification"];
+const CODEX_DEFAULT_EVENTS = ["Stop"];
 const CLAUDE_ALLOWED_EVENTS = new Set(["Stop", "StopFailure", "SubagentStop", "TeammateIdle", "PermissionRequest", "Elicitation"]);
+const CODEX_ALLOWED_EVENTS = new Set(["Stop", "SubagentStop", "PermissionRequest"]);
 const GEMINI_ALLOWED_EVENTS = new Set([
   "SessionStart",
   "SessionEnd",
@@ -78,8 +80,9 @@ function parseArgs(argv) {
   if (positional[0]) args.action = positional[0];
   if (args.action === "remove") args.action = "uninstall";
   if (!["install", "uninstall"].includes(args.action)) fail(`Unsupported action: ${args.action}`);
-  if (!["claude", "gemini"].includes(args.runtime)) fail(`Unsupported runtime: ${args.runtime}`);
+  if (!["claude", "gemini", "codex"].includes(args.runtime)) fail(`Unsupported runtime: ${args.runtime}`);
   if (!["user", "project-local", "project"].includes(args.scope)) fail(`Unsupported scope: ${args.scope}`);
+  if (args.runtime === "codex" && args.scope === "project-local") fail("Codex does not have a project-local hooks file; use user or project scope");
   if (!["native", "node", "powershell", "shell"].includes(args.runner)) fail(`Unsupported runner: ${args.runner}`);
   if (!Number.isFinite(args.timeout) || args.timeout <= 0) fail("--timeout must be a positive integer");
   args.events = validateEvents(args.runtime, args.events || defaultEvents(args.runtime));
@@ -94,11 +97,13 @@ function parseEvents(value) {
 }
 
 function defaultEvents(runtime) {
-  return runtime === "claude" ? [...CLAUDE_DEFAULT_EVENTS] : [...GEMINI_DEFAULT_EVENTS];
+  if (runtime === "claude") return [...CLAUDE_DEFAULT_EVENTS];
+  if (runtime === "codex") return [...CODEX_DEFAULT_EVENTS];
+  return [...GEMINI_DEFAULT_EVENTS];
 }
 
 function validateEvents(runtime, events) {
-  const allowed = runtime === "claude" ? CLAUDE_ALLOWED_EVENTS : GEMINI_ALLOWED_EVENTS;
+  const allowed = runtime === "claude" ? CLAUDE_ALLOWED_EVENTS : runtime === "codex" ? CODEX_ALLOWED_EVENTS : GEMINI_ALLOWED_EVENTS;
   const invalid = events.filter((event) => !allowed.has(event));
   if (invalid.length) fail(`Unsupported ${runtime} event(s): ${invalid.join(", ")}`);
   return events;
@@ -128,6 +133,9 @@ function settingsPath(runtime, scope, projectRoot) {
     if (scope === "user") return path.join(home, ".claude", "settings.json");
     if (scope === "project-local") return path.join(root, ".claude", "settings.local.json");
     return path.join(root, ".claude", "settings.json");
+  }
+  if (runtime === "codex") {
+    return scope === "user" ? path.join(home, ".codex", "hooks.json") : path.join(root, ".codex", "hooks.json");
   }
   if (scope === "user") return path.join(home, ".gemini", "settings.json");
   return path.join(root, ".gemini", "settings.json");
@@ -220,13 +228,14 @@ function buildCommandParts(args, event, output) {
 function buildHookEntry(args, event) {
   const output = args.runtime === "gemini" ? "gemini" : "none";
   const commandParts = buildCommandParts(args, event, output);
-  if (args.runtime === "gemini") {
+  if (args.runtime === "gemini" || args.runtime === "codex") {
     return {
-      name: STATUS_MESSAGE,
       type: "command",
       command: commandParts.map(quoteForCommand).join(" "),
-      timeout: args.timeout * 1000,
-      description: "Ring a non-blocking Agent Doorbell cue when the agent stops or needs attention.",
+      timeout: args.runtime === "gemini" ? args.timeout * 1000 : args.timeout,
+      ...(args.runtime === "gemini"
+        ? { name: STATUS_MESSAGE, description: "Ring a non-blocking Agent Doorbell cue when the agent stops or needs attention." }
+        : { statusMessage: STATUS_MESSAGE }),
     };
   }
   return {

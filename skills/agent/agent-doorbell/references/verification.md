@@ -27,6 +27,7 @@ From the skill directory:
 .\scripts\hook-runner.ps1 -Event AfterAgent -Reason done -Mode none -Output gemini
 .\scripts\install-hooks.ps1 -Runtime claude -Scope user -Mode none -DryRun
 .\scripts\install-hooks.ps1 -Runtime gemini -Scope user -Mode none -DryRun
+.\scripts\install-hooks.ps1 -Runtime codex -Scope user -Mode none -DryRun
 ```
 
 ```bash
@@ -49,12 +50,14 @@ From the skill directory:
 ```bash
 node scripts/install-hooks.js --runtime claude --events NotARealEvent --dry-run
 node scripts/install-hooks.js --runtime gemini --events NotARealEvent --dry-run
+node scripts/install-hooks.js --runtime codex --events NotARealEvent --dry-run
 node scripts/install-hooks.js --runtime claude --events "" --dry-run
 ```
 
 ```powershell
 .\scripts\install-hooks.ps1 -Runtime claude -Events NotARealEvent -DryRun
 .\scripts\install-hooks.ps1 -Runtime gemini -Events NotARealEvent -DryRun
+.\scripts\install-hooks.ps1 -Runtime codex -Events NotARealEvent -DryRun
 .\scripts\install-hooks.ps1 -Runtime claude -Events "" -DryRun
 ```
 
@@ -64,6 +67,7 @@ Expected behavior:
 - Explicit empty event lists are rejected instead of silently falling back to defaults.
 - Dry runs do not write or modify Claude Code or Gemini CLI settings files.
 - The PowerShell installer enforces the same runtime-specific event allowlist as the Node convenience installer.
+- Codex defaults to `Stop`; `PermissionRequest` must be selected explicitly because it fires for tool approvals.
 
 ## PowerShell Settings Preservation Test
 
@@ -234,6 +238,27 @@ Expected behavior:
 - Uninstall targets only hooks identified as Agent Doorbell hooks.
 - Default output contains no `python` or Node hook command.
 - The PowerShell installer should produce equivalent Windows hook entries without Node.
+
+## Codex Installer Dry Run
+
+From the skill directory:
+
+```bash
+node scripts/install-hooks.js --runtime codex --scope user --mode none --dry-run
+node scripts/install-hooks.js --runtime codex --events PermissionRequest --scope user --mode none --dry-run
+```
+
+```powershell
+.\scripts\install-hooks.ps1 -Runtime codex -Scope user -Mode none -DryRun
+.\scripts\install-hooks.ps1 -Runtime codex -Events PermissionRequest -Scope user -Mode none -DryRun
+```
+
+Expected behavior:
+
+- The default event list is only `Stop`.
+- `PermissionRequest` remains available only when explicitly requested.
+- Entries use a command string, seconds for `timeout`, and no `async` field because Codex does not support asynchronous command hooks.
+- User scope targets `~/.codex/hooks.json`; project scope targets `<project>/.codex/hooks.json`.
 
 ## Real Install Safety Test
 

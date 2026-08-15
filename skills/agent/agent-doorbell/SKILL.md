@@ -30,6 +30,7 @@ If the user forbids tool use, shell commands, notifications, or settings changes
 | --- | --- | --- | --- |
 | Claude Code | `Elicitation`, `PermissionRequest`, `Stop`, `StopFailure` | `~/.claude/settings.json` | Uses command hooks with `command`, `args`, `async: true`, `timeout`, and `statusMessage`. |
 | Gemini CLI | `AfterAgent`, `Notification` | `~/.gemini/settings.json` | Uses command hooks with a command string and millisecond timeout. The runner emits Gemini-compatible JSON output. |
+| Codex | `Stop` | `~/.codex/hooks.json` | Uses a command string and second-based timeout. `PermissionRequest` is opt-in because it fires for tool approval requests and can be noisy. |
 | Other Agent runtimes | Runtime-specific stop/finalize/input events | Runtime-specific local settings | Configure only when the runtime has documented lifecycle hooks. Connect those hooks to the OS-native runner. |
 
 | Operating system | Default hook runner | Notes |
@@ -48,6 +49,7 @@ Do not chase every Agent runtime. Support only runtimes with documented lifecycl
 2. Choose the runtime.
    - Use `claude` when the request mentions Claude Code or the current surface is Claude Code.
    - Use `gemini` when the request mentions Gemini CLI.
+   - Use `codex` when the request mentions Codex or the current surface is Codex.
    - If the runtime is unclear, ask one short question instead of writing the wrong settings file.
 3. Choose the action.
    - Default action is install/update when the user explicitly invokes `agent-doorbell`.
@@ -78,12 +80,25 @@ Gemini CLI uninstall:
 .\scripts\install-hooks.ps1 -Action uninstall -Runtime gemini -Scope user
 ```
 
+Codex install/update:
+
+```powershell
+.\scripts\install-hooks.ps1 -Runtime codex -Scope user
+```
+
+Codex uninstall:
+
+```powershell
+.\scripts\install-hooks.ps1 -Action uninstall -Runtime codex -Scope user
+```
+
 Node convenience installer examples, useful on macOS/Linux when Node is available:
 
 ```bash
 node scripts/install-hooks.js --runtime claude --scope user
 node scripts/install-hooks.js uninstall --runtime claude --scope user
 node scripts/install-hooks.js --runtime gemini --scope user
+node scripts/install-hooks.js --runtime codex --scope user
 ```
 
 Project-local examples:
@@ -91,6 +106,7 @@ Project-local examples:
 ```bash
 node scripts/install-hooks.js --runtime claude --scope project-local --project-root .
 node scripts/install-hooks.js --runtime gemini --scope project --project-root .
+node scripts/install-hooks.js --runtime codex --scope project --project-root .
 ```
 
 Use `--dry-run` to preview changes without writing settings:
