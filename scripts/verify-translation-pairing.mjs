@@ -63,7 +63,9 @@ function parseCliArgs(argv) {
 /** Whether a repository-relative path belongs to the bilingual source corpus. */
 function isScopeFile(file) {
   if (file.startsWith('.agents/notes/archived/')) return false
-  return file.startsWith('docs/') || file.startsWith('.agents/notes/') || /^CONTRIBUTING(\.zh)?\.md$/.test(file)
+  return file.startsWith('docs/') || file.startsWith('.agents/notes/')
+    || /^CONTRIBUTING(\.zh)?\.md$/.test(file)
+    || /^README(\.zh)?\.md$/i.test(file)
 }
 
 /** Recursively list regular files under a directory as posix relative paths. */
@@ -97,7 +99,7 @@ if (request.scope === 'pairs') {
   }
 } else {
   const all = [...walk(join(root, 'docs'), 'docs', []), ...walk(join(root, '.agents/notes'), '.agents/notes', [])]
-  for (const f of ['CONTRIBUTING.md', 'CONTRIBUTING.zh.md']) if (existsSync(join(root, f))) all.push(f)
+  for (const f of ['CONTRIBUTING.md', 'CONTRIBUTING.zh.md', 'README.md', 'README.zh.md']) if (existsSync(join(root, f))) all.push(f)
   for (const file of all) if (isScopeFile(file)) files.add(file)
 }
 

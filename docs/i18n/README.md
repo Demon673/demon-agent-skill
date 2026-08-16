@@ -34,7 +34,7 @@ The gate's limit, stated plainly: a green gate means the pair was confirmed cons
 
 ## Scope and exclusions
 
-**In scope**: every content document under `docs/` and the active Agent Note lifecycles under `.agents/notes/` (`proposed/`, `implemented/`, `rejected/`).
+**In scope**: the root `README.md` and `CONTRIBUTING.md`, every content document under `docs/`, and the active Agent Note lifecycles under `.agents/notes/` (`proposed/`, `implemented/`, `rejected/`).
 
 **Excluded** (never paired, and the gate rejects a `.zh.md` or `.i18n.yaml` for them):
 

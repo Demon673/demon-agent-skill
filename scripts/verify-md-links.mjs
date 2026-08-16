@@ -23,6 +23,7 @@ function walk(dir, out) {
 
 const files = [
   join(root, 'README.md'),
+  join(root, 'README.zh.md'),
   join(root, 'AGENTS.md'),
   ...walk(join(root, '.agents/notes'), []),
   ...walk(join(root, '.agents/skills'), []),
