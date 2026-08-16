@@ -9,6 +9,8 @@ This repository is a public Agent skills source repository. Treat it as the sour
 - `skills/<category>/<skill-name>/scripts/`: optional deterministic helpers for fragile or repeated operations.
 - `.claude-plugin/plugin.json`: installable skill manifest.
 - `scripts/`: repository maintenance scripts.
+- `docs/`: the documentation standard and bilingual convention (see [docs/AGENTS.md](docs/AGENTS.md)).
+- `.agents/notes/`: Agent Note decision records (see [.agents/notes/README.md](.agents/notes/README.md)).
 
 ## Skill Authoring Rules
 
@@ -18,6 +20,13 @@ This repository is a public Agent skills source repository. Treat it as the sour
 - Keep `SKILL.md` concise. Move detailed, conditional, or platform-specific material into directly linked files under `references/`.
 - Do not add auxiliary documentation inside a skill folder unless it directly supports the skill at runtime.
 - Prefer existing repository patterns over inventing a new skill layout.
+
+## Documentation and decisions
+
+- Follow [docs/AGENTS.md](docs/AGENTS.md) for doc structure, placement, and writing rules.
+- Every non-trivial change adds or updates an Agent Note under `.agents/notes/` ([rules](.agents/notes/README.md)).
+- Content docs under `docs/` and active Agent Notes are bilingual triplets (`foo.md` + `foo.zh.md` + `foo.i18n.yaml`); `AGENTS.md` and `SKILL.md` stay English-only ([i18n](docs/i18n/README.md)).
+- Use the maintenance skills for placement, prose, and review: [doc-standards](skills/agent/doc-standards/SKILL.md), [prose-standard](skills/agent/prose-standard/SKILL.md), [code-review](skills/agent/code-review/SKILL.md).
 
 ## Validation
 
@@ -34,6 +43,12 @@ For a whole-repository pass, run:
 ```
 
 The default whole-repository pass may skip known upstream exceptions. Use `-Strict` only when intentionally cleaning those exceptions.
+
+For documentation and Agent Note changes, run:
+
+```bash
+npm run doc-gates
+```
 
 ## Quality Gate
 

@@ -1,0 +1,53 @@
+// Git-blob operations owned by the bilingual pairing workflow.
+// Faithful port of deepseek-harness scripts/translation-pairing-git.ts.
+
+import { spawnSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
+
+const SNAPSHOT_REF_PREFIX = 'refs/dsh/translation-pairing/snapshots'
+
+/** Maximum buffered stdout or stderr for repository-owned Git subprocesses. */
+export const GIT_COMMAND_MAX_BUFFER = 1 << 26
+
+/** Full SHA-1 Git blob hash (the 40-hex format used by pairing records). */
+export function gitBlobHash(content) {
+  const hash = createHash('sha1')
+  hash.update(`blob ${content.byteLength}\0`)
+  hash.update(content)
+  return hash.digest('hex')
+}
+
+/**
+ * Run one Git subprocess and return its exact stdout bytes.
+ */
+export function runGit(root, args, operation, input) {
+  const result = spawnSync('git', ['-C', root, ...args], {
+    input,
+    maxBuffer: GIT_COMMAND_MAX_BUFFER,
+  })
+  if (result.error) {
+    throw new Error(`${operation} failed: ${result.error.message}`, { cause: result.error })
+  }
+  if (result.status !== 0) {
+    throw new Error(`${operation} failed with status ${String(result.status)}: ${result.stderr.toString('utf8').trim()}`)
+  }
+  return result.stdout
+}
+
+/**
+ * Persist exact working-tree bytes so a pairing record can later recover them
+ * with `git cat-file`, even when they have never appeared in the index or a
+ * commit. The returned object ID is checked against the pairing format's own
+ * content hash before the caller writes a sidecar.
+ */
+export function storeGitBlob(root, content) {
+  const expected = gitBlobHash(content)
+  const stored = runGit(root, ['hash-object', '-w', '--stdin'], 'git hash-object -w --stdin', content)
+    .toString('utf8')
+    .trim()
+  if (stored !== expected) {
+    throw new Error(`git hash-object -w --stdin returned unexpected object ID ${JSON.stringify(stored)}; expected ${expected}`)
+  }
+  runGit(root, ['update-ref', `${SNAPSHOT_REF_PREFIX}/${stored}`, stored], 'git update-ref for translation snapshot')
+  return stored
+}

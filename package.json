@@ -1,0 +1,20 @@
+{
+  "name": "demon-agent-skill",
+  "private": true,
+  "type": "module",
+  "description": "Public Agent skills source repository. Documentation gates are faithful ports of the deepseek-harness pnpm gates.",
+  "scripts": {
+    "doc-gates": "node scripts/run-doc-gates.mjs",
+    "verify-translation-pairing": "node scripts/verify-translation-pairing.mjs",
+    "verify-agent-note-format": "node scripts/verify-agent-note-format.mjs",
+    "verify-md-wrap": "node scripts/verify-md-wrap.mjs",
+    "verify-md-links": "node scripts/verify-md-links.mjs",
+    "verify-doc-budgets": "node scripts/verify-doc-budgets.mjs",
+    "verify-archived-agent-notes": "node scripts/verify-archived-agent-notes.mjs"
+  },
+  "dependencies": {
+    "mdast-util-from-markdown": "^2.0.3",
+    "mdast-util-gfm": "^3.1.0",
+    "micromark-extension-gfm": "^3.0.0"
+  }
+}

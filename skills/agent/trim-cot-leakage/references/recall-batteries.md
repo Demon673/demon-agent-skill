@@ -1,0 +1,29 @@
+# Recall batteries
+
+Probes for [the taxonomy](../SKILL.md#taxonomy). Every hit needs semantic judgment — the batteries over-match by design and under-match by nature, so pair them with an unpatterned read of the densest prose in scope.
+
+## Invocation rules
+
+- Add `--hidden --glob '!.git/**'` so `.agents/` is searched; ripgrep skips dot-directories by default.
+- Put exclusions last so a later include cannot re-admit them: `--glob '!.agents/notes/archived/**' --glob '!.agents/skills/agent/trim-cot-leakage/**'` (the skill's own files quote leaked wording as calibration).
+- Natural-language lines carry `-i` so sentence-initial capitals hit; the first line, which matches code patterns, stays case-sensitive.
+- A zero-hit pattern proves nothing until you have seen it match: test it against a known-positive string before trusting the negative.
+
+## English battery
+
+```sh
+rg -n --hidden '\(decision \d|\(audit [A-Z]\d|design §|plan §|\bP-I\b|\bW\d\b|\bT\d\b' ...
+rg -n --hidden -i 'this PR|this branch|this stack|later PR|previous commit|this commit' ...
+rg -n --hidden -i 'used to |no longer|previously|the old |was renamed|was moved' ...
+rg -n --hidden -i '\bv1\b|this cut|\bcut \d|\btoday\b|\bfor now\b|roadmap' ...
+rg -n --hidden -i 'rejected in review|review round|reviewer|as of v\d' ...
+rg -n --hidden -i 'probably |should be enough|should suffice|it simply|is safe —|is safe --' ...
+rg -n --hidden '§\d' ...
+```
+
+## Chinese battery
+
+```sh
+rg -n --hidden '设计稿|评审|上一?轮|旧版|老的|不再|以前|本版|遗留|私有' ...
+rg -n --hidden '(^|[^a-zA-Z])端([^a-zA-Z]|$)' --glob '*.md' ...
+```

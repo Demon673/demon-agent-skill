@@ -23,6 +23,8 @@ README.md                         面向用户的仓库入口
 requirements/skill-validation.txt skill 校验依赖
 scripts/                          仓库维护脚本
 skills/<category>/<skill-name>/   installable skill folders
+docs/                             文档标准与双语约定
+.agents/notes/                    Agent Note 决策记录
 ```
 
 每个包含 `SKILL.md` 的目录都是一个可安装 skill。`link-skills.ps1` 会按 skill 目录名扁平链接到 `%USERPROFILE%\.agents\skills`，所以不同分类下也不能复用同一个 skill 目录名。
@@ -37,6 +39,15 @@ skills/<category>/<skill-name>/   installable skill folders
 | `skills/roblox/` | 本仓库维护的 Roblox/Rojo/Luau 工作流技能 |
 | `skills/dota2/` | DOTA2 custom game 开发技能 |
 | `skills/unreal/` | Unreal Blueprint 只读分析技能 |
+
+## 文档与决策记录
+
+仓库遵循一套从官方 deepseek-harness 忠实移植的文档规范（Node ESM 门禁脚本复用官方 mdast/GFM 解析器）（见 [`docs/AGENTS.md`](docs/AGENTS.md)）：一个事实一个归属、教程/参考分类、写作规则和 slop 清单。
+
+- 内容文档和活跃的 Agent Note 都是双语三件套（`foo.md` + `foo.zh.md` + `foo.i18n.yaml`，见 [`docs/i18n/README.md`](docs/i18n/README.md)）；`AGENTS.md` 指令文件和 `SKILL.md` 保持英文。
+- 决策记录（Agent Note）放在 `.agents/notes/`，按 `生命周期/分类/日期-主题` 组织（见 [.agents/notes/README.md](.agents/notes/README.md)）。
+- 事故复盘放在 [`docs/postmortem/`](docs/postmortem/README.md)；防御模式见 [`docs/defensive-patterns.md`](docs/defensive-patterns.md)，领域词汇见 [`docs/glossary.md`](docs/glossary.md)，翻译语体样例见 [`docs/i18n/style-samples.md`](docs/i18n/style-samples.md)。
+- `skills/agent/` 下新增 9 个维护类 skill：`doc-standards`、`prose-standard`、`code-review`、`translate-docs`、`archive-agent-notes`、`trim-cot-leakage`、`find-simplifications`、`pre-push-checks`、`merging-stacked-prs`，均由官方 `dsh-*` skill 改造而来、改为通用前缀并限定于本仓库。
 
 ## 常用命令
 
@@ -62,6 +73,13 @@ skills/<category>/<skill-name>/   installable skill folders
 
 ```powershell
 .\scripts\validate-skills.ps1
+```
+
+校验文档门禁（配对 / 格式 / 预算 / 链接 / 换行 / 封存）：
+
+```bash
+npm install   # 首次运行前安装 mdast/GFM 依赖
+npm run doc-gates
 ```
 
 ## 安装

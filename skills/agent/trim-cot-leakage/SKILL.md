@@ -1,0 +1,40 @@
+---
+name: trim-cot-leakage
+description: Use when auditing or fixing prose that reads like a leaked reasoning transcript — dead design-session citations, change narration such as "used to" or "no longer", stack or review vantage, reviewer-addressed justification, control-flow narration, or hedged planning residue in docs, skill bodies, comments, or Agent Notes.
+---
+
+# Trimming Chain-of-Thought Leakage
+
+Chain-of-thought leakage is prose whose vantage is the authoring session rather than the repository: it cites artifacts only that session could see, narrates the change instead of the state, or argues with a reviewer who has left. The fix is never deletion alone when a passage carries factual clauses — restate each so it stands on its own, then delete the transcript around it; a passage carrying none is deleted outright. **Required background:** [prose-standard](../prose-standard/SKILL.md) owns the complete-proposition rule this skill applies. It is guidance, not a script.
+
+## The one test
+
+For every suspect passage ask: **could a reader with no access to any session transcript, PR thread, or uncommitted draft resolve every reference and verify every claim?** If no, restate the surviving facts and delete the rest. If yes, it is not leakage — but a resolvable change story on a current-state surface (README, docs, skill body) is still change narration and belongs in a commit, PR, or Agent Note.
+
+## Taxonomy
+
+1. **Dead design-session citations** — `(decision 7)`, `(audit C2)`, `design §4.7`, phase labels (`T4`, `W3`). If the decision has a committed owner, cite it by name and path; otherwise delete the citation and restate its factual clause.
+2. **Stack and PR vantage** — "a later PR in this stack", "this PR adds", "the previous commit". State the shipped mechanism; deferred work becomes a `TODO` marker or an issue reference.
+3. **Change narration and version stamps** — "used to", "no longer", "the old X", and indexical stamps ("v1", "this cut", "today"). State the present behavior; a fixed regression becomes a present-tense counterfactual ("without X, Y happens"), never repo history.
+4. **Review choreography** — "rejected in review", "the reviewer confirmed", draft ordinals ("v5 of this note"). Keep the surviving decision and rationale as plain fact.
+5. **Reviewer-addressed justification** — "the cast is safe — it simply…", "this is correct because…". State the invariant that makes the code or rule safe, or delete the comment.
+6. **Restatement and derivation transcripts** — control-flow narration ("first we X, then we Y"), proofs of obvious branches. Delete; keep only a non-obvious contract.
+7. **Hedges and planning residue** — "probably fine for now", "should be enough", deferrals with no marker. Promote to `TODO`/`FIXME` or restate as the actual bound.
+8. **Authoring-language slips** — untranslated fragments in prose whose language is otherwise English, or the reverse in a `.zh.md` counterpart. Translate or delete.
+
+## What is not leakage
+
+- **Issue references** — `#1470`, `TODO(name):` resolve on their own; keep them on any surface.
+- **Merged-PR and issue citations inside Agent Notes** — sanctioned evidence per the documentation standard's change-story routing.
+- **Suppression justifications** — disable-comment reasons and empty-exception explanations are required prose; fix a false reason, never delete it.
+- **Counterfactual-present pins** — "without X, Y happens", "a naive X would…".
+- **Measured bounds** — "(measured: …)" calibrating a constant; the provenance word "measured" is load-bearing.
+- **External references that resolve outside the repo by design** — standards sections (RFC 9110 §10.1.5), upstream file names.
+
+## Workflow
+
+1. Require an explicit scope. Never touch `.agents/notes/archived/`; sealed history keeps its original voice.
+2. Audit read-only first: run the [recall batteries](references/recall-batteries.md), then judge every hit semantically. The batteries over-match by design and under-match by nature — also read the densest prose in scope without a pattern in hand.
+3. Fix owner-first: for a bilingual pair, update the counterpart; for a generated or manifest-listed surface, fix the source.
+4. Before deleting anything, enumerate the passage's propositions and check the [overcorrection traps](references/examples.md).
+5. Verify: re-run the batteries expecting only sanctioned keeps, confirm every remaining citation resolves, and run `npm run doc-gates` for touched docs.
