@@ -2,7 +2,7 @@
 
 [English](README.md) | 中文
 
-本仓库的文档同时面向两种语言的使用者，因此每个纳入范围的文档都同时维护英文和简体中文两个版本。本页定义配对契约、门禁、范围和排除项；[terminology.md](terminology.md) 是术语的权威来源。常规的对应版本更新直接进行；扩展的 [`translate-docs`](../../skills/agent/translate-docs/SKILL.md) 工作流仅在用户显式调用时运行。
+本仓库的文档同时面向两种语言的使用者，因此每个纳入范围的文档都同时维护英文和简体中文两个版本。本页定义配对契约、门禁、范围和排除项；[terminology.md](terminology.md) 是术语的权威来源。常规的对应版本更新直接进行；扩展的 [`translate-docs`](../../.agents/skills/translate-docs/SKILL.md) 工作流仅在用户显式调用时运行。
 
 ## 配对契约
 
@@ -45,4 +45,4 @@ foo.zh.md: 89e6c98d92887913cadf06b2adb97f26cde4849b
 
 ## 分工
 
-常规的对应版本由工作 agent 在加载 [terminology.md](terminology.md) 后单次直接更新；普通的更新不调用翻译 skill，也不委派给子 agent。扩展的 [`translate-docs`](../../skills/agent/translate-docs/SKILL.md) 工作流——整篇翻译、简报、委派翻译——仅用于用户显式调用。翻译质量和术语仍由评审负责。
+常规的对应版本由工作 agent 在加载 [terminology.md](terminology.md) 后单次直接更新；普通的更新不调用翻译 skill，也不委派给子 agent。扩展的 [`translate-docs`](../../.agents/skills/translate-docs/SKILL.md) 工作流——整篇翻译、简报、委派翻译——仅用于用户显式调用。翻译质量和术语仍由评审负责。

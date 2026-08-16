@@ -26,7 +26,7 @@ This repository is a public Agent skills source repository. Treat it as the sour
 - Follow [docs/AGENTS.md](docs/AGENTS.md) for doc structure, placement, and writing rules.
 - Every non-trivial change adds or updates an Agent Note under `.agents/notes/` ([rules](.agents/notes/README.md)).
 - Content docs under `docs/` and active Agent Notes are bilingual triplets (`foo.md` + `foo.zh.md` + `foo.i18n.yaml`); `AGENTS.md` and `SKILL.md` stay English-only ([i18n](docs/i18n/README.md)).
-- Use the maintenance skills for placement, prose, and review: [doc-standards](skills/agent/doc-standards/SKILL.md), [prose-standard](skills/agent/prose-standard/SKILL.md), [code-review](skills/agent/code-review/SKILL.md).
+- Use the maintenance skills for placement, prose, and review: [doc-standards](.agents/skills/doc-standards/SKILL.md), [prose-standard](.agents/skills/prose-standard/SKILL.md), [code-review](.agents/skills/code-review/SKILL.md).
 
 ## Validation
 

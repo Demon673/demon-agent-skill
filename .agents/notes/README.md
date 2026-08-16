@@ -33,7 +33,7 @@ The `architecture` / `process` line: **architecture** is about the repo's struct
 
 ## Archiving and deletion
 
-Archive an implemented note when the shipped decision is complete and its rationale is unlikely to guide future work. Keep it active when its alternatives, ownership boundary, negative guarantee, or reintroduction condition remains useful. Never archive a proposed note: reject an obsolete proposal. Keep a rejected note only while it prevents a plausible mistake; otherwise delete its English and Chinese files together. Use [`archive-agent-notes`](../../skills/agent/archive-agent-notes/SKILL.md) rather than word count, age, or a quota.
+Archive an implemented note when the shipped decision is complete and its rationale is unlikely to guide future work. Keep it active when its alternatives, ownership boundary, negative guarantee, or reintroduction condition remains useful. Never archive a proposed note: reject an obsolete proposal. Keep a rejected note only while it prevents a plausible mistake; otherwise delete its English and Chinese files together. Use [`archive-agent-notes`](../skills/archive-agent-notes/SKILL.md) rather than word count, age, or a quota.
 
 The archive is path-encoded as `archived/{class}/yyyy-mm-dd-topic-title.md`; `implemented` is deliberately absent because only implemented notes can enter it. An archival change moves the complete triplet, retains `Status: implemented`, inserts the same `Archived: YYYY-MM-DD` line immediately below that status in both files, and repairs or deletes inbound links. These are the only permitted content changes during archival. Once sealed, an archived triplet is frozen: never edit, translate, reformat, or delete it, and never treat it as authority for current behavior.
 
