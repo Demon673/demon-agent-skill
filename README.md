@@ -49,7 +49,7 @@ The repository follows a documentation standard ported from the official deepsee
 - Content documents and active Agent Notes are bilingual triplets (`foo.md` + `foo.zh.md` + `foo.i18n.yaml`, see [`docs/i18n/README.md`](docs/i18n/README.md)); `AGENTS.md` instruction files and `SKILL.md` stay English.
 - Decision records (Agent Notes) live under `.agents/notes/`, organized by `lifecycle/class/date-topic` (see [.agents/notes/README.md](.agents/notes/README.md)).
 - Incident post-mortems live under [`docs/postmortem/`](docs/postmortem/README.md); defensive patterns are in [`docs/defensive-patterns.md`](docs/defensive-patterns.md), domain vocabulary in [`docs/glossary.md`](docs/glossary.md), and translation style samples in [`docs/i18n/style-samples.md`](docs/i18n/style-samples.md).
-- `.agents/skills/` holds 9 internal maintenance skills (not published): `doc-standards`, `prose-standard`, `code-review`, `translate-docs`, `archive-agent-notes`, `trim-cot-leakage`, `find-simplifications`, `pre-push-checks`, `merging-stacked-prs`, repurposed from the official `dsh-*` skills with generic names scoped to this repository.
+- `.agents/skills/` holds 3 internal maintenance skills (not published): `archive-agent-notes`, `repo-standards-review`, `translate-docs`.
 
 ## Common commands
 

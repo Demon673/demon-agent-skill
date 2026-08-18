@@ -5,6 +5,7 @@
     "./skills/agent/answer-only",
     "./skills/agent/context-curator",
     "./skills/agent/evidence-checker",
+    "./skills/agent/find-simplifications",
     "./skills/agent/merging-stacked-prs",
     "./skills/agent/pre-push-checks",
     "./skills/agent/prose-standard",
