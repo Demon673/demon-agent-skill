@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prune Prompt Pollution"
+  short_description: "Keep agent-consumed documents fact-positive"
+  default_prompt: "Use $prune-prompt-pollution when writing or reviewing agent-consumed documents."

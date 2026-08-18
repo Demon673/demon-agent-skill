@@ -1,0 +1,4 @@
+interface:
+  display_name: "Land Stacked PRs"
+  short_description: "Land a stack of dependent GitHub PRs via gh stack"
+  default_prompt: "Use $merging-stacked-prs to land this stack of dependent PRs."

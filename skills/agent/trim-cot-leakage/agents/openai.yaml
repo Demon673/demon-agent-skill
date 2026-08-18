@@ -1,0 +1,4 @@
+interface:
+  display_name: "Trim Chain-of-Thought Leakage"
+  short_description: "Remove reasoning-transcript residue from docs and skills"
+  default_prompt: "Use $trim-cot-leakage to audit a specified scope for leaked reasoning transcripts."

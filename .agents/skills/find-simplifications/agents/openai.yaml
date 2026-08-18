@@ -1,0 +1,7 @@
+interface:
+  display_name: "Find Simplifications"
+  short_description: "Find simplification candidates in this repository"
+  default_prompt: "Use $find-simplifications to find simplification candidates in this repository."
+
+policy:
+  allow_implicit_invocation: false

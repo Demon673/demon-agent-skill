@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prose Standard"
+  short_description: "Write enough to preserve the contract, then trim"
+  default_prompt: "Use $prose-standard to audit a specified scope for required, complete, and concise prose."

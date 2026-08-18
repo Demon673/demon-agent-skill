@@ -20,6 +20,7 @@ This repository is a public Agent skills source repository. Treat it as the sour
 - Keep `SKILL.md` concise. Move detailed, conditional, or platform-specific material into directly linked files under `references/`.
 - Do not add auxiliary documentation inside a skill folder unless it directly supports the skill at runtime.
 - Prefer existing repository patterns over inventing a new skill layout.
+- Each skill carries Codex metadata in `agents/openai.yaml` beside `SKILL.md`; see [docs/skill-authoring.md](docs/skill-authoring.md) for the layout and the invocation-mode mapping.
 
 ## Documentation and decisions
 

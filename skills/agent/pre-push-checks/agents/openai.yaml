@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pre-Push Checks"
+  short_description: "Run the smallest checks that cover the outgoing diff"
+  default_prompt: "Use $pre-push-checks before pushing this branch."
