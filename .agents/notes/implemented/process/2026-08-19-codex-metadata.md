@@ -10,7 +10,7 @@ Skills carried only the DeepSeek Harness frontmatter (`name`, `description`, `di
 
 ## Decision
 
-Every skill carries a Codex metadata file `agents/openai.yaml` beside `SKILL.md`, with `interface.display_name`, `interface.short_description`, `interface.default_prompt`, and — for user-invoked skills — `policy.allow_implicit_invocation: false`. The invocation mode is expressed in both harnesses: `disable-model-invocation: true` (DeepSeek Harness frontmatter) maps to `allow_implicit_invocation: false` (Codex yaml). The convention is recorded in [`docs/skill-authoring.md`](../../../../docs/skill-authoring.md), referenced from the root `AGENTS.md`.
+Every skill carries a Codex metadata file `agents/openai.yaml` beside `SKILL.md`, with `interface.display_name`, `interface.short_description`, `interface.default_prompt`, and — for user-invoked skills — `policy.allow_implicit_invocation: false`. The invocation mode is expressed in both harnesses: `disable-model-invocation: true` (DeepSeek Harness frontmatter) maps to `allow_implicit_invocation: false` (Codex yaml). The convention is recorded in the root `AGENTS.md`.
 
 ## Alternatives considered
 

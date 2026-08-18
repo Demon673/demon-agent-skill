@@ -10,7 +10,7 @@ skill 只携带 DeepSeek Harness 的 frontmatter（`name`、`description`、`dis
 
 ## 决策
 
-每个 skill 都在 `SKILL.md` 旁携带 Codex 元数据文件 `agents/openai.yaml`，含 `interface.display_name`、`interface.short_description`、`interface.default_prompt`，以及——对用户调用型 skill——`policy.allow_implicit_invocation: false`。调用模式在两个 harness 里都表达：`disable-model-invocation: true`（DeepSeek Harness frontmatter）对应 `allow_implicit_invocation: false`（Codex yaml）。约定记录在 [`docs/skill-authoring.md`](../../../../docs/skill-authoring.md)，并从根 `AGENTS.md` 引用。
+每个 skill 都在 `SKILL.md` 旁携带 Codex 元数据文件 `agents/openai.yaml`，含 `interface.display_name`、`interface.short_description`、`interface.default_prompt`，以及——对用户调用型 skill——`policy.allow_implicit_invocation: false`。调用模式在两个 harness 里都表达：`disable-model-invocation: true`（DeepSeek Harness frontmatter）对应 `allow_implicit_invocation: false`（Codex yaml）。约定记录在根 `AGENTS.md`。
 
 ## 备选方案
 
