@@ -2,19 +2,55 @@
 
 English | [中文](skill-authoring.zh.md)
 
-A skill is two files: the workflow in `SKILL.md`, and the mainstream-agent metadata in `agents/openai.yaml`. Both carry the invocation mode, each in its own harness's syntax, so a skill ports across DeepSeek Harness and Codex without edit.
+This repository ships skills, so it follows the Agent Skills standard for `SKILL.md` and its directory layout. This page is the reference an author consults before writing or editing a skill.
 
-## Layout
+## Directory layout
 
-- `SKILL.md` — frontmatter `name` (hyphen-case) and `description` (trigger-focused); add `disable-model-invocation: true` for a user-invoked skill.
-- `agents/openai.yaml` — Codex metadata: `display_name`, `short_description`, `default_prompt`; add `policy.allow_implicit_invocation: false` for a user-invoked skill.
-- `references/` — disclosed reference, loaded only when the skill fires.
+```text
+skill-name/
+├── SKILL.md      # required — frontmatter + body
+├── references/   # optional — loaded on demand
+├── scripts/      # optional — deterministic helpers
+└── agents/       # optional — per-agent metadata
+
+```
+
+## SKILL.md frontmatter
+
+| Field | Required | Meaning |
+|---|---|---|
+| `name` | yes | lowercase-hyphen identifier, at most 64 characters |
+| `description` | yes | what the skill does and when to fire — the discovery surface |
+| `license` | no | SPDX identifier |
+| `allowed-tools` | no | comma-separated tool allow-list |
+| `metadata` | no | arbitrary key-value map |
+| `disable-model-invocation` | no | `true` = the model will not auto-invoke; only the user can. Default `false` |
+| `user-invocable` | no | whether the user can invoke by name |
+
+## Body
+
+- Write for the agent: ordered steps and, where needed, flat reference, co-located so one heading carries its rules and caveats.
+- Keep `SKILL.md` concise; push detailed, conditional, or platform-specific material into `references/`, loaded only when a pointer fires.
+- The `description` is the context pointer: front-load the trigger, one branch per trigger, cut identity the body already carries.
 
 ## Invocation modes
 
-| Mode | SKILL.md | openai.yaml |
-|---|---|---|
-| Agent-invoked (passive) | `description` present, no `disable-model-invocation` | `interface` only; implicit invocation defaults to allowed |
-| User-invoked (active) | `disable-model-invocation: true`, or the description states "explicitly invokes" | `policy.allow_implicit_invocation: false` |
+By default, both the model and the user can invoke a skill.
 
-`disable-model-invocation` is available on internal skills only: published skills are validated by the skill-creator validator, which accepts `name` and `description` alone, so a published user-invoked skill signals the mode in its `description`.
+| Mode | SKILL.md | Codex `openai.yaml` |
+|---|---|---|
+| Agent-invoked (passive) | `disable-model-invocation` absent | `interface` only; implicit invocation defaults to allowed |
+| User-invoked (active) | `disable-model-invocation: true` | `policy.allow_implicit_invocation: false` |
+
+## Per-agent metadata
+
+- Codex reads `agents/openai.yaml`: `interface.display_name`, `interface.short_description`, `interface.default_prompt`, and `policy.allow_implicit_invocation`.
+- Other agents read the standard `SKILL.md` frontmatter.
+
+Independent capabilities are agent-invoked and decoupled (published); deliberate flow steps are user-invoked and bound to this repository.
+
+## Sources
+
+- [Claude Code skills](https://code.claude.com/docs/en/skills)
+- [Agent Skills](https://agentskills.so)
+- [SKILL.md frontmatter reference](https://agentpatterns.ai/tool-engineering/skill-frontmatter-reference/)

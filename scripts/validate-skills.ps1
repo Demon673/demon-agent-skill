@@ -59,6 +59,7 @@ function Resolve-QuickValidate {
     )
 
     $candidates = @()
+    $candidates += (Join-Path $PSScriptRoot 'quick_validate.py')
 
     if ($ExplicitSkillCreatorRoot) {
         $candidates += (Join-Path $ExplicitSkillCreatorRoot 'scripts\quick_validate.py')
