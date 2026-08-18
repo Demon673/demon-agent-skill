@@ -1,4 +1,4 @@
 interface:
   display_name: "Roblox Luau Developer"
-  short_description: "Roblox Luau development workflow"
-  default_prompt: "Use $roblox-luau-developer when working on Roblox Luau code."
+  short_description: "Roblox Luau development, debugging, and Rojo workflow"
+  default_prompt: "Use $roblox-luau-developer when working on Roblox Luau code, debugging Roblox runtime issues, or syncing a Rojo project."

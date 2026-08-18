@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roblox TypeScript Developer"
+  short_description: "TypeScript-for-Roblox (roblox-ts) development workflow"
+  default_prompt: "Use $roblox-typescript-developer when working on a Roblox TypeScript (roblox-ts) project."

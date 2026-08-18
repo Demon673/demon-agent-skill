@@ -13,9 +13,8 @@
     "./skills/agent/trim-cot-leakage",
     "./skills/agent/workflow-capture",
     "./skills/dota2/dota2-custom-game-dev",
-    "./skills/roblox/roblox-gameplay-debugger",
     "./skills/roblox/roblox-luau-developer",
-    "./skills/roblox/roblox-rojo-workflow",
+    "./skills/roblox/roblox-typescript-developer",
     "./skills/unreal/unreal-blueprint-analyzer"
   ]
 }

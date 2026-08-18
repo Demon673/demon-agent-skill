@@ -38,7 +38,7 @@ Private learning material, long-term context, and session records do not belong 
 | Path | Purpose |
 |---|---|
 | `skills/agent/` | General agent workflow skills |
-| `skills/roblox/` | Roblox/Rojo/Luau workflow skills maintained by this repository |
+| `skills/roblox/` | Roblox Luau and TypeScript (roblox-ts) workflow skills maintained by this repository |
 | `skills/dota2/` | DOTA2 custom game development skills |
 | `skills/unreal/` | Read-only Unreal Blueprint analysis skills |
 
@@ -49,7 +49,7 @@ The repository follows a documentation standard ported from the official deepsee
 - Content documents and active Agent Notes are bilingual triplets (`foo.md` + `foo.zh.md` + `foo.i18n.yaml`, see [`docs/i18n/README.md`](docs/i18n/README.md)); `AGENTS.md` instruction files and `SKILL.md` stay English.
 - Decision records (Agent Notes) live under `.agents/notes/`, organized by `lifecycle/class/date-topic` (see [.agents/notes/README.md](.agents/notes/README.md)).
 - Incident post-mortems live under [`docs/postmortem/`](docs/postmortem/README.md); defensive patterns are in [`docs/defensive-patterns.md`](docs/defensive-patterns.md), domain vocabulary in [`docs/glossary.md`](docs/glossary.md), and translation style samples in [`docs/i18n/style-samples.md`](docs/i18n/style-samples.md).
-- `.agents/skills/` holds 3 internal maintenance skills (not published): `archive-agent-notes`, `repo-standards-review`, `translate-docs`.
+- `.agents/skills/` holds 4 internal maintenance skills (not published): `archive-agent-notes`, `find-simplifications`, `repo-standards-review`, `translate-docs`.
 
 ## Common commands
 
