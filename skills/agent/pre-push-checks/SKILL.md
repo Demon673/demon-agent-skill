@@ -5,7 +5,7 @@ description: Use before pushing, force-pushing, or marking a branch ready for re
 
 # Pre-push checks
 
-Run relevant local evidence once before a push. There is no universal local baseline; every change needs the narrowest check that would fail for its regression. CI owns exhaustive coverage and the platform matrix.
+Run relevant local evidence once before a push. Select the narrowest check that would fail for each regression; CI owns exhaustive coverage and the platform matrix.
 
 ## Inspect the outgoing change
 

@@ -1,6 +1,6 @@
 ---
 name: trim-cot-leakage
-description: Use when auditing or fixing prose that reads like a leaked reasoning transcript — dead design-session citations, change narration such as "used to" or "no longer", stack or review vantage, reviewer-addressed justification, control-flow narration, or hedged planning residue in docs, skill bodies, comments, or Agent Notes.
+description: Use when auditing or fixing prose that reads like a leaked reasoning transcript — dead session citations, change narration, review residue, or hedged planning in docs, skill bodies, comments, or Agent Notes.
 ---
 
 # Trimming Chain-of-Thought Leakage
