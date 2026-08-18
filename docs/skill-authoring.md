@@ -35,19 +35,19 @@ skill-name/
 
 ## Invocation modes
 
-By default, both the model and the user can invoke a skill.
+By default both the model and the user can invoke a skill: the `description` lets the model auto-fire it, and the user can also type its name. There is one flag:
 
 | Mode | SKILL.md | Codex `openai.yaml` |
 |---|---|---|
-| Agent-invoked (passive) | `disable-model-invocation` absent | `interface` only; implicit invocation defaults to allowed |
-| User-invoked (active) | `disable-model-invocation: true` | `policy.allow_implicit_invocation: false` |
+| Default (model and user) | `disable-model-invocation` absent | `interface` only; implicit invocation allowed |
+| User-only (model does not auto-fire) | `disable-model-invocation: true` | `policy.allow_implicit_invocation: false` |
+
+Mark `disable-model-invocation: true` only for deliberate commands or destructive operations the model must never fire on its own; capabilities stay default.
 
 ## Per-agent metadata
 
 - Codex reads `agents/openai.yaml`: `interface.display_name`, `interface.short_description`, `interface.default_prompt`, and `policy.allow_implicit_invocation`.
 - Other agents read the standard `SKILL.md` frontmatter.
-
-Independent capabilities are agent-invoked and decoupled (published); deliberate flow steps are user-invoked and bound to this repository.
 
 ## Sources
 

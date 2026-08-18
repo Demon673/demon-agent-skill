@@ -28,7 +28,7 @@ This repository is a public Agent skills source repository. Treat it as the sour
 - Every non-trivial change adds or updates an Agent Note under `.agents/notes/` ([rules](.agents/notes/README.md)).
 - Content docs under `docs/` and active Agent Notes are bilingual triplets (`foo.md` + `foo.zh.md` + `foo.i18n.yaml`); `AGENTS.md` and `SKILL.md` stay English-only ([i18n](docs/i18n/README.md)).
 - Use these skills for prose and review: [prose-standard](skills/agent/prose-standard/SKILL.md), [repo-standards-review](.agents/skills/repo-standards-review/SKILL.md).
-- Independent capabilities are agent-invoked and decoupled (published); deliberate flow steps are user-invoked (`disable-model-invocation: true`) and bound to this repository.
+- Capabilities stay default (model and user can both invoke) and decouple (published); deliberate commands and destructive operations are user-only (`disable-model-invocation: true`) and bound to this repository.
 
 ## Validation
 

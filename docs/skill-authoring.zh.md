@@ -35,19 +35,19 @@ skill-name/
 
 ## 调用模式
 
-默认情况下，模型和用户都能调用一个 skill。
+默认情况下，模型和用户都能调用一个 skill：`description` 让模型自动触发，用户也能输入其名字。只有一个标志：
 
 | 模式 | SKILL.md | Codex `openai.yaml` |
 |---|---|---|
-| Agent 调用（被动） | 无 `disable-model-invocation` | 仅 `interface`；隐式调用默认允许 |
-| 用户调用（主动） | `disable-model-invocation: true` | `policy.allow_implicit_invocation: false` |
+| 默认（模型和用户） | 无 `disable-model-invocation` | 仅 `interface`；隐式调用允许 |
+| 用户专属（模型不自动触发） | `disable-model-invocation: true` | `policy.allow_implicit_invocation: false` |
+
+仅在「刻意的命令或破坏性操作、模型绝不能自行触发」时标 `disable-model-invocation: true`；能力保持默认。
 
 ## 各 agent 元数据
 
 - Codex 读取 `agents/openai.yaml`：`interface.display_name`、`interface.short_description`、`interface.default_prompt`、`policy.allow_implicit_invocation`。
 - 其他 agent 读取标准 `SKILL.md` frontmatter。
-
-独立能力是 agent 调用且解耦（发布）；刻意的流程步骤是用户调用且绑定本仓库。
 
 ## 来源
 
