@@ -2,6 +2,3 @@ interface:
   display_name: "Repo Standards Review"
   short_description: "Review this repository against its standards"
   default_prompt: "Use $repo-standards-review to review this repository's changes against its standards."
-
-policy:
-  allow_implicit_invocation: false

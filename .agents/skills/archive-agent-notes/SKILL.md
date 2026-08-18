@@ -1,7 +1,6 @@
 ---
 name: archive-agent-notes
 description: Use when adding, pruning, archiving, restoring, or reviewing Agent Notes — checking new notes for superseded active records, classifying implemented notes by future decision value, deleting rejected notes that no longer prevent a tempting mistake, and moving low-value notes to the frozen archive.
-disable-model-invocation: true
 ---
 
 # Archiving Agent Notes

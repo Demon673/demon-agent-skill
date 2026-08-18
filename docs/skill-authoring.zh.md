@@ -42,7 +42,7 @@ skill-name/
 | 默认（模型和用户） | 无 `disable-model-invocation` | 仅 `interface`；隐式调用允许 |
 | 用户专属（模型不自动触发） | `disable-model-invocation: true` | `policy.allow_implicit_invocation: false` |
 
-仅在「刻意的命令或破坏性操作、模型绝不能自行触发」时标 `disable-model-invocation: true`；能力保持默认。
+`disable-model-invocation: true` 也会使 skill 对其他 skill 不可触达，因此被其他 skill 触发的流程步骤必须保持默认。仅在「模型绝不能自动触发、且没有其他 skill 需要触达它」时标它。
 
 ## 各 agent 元数据
 

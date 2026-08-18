@@ -1,7 +1,6 @@
 ---
 name: repo-standards-review
 description: Review a pull request or a branch in this repository against its standards — skill frontmatter and body, docs and bilingual pairs, Agent Notes, and scripts — and report blockers separately from suggestions, prioritizing correctness and required behavior over style.
-disable-model-invocation: true
 ---
 
 # Reviewing this repository against its standards

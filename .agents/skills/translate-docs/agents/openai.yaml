@@ -2,6 +2,3 @@ interface:
   display_name: "Translate Docs"
   short_description: "Maintain the bilingual documentation pairs"
   default_prompt: "Use $translate-docs to maintain the bilingual documentation pairs."
-
-policy:
-  allow_implicit_invocation: false

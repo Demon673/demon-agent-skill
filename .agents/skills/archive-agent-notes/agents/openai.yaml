@@ -2,6 +2,3 @@ interface:
   display_name: "Archive Agent Notes"
   short_description: "Audit and freeze low-value Agent Notes"
   default_prompt: "Use $archive-agent-notes to audit Agent Notes and archive low-future-value records."
-
-policy:
-  allow_implicit_invocation: false

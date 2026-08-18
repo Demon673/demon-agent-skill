@@ -1,7 +1,6 @@
 ---
 name: find-simplifications
 description: Use to find non-obvious simplification candidates in this repository's skills and docs — dead, duplicated, speculative, or over-built surface — and turn the worthwhile ones into proposed Agent Notes or inline TODO markers instead of a pile of thin guesses.
-disable-model-invocation: true
 ---
 
 # Finding simplifications
@@ -55,7 +54,7 @@ Create one file per durable proposal under `.agents/notes/proposed/{class}/yyyy-
 
 ## Coalesce superseded notes
 
-When a simplification makes an owning note obsolete, use [archive-agent-notes](../archive-agent-notes/SKILL.md) for retention judgment. A fully superseded note is consolidated into the current owner after its unique rationale, alternatives, and consequences are preserved and inbound links repaired; a partial supersession keeps both notes cross-linked.
+When a simplification makes an owning note obsolete, run [archive-agent-notes](../archive-agent-notes/SKILL.md) to classify and archive the superseded records. A fully superseded note is consolidated into the current owner after its unique rationale, alternatives, and consequences are preserved and inbound links repaired; a partial supersession keeps both notes cross-linked.
 
 ## Validation
 

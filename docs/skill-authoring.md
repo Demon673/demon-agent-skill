@@ -42,7 +42,7 @@ By default both the model and the user can invoke a skill: the `description` let
 | Default (model and user) | `disable-model-invocation` absent | `interface` only; implicit invocation allowed |
 | User-only (model does not auto-fire) | `disable-model-invocation: true` | `policy.allow_implicit_invocation: false` |
 
-Mark `disable-model-invocation: true` only for deliberate commands or destructive operations the model must never fire on its own; capabilities stay default.
+`disable-model-invocation: true` also makes a skill unreachable by other skills, so a flow step that another skill fires must stay default. Mark it only for a skill the model must never auto-fire and that no other skill needs to reach.
 
 ## Per-agent metadata
 
