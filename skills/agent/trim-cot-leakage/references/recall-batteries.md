@@ -4,8 +4,8 @@ Probes for [the taxonomy](../SKILL.md#taxonomy). Every hit needs semantic judgme
 
 ## Invocation rules
 
-- Add `--hidden --glob '!.git/**'` so `.agents/` is searched; ripgrep skips dot-directories by default.
-- Put exclusions last so a later include cannot re-admit them: `--glob '!.agents/notes/archived/**' --glob '!.agents/skills/trim-cot-leakage/**'` (the skill's own files quote leaked wording as calibration).
+- Add `--hidden --glob '!.git/**'` so hidden directories (such as `.agents/`) are searched; ripgrep skips dot-directories by default.
+- Put exclusions last so a later include cannot re-admit them: exclude frozen archived notes and the skill's own directory (its files quote leaked wording as calibration).
 - Natural-language lines carry `-i` so sentence-initial capitals hit; the first line, which matches code patterns, stays case-sensitive.
 - A zero-hit pattern proves nothing until you have seen it match: test it against a known-positive string before trusting the negative.
 

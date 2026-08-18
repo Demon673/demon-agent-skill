@@ -1,11 +1,11 @@
 ---
 name: prose-standard
-description: Use when writing, reviewing, restoring, trimming, or auditing prose in this repository — deciding where documentation or comments are required across Markdown, skill frontmatter and bodies, comments, prompts, descriptions, and strings, and preserving complete contracts while removing reasoning transcripts and repetition.
+description: Use when writing, reviewing, restoring, trimming, or auditing prose — deciding where documentation or comments are required across Markdown, skill frontmatter and bodies, comments, prompts, descriptions, and strings, and preserving complete contracts while removing reasoning transcripts and repetition.
 ---
 
 # Prose Standard
 
-Write enough to preserve the contract, then remove reasoning transcripts, repetition, and decoration. A **contract** is an obligation, invariant, precondition, postcondition, or promise that a caller, reader, or maintainer relies on. This skill owns editorial judgment and required prose coverage; use [doc-standards](../doc-standards/SKILL.md) for placement and budgets, and [trim-cot-leakage](../trim-cot-leakage/SKILL.md) for reasoning-transcript leakage. It is guidance, not a script.
+Write enough to preserve the contract, then remove reasoning transcripts, repetition, and decoration. A **contract** is an obligation, invariant, precondition, postcondition, or promise that a caller, reader, or maintainer relies on. This skill owns editorial judgment and required prose coverage. Placement and budgets follow the repository's own documentation standard; reasoning-transcript leakage — dead session citations, change narration, review choreography, hedges — is a separate audit with its own taxonomy. It is guidance, not a script.
 
 ## Inputs and exclusions
 
@@ -13,7 +13,7 @@ Require an explicit `scope`. If it is missing, report the required input and sto
 
 Accept `mode: automatic | interactive`; default to `automatic`. `mode` controls questions, not write authority: review and audit tasks report findings without editing; explicitly requested write or trim tasks apply changes.
 
-Always exclude `.agents/notes/archived/` from review and edits. Archived notes are frozen snapshots; inspect an exact target only to understand a historical inbound citation, never to modernize its prose.
+Always exclude frozen archived notes from review and edits. Archived notes are frozen snapshots; inspect an exact target only to understand a historical inbound citation, never to modernize its prose.
 
 ## Preserve the complete proposition
 
@@ -44,10 +44,10 @@ Preserve searchable mechanism names and meaningful modal, temporal, or negative 
 ## Workflow
 
 1. Confirm scope, mode, and the applicable `AGENTS.md` files.
-2. Read [the documentation standard](../../../docs/AGENTS.md) and the owning doc or code before judging a passage. For calibration, read [the distilled examples](references/examples.md).
+2. Read your repository's documentation standard and the owning doc or code before judging a passage. For calibration, read [the distilled examples](references/examples.md).
 3. Inspect the requested scope, not only the largest files. Use searches and word counts to find candidates, then judge passages semantically.
 4. Classify each candidate as keep, add, trim, restore, restructure, or defer. Apply changes only when the task authorizes edits.
-5. Run `npm run doc-gates` and `git diff --check`, plus `.\scripts\validate-skills.ps1` for any changed skill. Report the inspected scope, changes, deliberate keeps, deferred cases, and checks run.
+5. Run your repository's documentation and skill checks, plus `git diff --check`. Report the inspected scope, changes, deliberate keeps, deferred cases, and checks run.
 
 ## Borderline decisions
 

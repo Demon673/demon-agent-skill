@@ -1,9 +1,9 @@
 ---
-name: code-review
+name: repo-standards-review
 description: Review a pull request or a branch in this repository against its standards — skill frontmatter and body, docs and bilingual pairs, Agent Notes, and scripts — and report blockers separately from suggestions, prioritizing correctness and required behavior over style.
 ---
 
-# Reviewing a PR
+# Reviewing this repository against its standards
 
 **This skill is guidance, not a complete checklist.** Verify the PR's live base and head, then read the diff and enough surrounding context to understand the design before judging. A short review with one substantiated blocker beats a list of nits.
 
@@ -11,13 +11,13 @@ description: Review a pull request or a branch in this repository against its st
 
 - Root [AGENTS.md](../../../AGENTS.md): skill authoring, validation, and quality-gate rules.
 - [docs/AGENTS.md](../../../docs/AGENTS.md): documentation placement and prose discipline.
-- [prose-standard](../prose-standard/SKILL.md): required coverage and editorial judgment.
+- [prose-standard](../../../skills/agent/prose-standard/SKILL.md): required coverage and editorial judgment.
 - [.agents/notes/README.md](../../../.agents/notes/README.md): Agent Note format and scope. Treat disagreement with a note as a design discussion, not an automatic veto.
 - [docs/i18n/README.md](../../../docs/i18n/README.md) and [terminology.md](../../../docs/i18n/terminology.md): bilingual pairing and terminology.
 
 ## Blocking requirements
 
-1. **New prose receives semantic review.** Critically review every added or changed `SKILL.md`, description, doc, Agent Note, and comment with [prose-standard](../prose-standard/SKILL.md). Automated checks do not establish coverage, accuracy, or placement.
+1. **New prose receives semantic review.** Critically review every added or changed `SKILL.md`, description, doc, Agent Note, and comment with [prose-standard](../../../skills/agent/prose-standard/SKILL.md). Automated checks do not establish coverage, accuracy, or placement.
 2. **Skills follow the layout and manifest.** A new skill has a valid `name` (hyphen-case) and a trigger-focused `description`; it is listed in [.claude-plugin/plugin.json](../../../.claude-plugin/plugin.json); and its install name is unique across categories. Flag platform-specific metadata, runtime branding, and hard local paths unless justified.
 3. **Bilingual pairs update together.** A change to either side of a pair updates the counterpart and keeps both switcher lines; `npm run doc-gates` is green. A green pairing check does not prove translation quality.
 4. **Every non-trivial change carries an Agent Note** in the same diff, updated to shipped present-tense state when a proposal is implemented.

@@ -19,9 +19,9 @@ Confirm the checkout, branch, and the files the diff actually touches.
 
 ## Select relevant evidence
 
-- **Skill changes** (new `SKILL.md`, frontmatter, body, or manifest): run `.\scripts\validate-skills.ps1`, or on non-Windows run the skill-creator `quick_validate.py` against each changed skill directory. Confirm [.claude-plugin/plugin.json](../../../.claude-plugin/plugin.json) lists every skill.
-- **Docs or Agent Notes**: run `npm run doc-gates` for the documentation gates (pairing, notes, budgets, links, wrap, archive).
-- **Bilingual pairs**: a change to either side updates the counterpart, then re-record with `node scripts/verify-translation-pairing.mjs --write <pair>`; the pairing gate is green.
+- **Skill changes** (new `SKILL.md`, frontmatter, body, or manifest): run your repository's skill validator against each changed skill directory, and confirm the skill manifest lists every skill.
+- **Docs or decision records**: run your repository's documentation checks (pairing, note format, budgets, links, wrap, archive).
+- **Bilingual pairs**: a change to either side updates the counterpart, then re-record the pair with your repository's pairing check; the pairing gate is green.
 - **Whitespace and layout**: `git diff --check`.
 
 Do not repeat a passing check merely because a commit or push follows. Do not run a broader suite for a change that only touches one skill or one doc.

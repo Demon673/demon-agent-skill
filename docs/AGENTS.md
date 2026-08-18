@@ -1,6 +1,6 @@
 # AGENTS.md — The documentation standard
 
-This file defines document structure, writing rules, and the one-home-per-fact taxonomy for this repository. Use [`doc-standards`](../.agents/skills/doc-standards/SKILL.md) for placement and validation, and [`prose-standard`](../.agents/skills/prose-standard/SKILL.md) for required coverage and editorial judgment. Agent Notes ([.agents/notes/README.md](../.agents/notes/README.md)) carry decision rationale; they follow their own format but obey the writing rules below.
+This file defines document structure, writing rules, and the one-home-per-fact taxonomy for this repository. Use [`doc-standards`](../.agents/skills/doc-standards/SKILL.md) for placement and validation, and [`prose-standard`](../skills/agent/prose-standard/SKILL.md) for required coverage and editorial judgment. Agent Notes ([.agents/notes/README.md](../.agents/notes/README.md)) carry decision rationale; they follow their own format but obey the writing rules below.
 
 ## Document structure
 
@@ -36,7 +36,7 @@ Placement: rationale → Agent Notes; procedures → the owning skill or README;
 - **Document current state, not change history.** Avoid "previously / now / no longer", PR numbers, and stack positions in durable prose; name the live mechanism. Put change stories in commits, PRs, or Agent Notes.
 - **Every non-trivial change adds or updates at least one Agent Note in the same PR.** Only purely mechanical or local edits are exempt ([scope](../.agents/notes/README.md#when-to-write-one)).
 - **One physical line per paragraph** (`git diff --check`): use editor soft-wrap. Code blocks, tables, and list structure keep their formatting.
-- **Comments and descriptions state contracts, not reasoning transcripts.** Preserve behavior, failure, timing, ownership, modality, exceptions, and consequences; delete narration, walkthroughs, and code restatement. Use [`prose-standard`](../.agents/skills/prose-standard/SKILL.md) for details.
+- **Comments and descriptions state contracts, not reasoning transcripts.** Preserve behavior, failure, timing, ownership, modality, exceptions, and consequences; delete narration, walkthroughs, and code restatement. Use [`prose-standard`](../skills/agent/prose-standard/SKILL.md) for details.
 - **Write directly.** Name actors and facts. Reserve emphasis for the clause that changes behavior. Prefer the exact check, file, or rule over a metaphor.
 - **Cross-reference with relative Markdown links**, never bare filenames or note numbers.
 

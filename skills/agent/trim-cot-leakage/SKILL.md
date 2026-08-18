@@ -5,7 +5,7 @@ description: Use when auditing or fixing prose that reads like a leaked reasonin
 
 # Trimming Chain-of-Thought Leakage
 
-Chain-of-thought leakage is prose whose vantage is the authoring session rather than the repository: it cites artifacts only that session could see, narrates the change instead of the state, or argues with a reviewer who has left. The fix is never deletion alone when a passage carries factual clauses — restate each so it stands on its own, then delete the transcript around it; a passage carrying none is deleted outright. **Required background:** [prose-standard](../prose-standard/SKILL.md) owns the complete-proposition rule this skill applies. It is guidance, not a script.
+Chain-of-thought leakage is prose whose vantage is the authoring session rather than the repository: it cites artifacts only that session could see, narrates the change instead of the state, or argues with a reviewer who has left. The fix is never deletion alone when a passage carries factual clauses — restate each so it stands on its own, then delete the transcript around it; a passage carrying none is deleted outright. **Before editing, enumerate the complete proposition:** preserve each actor, action, condition, timing, modality, negative guarantee, exception, ownership, side effect, failure mode, and consequence. It is guidance, not a script.
 
 ## The one test
 
@@ -33,8 +33,8 @@ For every suspect passage ask: **could a reader with no access to any session tr
 
 ## Workflow
 
-1. Require an explicit scope. Never touch `.agents/notes/archived/`; sealed history keeps its original voice.
+1. Require an explicit scope. Never touch frozen archived notes; sealed history keeps its original voice.
 2. Audit read-only first: run the [recall batteries](references/recall-batteries.md), then judge every hit semantically. The batteries over-match by design and under-match by nature — also read the densest prose in scope without a pattern in hand.
 3. Fix owner-first: for a bilingual pair, update the counterpart; for a generated or manifest-listed surface, fix the source.
 4. Before deleting anything, enumerate the passage's propositions and check the [overcorrection traps](references/examples.md).
-5. Verify: re-run the batteries expecting only sanctioned keeps, confirm every remaining citation resolves, and run `npm run doc-gates` for touched docs.
+5. Verify: re-run the batteries expecting only sanctioned keeps, confirm every remaining citation resolves, and run your repository's documentation checks for touched docs.

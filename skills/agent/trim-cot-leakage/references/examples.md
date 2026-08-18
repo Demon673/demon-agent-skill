@@ -8,7 +8,7 @@ Use them to identify the governing principle, not as text templates. This file d
 
 **Leaked:** "Skill names flatten on install (decision 7)."
 
-**Fixed:** "Skill names flatten on install — see the [Agent Note rules](../../../../.agents/notes/README.md#layout-and-naming)."
+**Fixed:** "Skill names flatten on install — the flat-install rule in the skill-manifest documentation."
 
 The ordinal resolves nowhere; the owning doc's name and path do.
 

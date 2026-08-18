@@ -5,7 +5,7 @@ description: Use when writing, moving, reviewing, or auditing documentation in t
 
 # Applying the Documentation Standard
 
-The rules live in [docs/AGENTS.md](../../../docs/AGENTS.md). This workflow covers placement, corpus audits, and validation across Markdown, skill frontmatter, and Agent Notes. It is guidance, not a script; use [prose-standard](../prose-standard/SKILL.md) for required coverage and editorial judgment, and never treat length alone as a defect.
+The rules live in [docs/AGENTS.md](../../../docs/AGENTS.md). This workflow covers placement, corpus audits, and validation across Markdown, skill frontmatter, and Agent Notes. It is guidance, not a script; use [prose-standard](../../../skills/agent/prose-standard/SKILL.md) for required coverage and editorial judgment, and never treat length alone as a defect.
 
 ## Sources of truth (read, don't re-summarize)
 
@@ -35,7 +35,7 @@ Then check constraints that make placement expensive:
 Hunt the slop checklist with the cheapest probes first:
 
 1. Measure: `git ls-files '*.md' | xargs wc -w | sort -rn | head -30` to spot unbudgeted outliers.
-2. Hunt reasoning-transcript leakage with [trim-cot-leakage](../trim-cot-leakage/SKILL.md).
+2. Hunt reasoning-transcript leakage with [trim-cot-leakage](../../../skills/agent/trim-cot-leakage/SKILL.md).
 3. Hunt duplication by grepping distinctive phrases; keep one home and link the rest.
 4. Replace hand-written inventories with the authoritative tree or script.
 5. In `implemented/` Agent Notes, remove migration plans, acceptance checklists, and future-tense spec language; keep the verification contract and named coverage gaps.

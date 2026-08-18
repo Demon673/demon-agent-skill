@@ -37,7 +37,7 @@ Translate the whole file into the other language, section by section, keeping ea
 
 - [docs/i18n/README.md](../../../docs/i18n/README.md) — the pairing contract, switchers, scope, and exclusions.
 - [docs/i18n/terminology.md](../../../docs/i18n/terminology.md) — the terminology table, binding in both directions. Load it before translating, not when a term feels uncertain.
-- [prose-standard](../prose-standard/SKILL.md) — apply it to both sides without adding or dropping source propositions.
+- [prose-standard](../../../skills/agent/prose-standard/SKILL.md) — apply it to both sides without adding or dropping source propositions.
 
 ### Translate
 
