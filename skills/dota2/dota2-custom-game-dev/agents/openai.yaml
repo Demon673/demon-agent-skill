@@ -1,0 +1,4 @@
+interface:
+  display_name: "DOTA2 Custom Game Dev"
+  short_description: "Develop DOTA2 custom game addons"
+  default_prompt: "Use $dota2-custom-game-dev when working on DOTA2 custom game addons."

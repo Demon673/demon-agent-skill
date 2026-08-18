@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unreal Blueprint Analyzer"
+  short_description: "Read-only analysis of Unreal Blueprint assets"
+  default_prompt: "Use $unreal-blueprint-analyzer to inspect and understand Unreal Blueprint assets."

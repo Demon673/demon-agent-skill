@@ -1,0 +1,4 @@
+interface:
+  display_name: "Context Curator"
+  short_description: "Curate durable context from conversation with confirmation"
+  default_prompt: "Use $context-curator to curate durable context from the conversation with explicit confirmation."

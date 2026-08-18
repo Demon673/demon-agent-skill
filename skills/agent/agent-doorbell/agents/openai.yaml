@@ -1,0 +1,7 @@
+interface:
+  display_name: "Agent Doorbell"
+  short_description: "Install or remove desktop/audio reminders for agent stop and attention"
+  default_prompt: "Use $agent-doorbell to configure the automatic agent doorbell hooks."
+
+policy:
+  allow_implicit_invocation: false

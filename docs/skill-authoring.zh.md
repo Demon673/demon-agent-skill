@@ -15,6 +15,8 @@
 | 模式 | SKILL.md | openai.yaml |
 |---|---|---|
 | Agent 调用（被动） | 有 `description`，无 `disable-model-invocation` | 仅 `interface`；隐式调用默认允许 |
-| 用户调用（主动） | `disable-model-invocation: true` | `policy.allow_implicit_invocation: false` |
+| 用户调用（主动） | `disable-model-invocation: true`，或 description 里写明 "explicitly invokes" | `policy.allow_implicit_invocation: false` |
+
+`disable-model-invocation` 仅在内部 skill 可用：发布 skill 由 skill-creator 校验器校验，只接受 `name` 和 `description`，因此发布的用户调用型 skill 在 `description` 里表达该模式。
 
 独立能力是 agent 调用且解耦（发布）；刻意的流程步骤是用户调用且绑定本仓库。

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workflow Capture"
+  short_description: "Capture a repeated workflow into a reusable artifact"
+  default_prompt: "Use $workflow-capture to capture a repeated workflow into the right reusable artifact."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roblox Rojo Workflow"
+  short_description: "Roblox Rojo project workflow"
+  default_prompt: "Use $roblox-rojo-workflow when working on a Roblox Rojo project."

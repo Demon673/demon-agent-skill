@@ -15,6 +15,6 @@ A skill is two files: the workflow in `SKILL.md`, and the mainstream-agent metad
 | Mode | SKILL.md | openai.yaml |
 |---|---|---|
 | Agent-invoked (passive) | `description` present, no `disable-model-invocation` | `interface` only; implicit invocation defaults to allowed |
-| User-invoked (active) | `disable-model-invocation: true` | `policy.allow_implicit_invocation: false` |
+| User-invoked (active) | `disable-model-invocation: true`, or the description states "explicitly invokes" | `policy.allow_implicit_invocation: false` |
 
-Independent capabilities are agent-invoked and decoupled (published); deliberate flow steps are user-invoked and bound to this repository.
+`disable-model-invocation` is available on internal skills only: published skills are validated by the skill-creator validator, which accepts `name` and `description` alone, so a published user-invoked skill signals the mode in its `description`.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roblox Gameplay Debugger"
+  short_description: "Diagnose Roblox gameplay and runtime issues"
+  default_prompt: "Use $roblox-gameplay-debugger to diagnose Roblox gameplay and runtime issues."

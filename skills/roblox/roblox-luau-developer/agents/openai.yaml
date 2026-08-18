@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roblox Luau Developer"
+  short_description: "Roblox Luau development workflow"
+  default_prompt: "Use $roblox-luau-developer when working on Roblox Luau code."
