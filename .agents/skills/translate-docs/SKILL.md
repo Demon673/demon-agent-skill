@@ -1,6 +1,7 @@
 ---
 name: translate-docs
 description: Use when maintaining the English ↔ Simplified Chinese bilingual documentation pairs in this repository — writing a new counterpart, applying a minimal update to keep an existing pair in sync, or verifying pair consistency after an edit.
+disable-model-invocation: true
 ---
 
 # Translating documentation

@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-把两者融合为一个发布、自包含的 [`find-simplifications`](../../../../skills/agent/find-simplifications/SKILL.md)，放在 `skills/agent/` 下：它 survey 代码、文档和 skill，用消费方证据证明或否决每个候选，并把提案记录到宿主仓库的决策记录系统或行内 `TODO(tag)` 标记。删除内部 `doc-standards`；它的定位与预算规则保留在 `docs/AGENTS.md` 里，根 `AGENTS.md` 已指向该文件。
+把两者融合为一个发布、自包含的 [`find-simplifications`](../../../../.agents/skills/find-simplifications/SKILL.md)，放在 `skills/agent/` 下：它 survey 代码、文档和 skill，用消费方证据证明或否决每个候选，并把提案记录到宿主仓库的决策记录系统或行内 `TODO(tag)` 标记。删除内部 `doc-standards`；它的定位与预算规则保留在 `docs/AGENTS.md` 里，根 `AGENTS.md` 已指向该文件。
 
 ## 备选方案
 
