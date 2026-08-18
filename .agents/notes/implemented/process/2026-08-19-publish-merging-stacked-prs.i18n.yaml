@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-19-publish-merging-stacked-prs.md
+2026-08-19-publish-merging-stacked-prs.md: da5855a03000e40dab2ecac2fa42a63a12297991
+2026-08-19-publish-merging-stacked-prs.zh.md: 34a8332df4e469601abfc32597cbbe33ffce0702
