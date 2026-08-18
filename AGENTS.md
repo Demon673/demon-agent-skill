@@ -18,7 +18,7 @@ This repository is a public Agent skills source repository. Treat it as the sour
 - Write `SKILL.md` in English by default. Frontmatter: `name` (hyphen-case) and `description` (behavior-based, trigger-focused — the discovery surface) are required; `license`, `allowed-tools`, `metadata`, `disable-model-invocation`, `user-invocable` are optional standard fields.
 - Keep `SKILL.md` concise; move detailed, conditional, or platform-specific material into `references/`, loaded only when the skill fires.
 - Invocation defaults to both model and user; `disable-model-invocation: true` makes a skill user-only and unreachable by other skills, so a flow step another skill fires stays default.
-- `agents/openai.yaml` is optional, Codex-only metadata; add it only when a skill must target Codex.
+- Each skill carries `agents/openai.yaml` (Codex metadata) beside `SKILL.md`.
 - Do not add auxiliary documentation inside a skill folder unless it directly supports the skill at runtime.
 - Prefer existing repository patterns over inventing a new skill layout.
 
