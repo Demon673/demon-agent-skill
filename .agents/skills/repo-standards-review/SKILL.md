@@ -12,6 +12,7 @@ description: Review a pull request or a branch in this repository against its st
 - Root [AGENTS.md](../../../AGENTS.md): skill authoring, validation, and quality-gate rules.
 - [docs/AGENTS.md](../../../docs/AGENTS.md): documentation placement and prose discipline.
 - [prose-standard](../../../skills/agent/prose-standard/SKILL.md): required coverage and editorial judgment.
+- [trim-cot-leakage](../../../skills/agent/trim-cot-leakage/SKILL.md) and [prune-prompt-pollution](../../../skills/agent/prune-prompt-pollution/SKILL.md): reasoning-transcript and prompt-pollution smells respectively.
 - [.agents/notes/README.md](../../../.agents/notes/README.md): Agent Note format and scope. Treat disagreement with a note as a design discussion, not an automatic veto.
 - [docs/i18n/README.md](../../../docs/i18n/README.md) and [terminology.md](../../../docs/i18n/terminology.md): bilingual pairing and terminology.
 
@@ -34,4 +35,4 @@ description: Review a pull request or a branch in this repository against its st
 
 ## Reporting findings
 
-State the defect, location, impact, and evidence. Separate blockers from suggestions and omit issues a green check already enforces. When receiving review, verify each claim and fix or rebut it on technical grounds without performative agreement.
+State the defect, location, impact, and evidence. Separate blockers from suggestions and omit issues a green check already enforces. When receiving review, verify each claim and fix or rebut it on technical grounds without performative agreement. When the review surfaces dead, duplicated, speculative, or over-built surface, hand those candidates to [find-simplifications](../find-simplifications/SKILL.md) to turn them into proposed Agent Notes or `TODO(tag)` markers.

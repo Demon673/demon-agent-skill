@@ -52,6 +52,8 @@ For documentation and Agent Note changes, run:
 npm run doc-gates
 ```
 
+For a semantic review of a non-trivial change (skill bodies, docs, notes), run [repo-standards-review](.agents/skills/repo-standards-review/SKILL.md) before pushing.
+
 ## Quality Gate
 
 When creating or updating a skill, inspect the changed skill for local paths, platform-specific metadata, runtime branding, and strong cross-skill dependencies before finishing:

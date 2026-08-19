@@ -31,6 +31,8 @@ Do not archive toward a quota. Inspect every note in scope, classify analogous g
 2. Make no body edits. Insert only `Archived: YYYY-MM-DD` immediately below `Status: implemented` in both files, using the same date on both sides.
 3. Search for inbound links from active prose. Redirect them to current authority, retarget them to the archived path only when the historical snapshot is intentionally cited, or delete them. Never verify or repair links out of the archived note.
 
+When inbound-link repair edited an active bilingual doc, hand the counterpart update to [translate-docs](../translate-docs/SKILL.md) so both sides stay in sync before the pairing gate.
+
 After the pair is sealed, never edit, move, translate, reformat, or delete it. Archived notes remain valid inbound-link targets but are historical snapshots, not authority for current behavior.
 
 ## Validate and report
