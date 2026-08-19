@@ -15,10 +15,10 @@ Fuse the two into one published, self-contained [`find-simplifications`](../../.
 ## Alternatives considered
 
 - **Keep both, publish only find-simplifications.** Rejected: `doc-standards` is a thin wrapper over `docs/AGENTS.md`, and two overlapping maintenance skills is the packaging this note replaces.
-- **Keep `doc-standards` internal and drop find-simplifications.** Rejected: the survey-and-prove workflow is the valuable half, and it is general; the doc-side means fold cleanly into it.
+- **Keep `doc-standards` internal and drop find-simplifications.** Rejected: the survey-and-prove workflow is the valuable half, and it is general; the doc-side means already live in `docs/AGENTS.md` (the tier taxonomy and slop checklist) and in `prose-standard` and `trim-cot-leakage`, so `doc-standards` would only duplicate them.
 
 ## Consequences
 
 - The published manifest grows from 16 to 17 skills; the internal set shrinks from 5 to 3.
 - One coherent general "find simplifications" skill spans code, docs, and skills, with no cross-references.
-- Documentation placement and budgets are governed directly by `docs/AGENTS.md`, not by a wrapper skill.
+- Documentation placement and budgets are governed directly by `docs/AGENTS.md`, not by a wrapper skill; the doc-side means stay in the `docs/AGENTS.md` tier taxonomy and slop checklist plus `prose-standard` and `trim-cot-leakage`.

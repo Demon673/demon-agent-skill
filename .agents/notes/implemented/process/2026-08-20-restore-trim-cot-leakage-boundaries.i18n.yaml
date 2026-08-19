@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-20-restore-trim-cot-leakage-boundaries.md
+2026-08-20-restore-trim-cot-leakage-boundaries.md: 29dcda5dbd80853b2e9d8c7a76d0e56d8bf191e1
+2026-08-20-restore-trim-cot-leakage-boundaries.zh.md: 1e226cb926454883a80a44ccb3d13b36ef3bcdd9

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Record Browser GIF"
+  short_description: "Record browser or Web UI interaction demos as optimized GIFs"
+  default_prompt: "Use $record-browser-gif to record a browser or Web UI interaction demo as an optimized GIF."

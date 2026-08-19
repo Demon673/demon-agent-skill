@@ -11,7 +11,7 @@ Every Agent Note has two axes, both encoded in its **path** — `{lifecycle}/{cl
 - **Lifecycle** (the top-level folder) is the note's status, and a note moves between folders as that status changes:
   - **`proposed/`** — proposals reviewed before implementation; not yet built (or only partly).
   - **`implemented/`** — the decision shipped. The file records what was decided and what was rejected, and is **kept current with what actually shipped**: when the repo later renames a skill or changes a default, the note is updated in the same change to match (facts only — paths, names, defaults — not the decision itself). See [implemented/AGENTS.md](implemented/AGENTS.md).
-  - **`rejected/`** — the proposal was considered and declined. Keep it only while its rationale prevents a tempting, meaningful mistake; otherwise delete the complete pair.
+  - **`rejected/`** — the proposal was considered and declined. Keep it only while its rationale prevents a tempting, meaningful mistake; otherwise delete the complete triplet.
 - **Class** (the nested folder) is the kind of decision — see the Classification section below.
 
 The date in the filename is when the topic was **first proposed**. Cross-references use relative Markdown links, never bare prose or note numbers, so they are checkable and survive moves between folders. Do not add a centralized index; browse the lifecycle/class folders.
@@ -33,7 +33,7 @@ The `architecture` / `process` line: **architecture** is about the repo's struct
 
 ## Archiving and deletion
 
-Archive an implemented note when the shipped decision is complete and its rationale is unlikely to guide future work. Keep it active when its alternatives, ownership boundary, negative guarantee, or reintroduction condition remains useful. Never archive a proposed note: reject an obsolete proposal. Keep a rejected note only while it prevents a plausible mistake; otherwise delete its English and Chinese files together. Use [`archive-agent-notes`](../../skills/agent/archive-agent-notes/SKILL.md) rather than word count, age, or a quota.
+Archive an implemented note when the shipped decision is complete and its rationale is unlikely to guide future work. Keep it active when its alternatives, ownership boundary, negative guarantee, or reintroduction condition remains useful. Never archive a proposed note: reject an obsolete proposal. Keep a rejected note only while it prevents a plausible mistake; otherwise delete the complete triplet together. Use [`archive-agent-notes`](../../skills/agent/archive-agent-notes/SKILL.md) rather than word count, age, or a quota.
 
 The archive is path-encoded as `archived/{class}/yyyy-mm-dd-topic-title.md`; `implemented` is deliberately absent because only implemented notes can enter it. An archival change moves the complete triplet, retains `Status: implemented`, inserts the same `Archived: YYYY-MM-DD` line immediately below that status in both files, and repairs or deletes inbound links. These are the only permitted content changes during archival. Once sealed, an archived triplet is frozen: never edit, translate, reformat, or delete it, and never treat it as authority for current behavior.
 

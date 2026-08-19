@@ -15,10 +15,10 @@ Status: implemented
 ## 备选方案
 
 - **两者都保留，只发布 find-simplifications。** 否决：`doc-standards` 只是 `docs/AGENTS.md` 的薄 wrapper，两个重叠的维护 skill 正是本 note 要取代的打包。
-- **保留内部 doc-standards、丢弃 find-simplifications。** 否决：survey+证明 流程才是值钱的一半，且它是通用的；文档侧手段能干净地并入其中。
+- **保留内部 doc-standards、丢弃 find-simplifications。** 否决：survey+证明 流程才是值钱的一半，且它是通用的；文档侧手段已由 `docs/AGENTS.md`（层级分类与 slop checklist）以及 `prose-standard`、`trim-cot-leakage` 承载，保留 `doc-standards` 只会重复这些归属。
 
 ## 后果
 
 - 发布清单从 16 增至 17 个 skill；内部集合从 5 减至 3 个。
 - 一个自洽的通用「找简化」skill 覆盖代码、文档和 skill，且无任何跨引用。
-- 文档的定位与预算由 `docs/AGENTS.md` 直接管辖，不再靠 wrapper skill。
+- 文档的定位与预算由 `docs/AGENTS.md` 直接管辖，不再靠 wrapper skill；文档侧手段保留在 `docs/AGENTS.md` 的层级分类与 slop checklist，以及 `prose-standard`、`trim-cot-leakage` 中。

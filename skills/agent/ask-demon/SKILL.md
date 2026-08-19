@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Ask Demon
 
-You don't remember every skill, so ask. This pack complements Matt's engineering skills: Matt owns the engineering loop (grill → spec → tickets → implement → code-review); this pack owns the documentation and Agent-Note maintenance loop and game-domain work.
+You don't remember every skill, so ask. This pack complements Matt's engineering skills: Matt owns the engineering loop (grill → spec → tickets → implement → code-review — the single review entry point); this pack owns the documentation and Agent-Note maintenance loop and game-domain work. The full absorption map and seams are in [docs/skills-map.md](../../../docs/skills-map.md).
 
 A **flow** is a path through the skills. One **main flow** carries the documentation work; everything else is standalone, or a prose tool layer that runs underneath.
 
@@ -36,6 +36,7 @@ Off the main flow; reach for each on its own trigger.
 - **`pre-push-checks`** — before pushing, select the narrowest checks that cover the outgoing diff; protect history-rewriting pushes with `--force-with-lease`.
 - **`merging-stacked-prs`** — land a stack of dependent GitHub PRs through `gh stack`; layers with Matt's `resolving-merge-conflicts`.
 - **`workflow-capture`** — turn a proven or requested workflow into a reusable skill.
+- **`record-browser-gif`** — record browser/Web UI demos as evidence GIFs for GUI-changing PRs.
 - **`agent-doorbell`** — install hook-based desktop/audio reminders for agent stop and attention events.
 - **`dota2-custom-game-dev`** — DOTA2 custom game addons.
 - **`roblox-luau-developer`** — Roblox Luau development, debugging, and Rojo sync.

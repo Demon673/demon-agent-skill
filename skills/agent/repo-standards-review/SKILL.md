@@ -7,6 +7,8 @@ description: Review a pull request or a branch against the repository's standard
 
 **This skill is guidance, not a complete checklist.** Verify the PR's live base and head, then read the diff and enough surrounding context to understand the design before judging. A short review with one substantiated blocker beats a list of nits.
 
+For code-facing reviews — lifecycle, concurrency, invariants, disposal, and other implementation semantics — also load [the code review checklist](references/code-review-checklist.md).
+
 ## Sources of truth
 
 - The repository's root `AGENTS.md`: skill authoring, validation, and quality-gate rules.

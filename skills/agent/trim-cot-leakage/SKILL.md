@@ -24,16 +24,20 @@ For every suspect passage ask: **could a reader with no access to any session tr
 
 ## What is not leakage
 
-- **Issue references** — `#1470`, `TODO(name):` resolve on their own; keep them on any surface.
-- **Merged-PR and issue citations inside Agent Notes** — sanctioned evidence per the documentation standard's change-story routing.
-- **Suppression justifications** — disable-comment reasons and empty-exception explanations are required prose; fix a false reason, never delete it.
-- **Counterfactual-present pins** — "without X, Y happens", "a naive X would…".
+Unaided citation passes fail in both directions by deleting durable references and keeping dead ones. Apply these keep rules as written:
+- **Issue references** — `#1470`, `TODO(name):`, "issue #N owns the follow-up" resolve at HEAD; keep them on any surface, including READMEs. Do not relocate them to Agent Notes.
+- **Merged-PR and issue citations inside Agent Notes and postmortems** — sanctioned evidence per the documentation standard's change-story routing.
+- **Suppression justifications** — lint-disable `-- reason` clauses, coverage-ignore reasons, and empty-catch explanations are required prose; fix a false reason, never delete it.
+- **Counterfactual-present regression pins** — "without X, Y happens", "a naive X would…".
 - **Measured bounds** — "(measured: …)" calibrating a constant; the provenance word "measured" is load-bearing.
-- **External references that resolve outside the repo by design** — standards sections (RFC 9110 §10.1.5), upstream file names.
+- **Runtime old/new states** — "the old connection drains before the new one accepts" is runtime lifecycle, not change history.
+- **Historical stage names inside a note's change-story sections** — "the first cut shipped X" is current-state-safe there; indexical stamps ("this cut") stay banned everywhere.
+- **External references that resolve outside the repo by design** — standards sections (RFC 9110 §10.1.5), design-artifact names (a Figma frame). The §-ban covers uncommitted internal drafts, not external standards or committed docs that own their §-numbering.
+- **Project voice and genre forms** — "we" as project voice; a note's Alternatives-considered section.
 
 ## Workflow
 
-1. Require an explicit scope. Never touch frozen archived notes; sealed history keeps its original voice.
+1. Require an explicit scope. Never touch `vendor/`, frozen archived notes, or recorded fixtures and snapshots — recorded model output and sealed history keep their original voice.
 2. Audit read-only first: run the [recall batteries](references/recall-batteries.md), then judge every hit semantically. The batteries over-match by design and under-match by nature — also read the densest prose in scope without a pattern in hand.
 3. Fix owner-first: for a bilingual pair, update the counterpart; for a generated or manifest-listed surface, fix the source.
 4. Before deleting anything, enumerate the passage's propositions and check the [overcorrection traps](references/examples.md).
