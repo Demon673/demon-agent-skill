@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-20-restore-find-simplifications-parity.md
+2026-08-20-restore-find-simplifications-parity.md: 9bf688c76c49c6a4e895213d09e41e111e04fc3e
+2026-08-20-restore-find-simplifications-parity.zh.md: 44e35baf8b18c72144f6862b95aac47d7e93d63a

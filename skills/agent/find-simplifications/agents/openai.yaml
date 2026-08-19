@@ -1,4 +1,4 @@
 interface:
   display_name: "Find Simplifications"
-  short_description: "Find simplification candidates in this repository"
+  short_description: "Find non-obvious simplification candidates across code, docs, and skills, and turn them into proposed Agent Notes or inline TODO/FIXME/XXX markers"
   default_prompt: "Use $find-simplifications to find simplification candidates in this repository."
