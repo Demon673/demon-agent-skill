@@ -1,4 +1,4 @@
-# Agent Note: Consolidate the Roblox skills and localize the game skills
+# Agent Note: Consolidate the Roblox skills and translate the game-skill bodies into English
 
 Status: implemented
 

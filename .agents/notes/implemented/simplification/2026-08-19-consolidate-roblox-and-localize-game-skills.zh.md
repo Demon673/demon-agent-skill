@@ -1,4 +1,4 @@
-# Agent Note: 合并 Roblox 技能并将游戏技能正文本地化为英文
+# Agent Note: 合并 Roblox 技能并将游戏技能正文译为英文
 
 Status: implemented
 

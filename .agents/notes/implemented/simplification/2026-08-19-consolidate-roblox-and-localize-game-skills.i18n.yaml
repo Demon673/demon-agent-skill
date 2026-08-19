@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/simplification/2026-08-19-consolidate-roblox-and-localize-game-skills.md
-2026-08-19-consolidate-roblox-and-localize-game-skills.md: a7553097db723f9570a311e2ef7ac7703d17395a
-2026-08-19-consolidate-roblox-and-localize-game-skills.zh.md: ad2b57587458790d4a08bc6ca92efd56516f1b29
+2026-08-19-consolidate-roblox-and-localize-game-skills.md: 0980dffb39ebe55491e0b87f57ca683d1212341e
+2026-08-19-consolidate-roblox-and-localize-game-skills.zh.md: 3be223e17410cb5a72894a9c1ce9001778452187

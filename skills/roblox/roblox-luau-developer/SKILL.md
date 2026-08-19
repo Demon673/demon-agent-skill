@@ -1,6 +1,6 @@
 ---
 name: roblox-luau-developer
-description: Roblox Luau development — implement, review, and refactor Luau gameplay scripts (ModuleScripts, ServerScripts/LocalScripts, RemoteEvent/RemoteFunction, DataStore, server/client boundaries); diagnose Roblox gameplay, replication, performance, DataStore, and runtime issues; and understand or sync Rojo-managed Roblox codebases (default.project.json, wally.toml, aftman.toml/rokit.toml, sourcemap.json). Use when working on Roblox, Luau, Roblox Studio code, or Rojo projects, or when debugging Roblox runtime issues.
+description: Roblox Luau development — implement, review, and refactor Luau gameplay scripts; diagnose Roblox gameplay, replication, performance, DataStore, and runtime issues; and understand or sync Rojo-managed Roblox codebases. Use when working on Roblox, Luau, Roblox Studio code, or Rojo projects, or when debugging Roblox runtime issues.
 ---
 
 # Roblox Luau Developer
@@ -11,8 +11,7 @@ Workflow for implementing, reviewing, and refactoring Roblox Luau code, diagnosi
 
 First determine how the project is organized:
 
-- Rojo project: look for `default.project.json`, `*.project.json`, `sourcemap.json`.
-- Package/tool managers: look for `wally.toml`, `pesde.toml`, `rokit.toml` (or the deprecated `aftman.toml`/`foreman.toml`), `.luaurc`, `selene.toml`, `.stylua.toml`.
+- Rojo project: a `default.project.json` or `*.project.json`; the toolchain files and sync workflow live in `references/rojo-workflow.md`.
 - Studio export: recognize `.rbxlx`, `.rbxmx`, `.model.json`, `src/`, `ReplicatedStorage/`, `ServerScriptService/`.
 - TypeScript source: a `roblox-ts` project carries `tsconfig.json`, `rbxtsc`, and `@rbxts/*` packages; treat its `.ts` source as the source of truth and do not patch generated Luau under `out/`.
 
