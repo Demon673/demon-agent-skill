@@ -27,7 +27,7 @@ This repository is a public Agent skills source repository. Treat it as the sour
 - Follow [docs/AGENTS.md](docs/AGENTS.md) for doc structure, placement, and writing rules.
 - Every non-trivial change adds or updates an Agent Note under `.agents/notes/` ([rules](.agents/notes/README.md)).
 - Content docs under `docs/` and active Agent Notes are bilingual triplets (`foo.md` + `foo.zh.md` + `foo.i18n.yaml`); `AGENTS.md` and `SKILL.md` stay English-only ([i18n](docs/i18n/README.md)).
-- Use these skills for prose and review: [prose-standard](skills/agent/prose-standard/SKILL.md), [repo-standards-review](.agents/skills/repo-standards-review/SKILL.md).
+- Use these skills for prose and review: [prose-standard](skills/agent/prose-standard/SKILL.md), [repo-standards-review](skills/agent/repo-standards-review/SKILL.md).
 - Skills default to both model and user invocation so a flow can cascade (one skill fires the next); mark `disable-model-invocation: true` only for a skill the model must never auto-fire and that no other skill needs to reach.
 
 ## Validation
@@ -52,7 +52,7 @@ For documentation and Agent Note changes, run:
 npm run doc-gates
 ```
 
-For a semantic review of a non-trivial change (skill bodies, docs, notes), run [repo-standards-review](.agents/skills/repo-standards-review/SKILL.md) before pushing.
+For a semantic review of a non-trivial change (skill bodies, docs, notes), run [repo-standards-review](skills/agent/repo-standards-review/SKILL.md) before pushing.
 
 ## Quality Gate
 

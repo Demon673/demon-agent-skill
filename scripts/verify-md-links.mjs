@@ -26,7 +26,6 @@ const files = [
   join(root, 'README.zh.md'),
   join(root, 'AGENTS.md'),
   ...walk(join(root, '.agents/notes'), []),
-  ...walk(join(root, '.agents/skills'), []),
   ...walk(join(root, 'docs'), []),
   ...walk(join(root, 'skills'), []),
 ].filter((f, i, a) => a.indexOf(f) === i)

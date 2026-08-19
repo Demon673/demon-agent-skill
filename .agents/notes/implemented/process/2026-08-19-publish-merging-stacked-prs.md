@@ -6,7 +6,7 @@ English | [中文](2026-08-19-publish-merging-stacked-prs.zh.md)
 
 ## Problem
 
-`merging-stacked-prs` was fully general (GitHub native `gh stack`, no coupling to this repository) but sat in the internal `.agents/skills/` set. Before publishing it, two things had to be confirmed: that it carries no cross-references, and that it does not overlap the `resolving-merge-conflicts` skill from `mattpocock/skill`, which the user installs globally.
+`merging-stacked-prs` was fully general (GitHub native `gh stack`, no coupling to this repository) but sat in the internal `skills/agent/` set. Before publishing it, two things had to be confirmed: that it carries no cross-references, and that it does not overlap the `resolving-merge-conflicts` skill from `mattpocock/skill`, which the user installs globally.
 
 ## Decision
 

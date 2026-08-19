@@ -6,7 +6,7 @@ Status: implemented
 
 ## 问题
 
-`merging-stacked-prs` 完全通用（GitHub 原生 `gh stack`，不耦合本仓库），却一直放在内部的 `.agents/skills/` 集合里。发布前需确认两点：它没有任何跨引用，以及它与用户全局安装的 `mattpocock/skill` 中的 `resolving-merge-conflicts` 不重叠。
+`merging-stacked-prs` 完全通用（GitHub 原生 `gh stack`，不耦合本仓库），却一直放在内部的 `skills/agent/` 集合里。发布前需确认两点：它没有任何跨引用，以及它与用户全局安装的 `mattpocock/skill` 中的 `resolving-merge-conflicts` 不重叠。
 
 ## 决策
 

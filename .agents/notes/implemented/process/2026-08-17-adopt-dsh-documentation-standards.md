@@ -18,7 +18,7 @@ Adopt the DeepSeek Harness documentation conventions and port its pnpm gate tool
 - A bilingual pairing contract at [`docs/i18n/README.md`](../../../../docs/i18n/README.md): English `foo.md` plus Chinese `foo.zh.md` plus a `foo.i18n.yaml` consistency record holding both sides' git blob hashes, mutual switchers, and a machine-checked mdast structural signature; [`translation-rules.md`](../../../../docs/i18n/translation-rules.md) and [`terminology.md`](../../../../docs/i18n/terminology.md) complete the i18n docs.
 - An Agent Note decision-record system under [`.agents/notes/`](../../README.md): path-encoded `{lifecycle}/{class}/date-topic`, a fixed header block and per-lifecycle skeleton, and a mandatory Alternatives-considered section.
 - Node ESM gate scripts ported from the upstream pnpm gates, using the official mdast/GFM parser: [`verify-translation-pairing.mjs`](../../../../scripts/verify-translation-pairing.mjs) with `scripts/lib/{markdown,record,git}.mjs` (`--list` / `--write` / `--check`), plus `verify-agent-note-format`, `verify-md-wrap`, `verify-md-links`, `verify-doc-budgets`, and `verify-archived-agent-notes`, orchestrated by [`run-doc-gates.mjs`](../../../../scripts/run-doc-gates.mjs) as `npm run doc-gates`.
-- Nine maintenance skills under [`.agents/skills/`](../../../../.agents/skills/) repurposed from the upstream `dsh-*` skills, renamed to generic prefixes and scoped to this repository.
+- Nine maintenance skills under [`skills/agent/`](../../../../skills/agent/) repurposed from the upstream `dsh-*` skills, renamed to generic prefixes and scoped to this repository.
 
 Instruction files named `AGENTS.md` and `SKILL.md` files remain English-only; content documents under `docs/` and active Agent Notes are bilingual triplets.
 

@@ -33,7 +33,7 @@
 
 ## 封存与删除
 
-当已实现的决策完整落地、其理由不太可能再指导后续工作时，封存该 implemented note。当它的备选方案、所有权边界、负面保证或重新引入条件仍然有用时，保持活跃。提案类 note 永不封存：废弃的提案应予以否决。仅当被否决的 note 仍能防止一个似是而非的错误时才保留；否则将其英文和中文文件一起删除。使用 [`archive-agent-notes`](../skills/archive-agent-notes/SKILL.md) 来做判断，而不是依赖字数、时长或配额。
+当已实现的决策完整落地、其理由不太可能再指导后续工作时，封存该 implemented note。当它的备选方案、所有权边界、负面保证或重新引入条件仍然有用时，保持活跃。提案类 note 永不封存：废弃的提案应予以否决。仅当被否决的 note 仍能防止一个似是而非的错误时才保留；否则将其英文和中文文件一起删除。使用 [`archive-agent-notes`](../../skills/agent/archive-agent-notes/SKILL.md) 来做判断，而不是依赖字数、时长或配额。
 
 封存路径编码为 `archived/{class}/yyyy-mm-dd-topic-title.md`；之所以刻意没有 `implemented`，是因为只有 implemented note 才能进入封存。封存变更会移动完整的一对文件，保留 `Status: implemented`，并在两种语言文件中的该状态行正下方插入相同的 `Archived: YYYY-MM-DD` 行，同时修复或删除入站链接。这些是封存期间仅允许的内容变更。一旦封存，归档的一对文件即被冻结：永不编辑、翻译、重排或删除，也永不将其视为当前行为的权威。
 

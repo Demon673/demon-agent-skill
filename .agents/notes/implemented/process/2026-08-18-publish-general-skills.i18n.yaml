@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-18-publish-general-skills.md
-2026-08-18-publish-general-skills.md: 5064c8c95e2b7f435e8022a34e225132a58d8514
-2026-08-18-publish-general-skills.zh.md: 3da4c2d677ff23d8be4ff897131395757a24ef91
+2026-08-18-publish-general-skills.md: 52dd062f8c203b9261b21dedadbe78a668371fd8
+2026-08-18-publish-general-skills.zh.md: 622af3302828167152e57ca58a6782e779773fd1

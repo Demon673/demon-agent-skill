@@ -2,7 +2,7 @@
 
 English | [中文](README.zh.md)
 
-This repo's documentation is read by people in both languages, so every in-scope document is maintained in English and Simplified Chinese. This page defines the pairing contract, the gate, scope, and exclusions; [terminology.md](terminology.md) is the terminology source of truth. Routine counterpart updates are made directly; the extended [`translate-docs`](../../.agents/skills/translate-docs/SKILL.md) workflow runs only on explicit user invocation.
+This repo's documentation is read by people in both languages, so every in-scope document is maintained in English and Simplified Chinese. This page defines the pairing contract, the gate, scope, and exclusions; [terminology.md](terminology.md) is the terminology source of truth. Routine counterpart updates are made directly; the extended [`translate-docs`](../../skills/agent/translate-docs/SKILL.md) workflow runs only on explicit user invocation.
 
 ## The pairing contract
 
@@ -45,4 +45,4 @@ The gate's limit, stated plainly: a green gate means the pair was confirmed cons
 
 ## Division of labor
 
-Routine counterparts are updated directly by the working agent in one pass after loading [terminology.md](terminology.md); it does not invoke a translation skill or delegate to a subagent for an ordinary update. The extended [`translate-docs`](../../.agents/skills/translate-docs/SKILL.md) workflow — whole-document translation, briefings, delegated prose — is reserved for explicit user invocation. Review still owns translation quality and terminology.
+Routine counterparts are updated directly by the working agent in one pass after loading [terminology.md](terminology.md); it does not invoke a translation skill or delegate to a subagent for an ordinary update. The extended [`translate-docs`](../../skills/agent/translate-docs/SKILL.md) workflow — whole-document translation, briefings, delegated prose — is reserved for explicit user invocation. Review still owns translation quality and terminology.

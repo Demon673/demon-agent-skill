@@ -49,7 +49,6 @@ npx skills@latest add Demon673/demon-agent-skill
 - 内容文档和活跃的 Agent Note 都是双语三件套（`foo.md` + `foo.zh.md` + `foo.i18n.yaml`，见 [`docs/i18n/README.md`](docs/i18n/README.md)）；`AGENTS.md` 指令文件和 `SKILL.md` 保持英文。
 - 决策记录（Agent Note）放在 `.agents/notes/`，按 `生命周期/分类/日期-主题` 组织（见 [.agents/notes/README.md](.agents/notes/README.md)）。
 - 事故复盘放在 [`docs/postmortem/`](docs/postmortem/README.md)；防御模式见 [`docs/defensive-patterns.md`](docs/defensive-patterns.md)，领域词汇见 [`docs/glossary.md`](docs/glossary.md)，翻译语体样例见 [`docs/i18n/style-samples.md`](docs/i18n/style-samples.md)。
-- `.agents/skills/` 下保留 4 个仓库内部维护类 skill（不对外发布）：`archive-agent-notes`、`find-simplifications`、`repo-standards-review`、`translate-docs`。
 
 ## 常用命令
 

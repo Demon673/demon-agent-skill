@@ -2,7 +2,7 @@
 
 [English](translation-rules.md) | 中文
 
-如何在本仓库的文档配对两侧之间进行翻译。两种语言具有同等效力（[README.md](README.md)）：变更可以先以任一语言撰写，那一侧就是该次更新的来源——这些规则约束对应版本的生成或更新。它们对人和 agent 同样有效。常规的 agent 工作在一次术语引导的单遍中直接翻译变更内容；扩展的 [`translate-docs`](../../.agents/skills/translate-docs/SKILL.md) 工作流仅在用户显式调用时运行。规则级别遵循 RFC 2119 用法：**MUST** / **MUST NOT** 是门禁或评审阻断项；**SHOULD** 需要说明理由才能偏离；**MAY** 可自行决定。
+如何在本仓库的文档配对两侧之间进行翻译。两种语言具有同等效力（[README.md](README.md)）：变更可以先以任一语言撰写，那一侧就是该次更新的来源——这些规则约束对应版本的生成或更新。它们对人和 agent 同样有效。常规的 agent 工作在一次术语引导的单遍中直接翻译变更内容；扩展的 [`translate-docs`](../../skills/agent/translate-docs/SKILL.md) 工作流仅在用户显式调用时运行。规则级别遵循 RFC 2119 用法：**MUST** / **MUST NOT** 是门禁或评审阻断项；**SHOULD** 需要说明理由才能偏离；**MAY** 可自行决定。
 
 ## 忠实性
 

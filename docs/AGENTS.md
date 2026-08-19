@@ -1,6 +1,6 @@
 # AGENTS.md — The documentation standard
 
-This file defines document structure, writing rules, and the one-home-per-fact taxonomy for this repository. Use [`prose-standard`](../skills/agent/prose-standard/SKILL.md) for required coverage and editorial judgment, and [`find-simplifications`](../.agents/skills/find-simplifications/SKILL.md) for surveying removable surface. Agent Notes ([.agents/notes/README.md](../.agents/notes/README.md)) carry decision rationale; they follow their own format but obey the writing rules below.
+This file defines document structure, writing rules, and the one-home-per-fact taxonomy for this repository. Use [`prose-standard`](../skills/agent/prose-standard/SKILL.md) for required coverage and editorial judgment, and [`find-simplifications`](../skills/agent/find-simplifications/SKILL.md) for surveying removable surface. Agent Notes ([.agents/notes/README.md](../.agents/notes/README.md)) carry decision rationale; they follow their own format but obey the writing rules below.
 
 ## Document structure
 
@@ -22,7 +22,6 @@ Each fact has one home — the tier whose job it is; elsewhere, link there.
 | Subtree `AGENTS.md` (`docs/`, `.agents/notes/`) | Orders specific to that subtree | Repo-wide rules the root file already carries |
 | Skill `SKILL.md` | The installable capability: frontmatter trigger plus the workflow steps | Deep, conditional, or platform-specific reference (→ `references/`), rationale that a docs page owns |
 | Skill `references/` | Disclosed reference loaded only when the skill's pointer fires | Content every run needs (that stays in `SKILL.md`) |
-| Maintenance skills (`.agents/skills/`) | Reusable workflows and specialized decision standards for maintaining this repository | Published skills (→ `skills/`), runtime contracts |
 | [Agent Notes](../.agents/notes/README.md) | Decision records: the why, what was given up, and required verification | Migration plans, acceptance checklists, and spec-speak once a decision has shipped |
 | [postmortem/](postmortem/README.md) | Incident stories — the only tier where war-story narrative belongs | Decision rationale (→ Agent Notes) |
 | `README.md` | User-facing repository entry: install, map, commands | Contributor procedure detail, decision history |
@@ -50,7 +49,7 @@ Budgets are guardrails, not reduction targets. Keep the always-loaded files smal
 
 ## The slop checklist
 
-Hunt these in any doc; [`find-simplifications`](../.agents/skills/find-simplifications/SKILL.md) runs this list as an audit:
+Hunt these in any doc; [`find-simplifications`](../skills/agent/find-simplifications/SKILL.md) runs this list as an audit:
 
 - The same rule stated in more than one home. Grep a distinctive phrase; keep one home and link the rest.
 - Narrated history or war stories ("previously", "now", "no longer", "renamed", PR numbers). State the current fact; link an Agent Note or postmortem when needed.

@@ -6,7 +6,7 @@ These Agent Notes describe shipped decisions. Follow the [documentation standard
 
 Keep paths, names, defaults, and mechanisms current in the same change that alters them. Rewrite stale facts in place; do not append change history.
 
-When a shipped note is unlikely to guide future work, archive its complete pair through [`archive-agent-notes`](../../skills/archive-agent-notes/SKILL.md) instead of continuing to maintain it.
+When a shipped note is unlikely to guide future work, archive its complete pair through [`archive-agent-notes`](../../../skills/agent/archive-agent-notes/SKILL.md) instead of continuing to maintain it.
 
 ### This is not a license to rewrite the *decision*
 

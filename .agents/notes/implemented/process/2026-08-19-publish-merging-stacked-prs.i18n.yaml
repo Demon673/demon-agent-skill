@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-19-publish-merging-stacked-prs.md
-2026-08-19-publish-merging-stacked-prs.md: da5855a03000e40dab2ecac2fa42a63a12297991
-2026-08-19-publish-merging-stacked-prs.zh.md: 34a8332df4e469601abfc32597cbbe33ffce0702
+2026-08-19-publish-merging-stacked-prs.md: cc9da404bd65c011e9406b39d0de55d8daa49f59
+2026-08-19-publish-merging-stacked-prs.zh.md: 824b9d06a0089cb422c2dc1aa097f025d4acb7e5

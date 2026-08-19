@@ -1,6 +1,6 @@
 ---
 name: find-simplifications
-description: Use to find non-obvious simplification candidates in this repository's skills and docs — dead, duplicated, speculative, or over-built surface — and turn the worthwhile ones into proposed Agent Notes or inline TODO markers instead of a pile of thin guesses.
+description: Find non-obvious simplification candidates in a repository's skills and docs — dead, duplicated, speculative, or over-built surface — and turn the worthwhile ones into proposed Agent Notes or inline TODO markers instead of a pile of thin guesses.
 ---
 
 # Finding simplifications
@@ -9,8 +9,8 @@ Turn a broad "find things to simplify" request into evidence-backed Agent Notes 
 
 ## Start with repo context
 
-- Read [AGENTS.md](../../../AGENTS.md) and [docs/AGENTS.md](../../../docs/AGENTS.md); simplifications that fight the one-home-per-fact taxonomy need extra evidence.
-- Use the [Agent Note tree](../../../.agents/notes/README.md) to understand intentional structure; a recorded decision needs new evidence to overturn, not just a "looks complex" flag.
+- Read the repository's root `AGENTS.md` and documentation standard; simplifications that fight the one-home-per-fact taxonomy need extra evidence.
+- Use the repository's Agent Note tree to understand intentional structure; a recorded decision needs new evidence to overturn, not just a "looks complex" flag.
 
 ## Survey broadly
 
@@ -42,7 +42,7 @@ Reject or downgrade when a consumer exists, an Agent Note justifies the surface,
 
 ## Write the Agent Note
 
-Create one file per durable proposal under `.agents/notes/proposed/{class}/yyyy-mm-dd-topic.md`, following the [note rules](../../../.agents/notes/README.md). Prefer this structure:
+Create one file per durable proposal under the repository's proposed-notes directory, following its note rules. Prefer this structure:
 
 - `# Agent Note: <action-oriented title>`
 - `Status: proposed`
@@ -54,8 +54,8 @@ Create one file per durable proposal under `.agents/notes/proposed/{class}/yyyy-
 
 ## Coalesce superseded notes
 
-When a simplification makes an owning note obsolete, run [archive-agent-notes](../archive-agent-notes/SKILL.md) to classify and archive the superseded records. A fully superseded note is consolidated into the current owner after its unique rationale, alternatives, and consequences are preserved and inbound links repaired; a partial supersession keeps both notes cross-linked.
+When a simplification makes an owning note obsolete, run `archive-agent-notes` to classify and archive the superseded records. A fully superseded note is consolidated into the current owner after its unique rationale, alternatives, and consequences are preserved and inbound links repaired; a partial supersession keeps both notes cross-linked.
 
 ## Validation
 
-Run `npm run doc-gates` and `git diff --check`; for skill changes, also run `.\scripts\validate-skills.ps1`. Summarize candidates added, consolidated, or rejected, the areas surveyed, and what was excluded.
+Run the repository's documentation gates and `git diff --check`; for skill changes, also run the repository's skill validator. Summarize candidates added, consolidated, or rejected, the areas surveyed, and what was excluded.

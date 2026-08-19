@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-17-adopt-dsh-documentation-standards.md
-2026-08-17-adopt-dsh-documentation-standards.md: bc756befdf5c2aa96373f3ce621b2d1fb8cea23c
-2026-08-17-adopt-dsh-documentation-standards.zh.md: 16434064ca22a1c386dfe935607c16dfa280de45
+2026-08-17-adopt-dsh-documentation-standards.md: 10cd1d92ccd127b99c91627c703fcfecc867e513
+2026-08-17-adopt-dsh-documentation-standards.zh.md: 3684d96cf6f3842a0aec45747afa8873ab3772fc

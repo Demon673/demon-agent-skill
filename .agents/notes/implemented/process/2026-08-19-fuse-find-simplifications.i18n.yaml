@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-19-fuse-find-simplifications.md
-2026-08-19-fuse-find-simplifications.md: b72719441c1809f5063510d1c69bd050b19648a7
-2026-08-19-fuse-find-simplifications.zh.md: 585fdfb1fc49c0aeee0716e2b47dafe3dde283e9
+2026-08-19-fuse-find-simplifications.md: 395136af67ed75a0041624b5fbd5751067d45274
+2026-08-19-fuse-find-simplifications.zh.md: 4d51ded498cadc14ddd0deaad587c617518d6e65

@@ -9,7 +9,7 @@ Reduce the active decision corpus without erasing history that can still guide w
 
 ## Read the contracts
 
-Read [the Agent Note rules](../../../.agents/notes/README.md), [the archive instructions](../../../.agents/notes/archived/AGENTS.md), and the applicable lifecycle instructions before classifying. Use current skills, docs, newer notes, and inbound links to establish whether a rationale still owns or constrains anything.
+Read the repository's Agent Note rules, archive instructions, and the applicable lifecycle instructions before classifying. Use current skills, docs, newer notes, and inbound links to establish whether a rationale still owns or constrains anything.
 
 ## Check supersession when adding a note
 
@@ -31,10 +31,10 @@ Do not archive toward a quota. Inspect every note in scope, classify analogous g
 2. Make no body edits. Insert only `Archived: YYYY-MM-DD` immediately below `Status: implemented` in both files, using the same date on both sides.
 3. Search for inbound links from active prose. Redirect them to current authority, retarget them to the archived path only when the historical snapshot is intentionally cited, or delete them. Never verify or repair links out of the archived note.
 
-When inbound-link repair edited an active bilingual doc, hand the counterpart update to [translate-docs](../translate-docs/SKILL.md) so both sides stay in sync before the pairing gate.
+When inbound-link repair edited an active bilingual doc, hand the counterpart update to `translate-docs` so both sides stay in sync before the pairing gate.
 
 After the pair is sealed, never edit, move, translate, reformat, or delete it. Archived notes remain valid inbound-link targets but are historical snapshots, not authority for current behavior.
 
 ## Validate and report
 
-Run `node scripts/verify-archived-agent-notes.mjs --write` to seal the moved triplet, then `npm run doc-gates` and `git diff --check`. Report active implemented notes kept, implemented notes archived, rejected notes kept/deleted, proposed notes rejected if any, and every genuinely borderline case with its chosen outcome.
+Run the repository's archive seal gate, then its documentation gates and `git diff --check`. Report active implemented notes kept, implemented notes archived, rejected notes kept/deleted, proposed notes rejected if any, and every genuinely borderline case with its chosen outcome.

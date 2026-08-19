@@ -10,7 +10,7 @@ English | [中文](2026-08-19-fuse-find-simplifications.zh.md)
 
 ## Decision
 
-Fuse the two into one published, self-contained [`find-simplifications`](../../../../.agents/skills/find-simplifications/SKILL.md) under `skills/agent/`: it surveys code, docs, and skills, proves or rejects each candidate with consumer evidence, and records proposals into the host repository's decision-record system or inline `TODO(tag)` markers. Delete the internal `doc-standards`; its placement and budget rules stay in `docs/AGENTS.md`, which the root `AGENTS.md` already points to.
+Fuse the two into one published, self-contained [`find-simplifications`](../../../../skills/agent/find-simplifications/SKILL.md) under `skills/agent/`: it surveys code, docs, and skills, proves or rejects each candidate with consumer evidence, and records proposals into the host repository's decision-record system or inline `TODO(tag)` markers. Delete the internal `doc-standards`; its placement and budget rules stay in `docs/AGENTS.md`, which the root `AGENTS.md` already points to.
 
 ## Alternatives considered
 

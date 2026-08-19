@@ -1,0 +1,6 @@
+interface:
+  display_name: "Setup Demon Skills"
+  short_description: "Configure a repository for the docs-maintenance skills"
+  default_prompt: "Use $setup-demon-skills to configure a repository for the maintenance flow."
+policy:
+  allow_implicit_invocation: false
