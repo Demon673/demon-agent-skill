@@ -87,6 +87,10 @@ Use `-Copy` only when a real file copy is needed instead of a Junction.
 - Use `README.md` for user-facing repository documentation.
 - Let the latest user request override saved context when they conflict.
 
+## Agent skills
+
+Issue tracker, triage labels, and domain-doc layout for Matt's engineering skills: see `docs/agents/`.
+
 ## Iteration Policy
 
 Do not expand a skill spec speculatively. Prefer this loop:
