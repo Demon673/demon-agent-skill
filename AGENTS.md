@@ -35,7 +35,7 @@ This repository is a public Agent skills source repository. Treat it as the sour
 Before considering a skill change done, run the targeted validator:
 
 ```powershell
-.\scripts\validate-skills.ps1 -SkillPath "skills\agent\context-curator"
+.\scripts\validate-skills.ps1 -SkillPath "skills\agent\prose-standard"
 ```
 
 For a whole-repository pass, run:
@@ -98,3 +98,5 @@ Do not expand a skill spec speculatively. Prefer this loop:
 5. Keep the worktree easy to review and commit.
 
 When changing synced upstream skills, preserve upstream compatibility unless the user explicitly wants a local fork.
+
+Ask one clarifying question only when acting without clarity would go wrong.

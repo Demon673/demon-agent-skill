@@ -1,4 +1,0 @@
-interface:
-  display_name: "Answer Only"
-  short_description: "Answer without hands-on work when asked"
-  default_prompt: "Use $answer-only when the user asks for a response without hands-on work."

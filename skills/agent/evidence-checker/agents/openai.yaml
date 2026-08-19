@@ -1,4 +1,0 @@
-interface:
-  display_name: "Evidence Checker"
-  short_description: "Track evidence status for claims and decisions"
-  default_prompt: "Use $evidence-checker to track evidence status for the claims and decisions in scope."

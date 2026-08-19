@@ -1,4 +1,0 @@
-interface:
-  display_name: "Task Intake"
-  short_description: "Clarify task entry when the request is unsafe to act on"
-  default_prompt: "Use $task-intake to clarify the task entry before acting."

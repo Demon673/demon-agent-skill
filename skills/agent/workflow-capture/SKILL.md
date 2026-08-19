@@ -87,7 +87,7 @@ Use the user's requested destination when it is safe. Otherwise follow the curre
 - private skill drafts: `skill-work/drafts/`
 - plugin ideas: `plugin-work/`
 - MCP ideas: `mcp-work/`
-- lightweight durable flows: an existing project flow store, such as `context-curator/FLOWS.md` when the workspace already uses it
+- lightweight durable flows: an existing project flow store when the workspace already uses one
 - mature public skill implementations: the user's chosen skill source repository, usually under `skills/<category>/<skill-name>/`
 
 Do not create destination directories just because they appear above; ask before creating a new workspace convention. Do not copy private workshop context into a public skill. When publishing, extract only the reusable, non-private behavior.

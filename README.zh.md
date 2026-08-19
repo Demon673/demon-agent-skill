@@ -68,7 +68,7 @@ npx skills@latest add Demon673/demon-agent-skill
 校验单个 skill：
 
 ```powershell
-.\scripts\validate-skills.ps1 -SkillPath "skills\agent\context-curator"
+.\scripts\validate-skills.ps1 -SkillPath "skills\agent\prose-standard"
 ```
 
 校验全仓：

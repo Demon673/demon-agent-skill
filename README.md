@@ -68,7 +68,7 @@ Link local skills into the install directory:
 Validate one skill:
 
 ```powershell
-.\scripts\validate-skills.ps1 -SkillPath "skills\agent\context-curator"
+.\scripts\validate-skills.ps1 -SkillPath "skills\agent\prose-standard"
 ```
 
 Validate the whole repository:
