@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/simplification/2026-08-19-thin-workflow-capture.md
+2026-08-19-thin-workflow-capture.md: d6f94c660f1c97a2f00a6dfcf2fc7828f6230699
+2026-08-19-thin-workflow-capture.zh.md: 34b6d9865832806e6ca42fed61f0f72d45a6ae14
