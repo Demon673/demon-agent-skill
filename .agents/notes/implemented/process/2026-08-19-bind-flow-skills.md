@@ -21,3 +21,4 @@ Revert `find-simplifications` to internal and bound: restore the Agent Note prop
 
 - The published manifest shrinks from 17 to 16; the internal set grows from 3 to 4.
 - The flow (find-simplifications → archive-agent-notes) is explicit and user-invoked; the capabilities (prose-standard, trim-cot-leakage, prune-prompt-pollution, pre-push-checks, merging-stacked-prs) are agent-invoked and published.
+- The invocation-mode half of this decision is superseded by [restore-flow-cascade](2026-08-19-restore-flow-cascade.md): the flow skills now stay default so the flow can cascade.

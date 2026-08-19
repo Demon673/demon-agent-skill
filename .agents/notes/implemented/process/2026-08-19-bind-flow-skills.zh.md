@@ -21,3 +21,4 @@ Status: implemented
 
 - 发布清单从 17 减至 16；内部集合从 3 增至 4。
 - 流程（find-simplifications → archive-agent-notes）显式且用户调用；能力（prose-standard、trim-cot-leakage、prune-prompt-pollution、pre-push-checks、merging-stacked-prs）是 agent 调用且发布。
+- 本决策的「调用模式」半段被 [restore-flow-cascade](2026-08-19-restore-flow-cascade.md) 取代：流程 skill 现在保持默认调用，使流程可级联。
