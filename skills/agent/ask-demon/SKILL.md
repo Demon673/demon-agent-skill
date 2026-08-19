@@ -1,12 +1,12 @@
 ---
 name: ask-demon
-description: Ask which skill or flow fits your situation. A router over the docs/Agent-Note maintenance flow, the prose tool layer, and the standalone git and game skills in this pack.
+description: Ask which skill or flow fits your situation. A router over the docs/Agent-Note maintenance flow, the prose-and-docs tool layer, and the standalone git and game skills in this pack.
 disable-model-invocation: true
 ---
 
 # Ask Demon
 
-You don't remember every skill, so ask. This pack complements Matt's engineering skills: Matt owns the engineering loop (grill → spec → tickets → implement → code-review — the single review entry point); this pack owns the documentation and Agent-Note maintenance loop and game-domain work. The full absorption map and seams are in [docs/skills-map.md](../../../docs/skills-map.md).
+You don't remember every skill, so ask. This pack complements Matt's engineering skills: Matt owns the engineering loop (grill → spec → tickets → implement → code-review — the single review entry point); this pack owns the documentation and Agent-Note maintenance loop and game-domain work. The full absorption map and seams are in the pack's skills map (`docs/skills-map.md` in the source repository).
 
 A **flow** is a path through the skills. One **main flow** carries the documentation work; everything else is standalone, or a prose tool layer that runs underneath.
 
@@ -21,13 +21,14 @@ The route documentation work travels: review a change, simplify what it surfaces
 
 The flow cascades — `repo-standards-review → find-simplifications → archive-agent-notes → translate-docs` — and each step is also independently invocable.
 
-## Prose tool layer
+## Prose and docs tool layer
 
-Three skills run beneath the flow and are reachable on their own when the prose, not the process, is the problem:
+Four skills run beneath the flow and are reachable on their own when the prose or document structure, not the process, is the problem:
 
 - **`prose-standard`** — the base: preserve the complete proposition, then remove reasoning transcripts, repetition, and decoration. Owns editorial judgment and coverage.
 - **`trim-cot-leakage`** — one smell: prose whose vantage is the authoring session (dead citations, change narration, review choreography). Restate the facts, delete the transcript.
 - **`prune-prompt-pollution`** — another smell: negation priming, absence declarations, stale meta-narrative, strawman warnings. Restate the positive target or the consequence.
+- **`doc-standards`** — the structure side: placement, tutorial/reference classification, corpus audits, and budget-gate probes. Owns where documents live and how they are shaped; prose-standard owns how they read.
 
 ## Standalone
 
@@ -45,4 +46,4 @@ Off the main flow; reach for each on its own trigger.
 
 ## Setup
 
-The maintenance flow needs a repository's conventions in place first — the Agent Note tree and the bilingual pairing contract. Run **`setup-demon-skills`** once to scaffold them and record where they live.
+The maintenance flow needs a repository's conventions in place first — the Agent Note tree, the bilingual pairing contract, and the documentation standard. Run **`setup-demon-skills`** once to scaffold them and record where they live.

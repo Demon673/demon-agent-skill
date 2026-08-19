@@ -14,7 +14,7 @@ This reference maps every deepseek-harness skill to its disposition in this repo
 | dsh-trim-cot-leakage | absorbed; non-leakage boundary list restored | skills/agent/trim-cot-leakage/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-restore-trim-cot-leakage-boundaries.md) |
 | dsh-merging-stacked-prs | absorbed; minor generalization kept | skills/agent/merging-stacked-prs/SKILL.md | — |
 | dsh-code-review | checklist absorbed; review flow owned by Matt's code-review | skills/agent/repo-standards-review/references/code-review-checklist.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-code-review-checklist.md) |
-| dsh-doc-standards | fused into find-simplifications; the structural audit lives in docs/AGENTS.md | — | [note](../.agents/notes/implemented/process/2026-08-19-fuse-find-simplifications.md) |
+| dsh-doc-standards | absorbed; operational workflow revived as doc-standards at full parity | skills/agent/doc-standards/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-doc-standards.md) |
 | dsh-doc-site-sync | deferred: port when a host repo has a docs-site projection | — | — |
 | record-browser-gif | absorbed including the deterministic encoder | skills/agent/record-browser-gif/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-record-browser-gif.md) |
 | cordis-plugin-development | not absorbed: deepseek-harness product domain; use the original in its repo | — | — |

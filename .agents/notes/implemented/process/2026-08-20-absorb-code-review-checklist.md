@@ -14,7 +14,7 @@ Preparing the port surfaced a factual error in the [fusion note](2026-08-19-fuse
 
 Add [`references/code-review-checklist.md`](../../../../skills/agent/repo-standards-review/references/code-review-checklist.md) to `repo-standards-review`: a generalized 1:1 port of `dsh-code-review` that keeps all six blocking requirements and manual checks while parameterizing deepseek-harness sources — standing orders and package rules, the defensive-patterns doc, the prose standard, the testing doc, the change-scope tool, the invariant and disposal conventions, and the translation rules and terminology. Add one pointer line in `repo-standards-review/SKILL.md` so code-facing reviews load the reference.
 
-Correct the fusion note's factual claim in place: the four doc-side means live in the `docs/AGENTS.md` tier taxonomy and slop checklist, plus `prose-standard` and `trim-cot-leakage` — not in `find-simplifications`. The fusion decision (fuse into `find-simplifications`, delete `doc-standards`) is unchanged.
+Correct the fusion note's factual claim in place: the four doc-side means live in the `docs/AGENTS.md` tier taxonomy and slop checklist, plus `prose-standard` and `trim-cot-leakage` — not in `find-simplifications`. The fusion decision is partially reversed later: the doc-standards half was revived at full parity in [2026-08-20-absorb-doc-standards](2026-08-20-absorb-doc-standards.md); only the find-simplifications half remains.
 
 ## Alternatives considered
 

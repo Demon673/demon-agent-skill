@@ -14,7 +14,7 @@ Status: implemented
 
 为 `repo-standards-review` 新增 [`references/code-review-checklist.md`](../../../../skills/agent/repo-standards-review/references/code-review-checklist.md)：一份通用化的 `dsh-code-review` 1:1 移植，保留全部六条 blocking requirement 与 manual check，同时参数化 deepseek-harness 的出处——standing order 与 package rule、defensive-patterns 文档、prose standard、testing 文档、change-scope 工具、invariant 与 disposal 约定、翻译规则与术语。在 `repo-standards-review/SKILL.md` 中加一行指针，使代码面评审加载该 reference。
 
-就地更正 fusion note 的事实表述：四个文档侧手段位于 `docs/AGENTS.md` 的层级分类与 slop checklist，以及 `prose-standard`、`trim-cot-leakage`——不在 `find-simplifications` 里。融合决策（并入 `find-simplifications`、删除 `doc-standards`）保持不变。
+就地更正 fusion note 的事实表述：四个文档侧手段位于 `docs/AGENTS.md` 的层级分类与 slop checklist，以及 `prose-standard`、`trim-cot-leakage`——不在 `find-simplifications` 里。融合决策后来被部分推翻：doc-standards 半部分已在 [2026-08-20-absorb-doc-standards](2026-08-20-absorb-doc-standards.md) 中以完整对等恢复；仅 find-simplifications 半部分保留。
 
 ## 备选方案
 

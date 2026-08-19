@@ -28,7 +28,7 @@ Do not archive toward a quota. Inspect every note in scope, classify analogous g
 ## Archive one implemented triplet
 
 1. Make no body edits. Insert only `Archived: YYYY-MM-DD` immediately below `Status: implemented` in both language files, using the same date on both sides.
-2. Re-record the consistency record mechanically for the two metadata-only edits, with the repository's pairing recorder in write mode (`node scripts/verify-translation-pairing.mjs --write <en-path>` in this repository). Do not translate, reformat, update facts, or repair links inside the note.
+2. Re-record the consistency record mechanically for the two metadata-only edits, with the repository's pairing recorder in write mode. Do not translate, reformat, update facts, or repair links inside the note.
 3. Move the complete `foo.md`, `foo.zh.md`, and `foo.i18n.yaml` triplet from `implemented/{class}/` to `archived/{class}/`; `implemented` is deliberately absent from the archive path.
 4. Search for inbound links from active prose. Redirect them to current authority, retarget them to the archived path only when the historical snapshot is intentionally cited, or delete them. Never verify or repair links out of the archived note.
 
@@ -38,4 +38,4 @@ After the triplet is sealed, never edit, move, translate, reformat, or delete it
 
 ## Validate and report
 
-Run the repository's archive seal gate in write mode first (`node scripts/verify-archived-agent-notes.mjs --write` in this repository): it proves every existing seal still matches, then appends only the newly archived artifacts. Run the gate again normally, then the documentation gates and `git diff --check`. Report active implemented notes kept, implemented notes archived, rejected notes kept/deleted, proposed notes rejected if any, and every genuinely borderline case with its chosen outcome.
+Run the repository's archive seal gate in write mode first: it proves every existing seal still matches, then appends only the newly archived artifacts. Run the gate again normally, then the documentation gates and `git diff --check`. Report active implemented notes kept, implemented notes archived, rejected notes kept/deleted, proposed notes rejected if any, and every genuinely borderline case with its chosen outcome.

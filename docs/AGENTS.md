@@ -1,6 +1,6 @@
 # AGENTS.md — The documentation standard
 
-This file defines document structure, writing rules, and the one-home-per-fact taxonomy for this repository. Use [`prose-standard`](../skills/agent/prose-standard/SKILL.md) for required coverage and editorial judgment, and [`find-simplifications`](../skills/agent/find-simplifications/SKILL.md) for surveying removable surface. Agent Notes ([.agents/notes/README.md](../.agents/notes/README.md)) carry decision rationale; they follow their own format but obey the writing rules below.
+This file defines document structure, writing rules, and the one-home-per-fact taxonomy for this repository. Use [`doc-standards`](../skills/agent/doc-standards/SKILL.md) for placement and validation, [`prose-standard`](../skills/agent/prose-standard/SKILL.md) for required coverage and editorial judgment, and [`find-simplifications`](../skills/agent/find-simplifications/SKILL.md) for surveying removable surface. Agent Notes ([.agents/notes/README.md](../.agents/notes/README.md)) carry decision rationale; they follow their own format but obey the writing rules below.
 
 ## Document structure
 
@@ -49,7 +49,7 @@ Budgets are guardrails, not reduction targets. Keep the always-loaded files smal
 
 ## The slop checklist
 
-Hunt these in any doc; [`find-simplifications`](../skills/agent/find-simplifications/SKILL.md) runs this list as an audit:
+Hunt these in any doc; [`doc-standards`](../skills/agent/doc-standards/SKILL.md) runs this list as an audit:
 
 - The same rule stated in more than one home. Grep a distinctive phrase; keep one home and link the rest.
 - Narrated history or war stories ("previously", "now", "no longer", "renamed", PR numbers). State the current fact; link an Agent Note or postmortem when needed.

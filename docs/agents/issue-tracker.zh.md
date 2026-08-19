@@ -10,8 +10,8 @@
 - **读取 issue**：`gh issue view <number> --comments`，用 `jq` 过滤评论并同时获取 labels。
 - **列出 issue**：`gh issue list --state open --json number,title,body,labels,comments --jq '[.[] | {number, title, body, labels: [.labels[].name], comments: [.comments[].body]}]'`，配合合适的 `--label` 与 `--state` 过滤。
 - **评论 issue**：`gh issue comment <number> --body "..."`
-- **应用 / 移除 labels**：`gh issue edit <number> --add-label "..."` / `--remove-label "..."
-- **关闭**：`gh issue close <number> --comment "..."`
+- **应用 / 移除 labels**：`gh issue edit <number> --add-label "..."` / `--remove-label "..."`
+- **关闭**：`gh issue close <number> --comment "..."``
 
 从 `git remote -v` 推断仓库；在克隆内运行时 `gh` 会自动完成。
 

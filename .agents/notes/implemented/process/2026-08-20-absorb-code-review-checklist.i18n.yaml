@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-20-absorb-code-review-checklist.md
-2026-08-20-absorb-code-review-checklist.md: e600fdcc3ba4059709f864b9c7e0162d2cb5f840
-2026-08-20-absorb-code-review-checklist.zh.md: a1abcec2531dd63759e65280f9bcd925e83c73d7
+2026-08-20-absorb-code-review-checklist.md: 7baab61d93a7296f533cb94104514f15d11ca53a
+2026-08-20-absorb-code-review-checklist.zh.md: bb8d533e8624fab6e83b7168805895223e1bd5aa
