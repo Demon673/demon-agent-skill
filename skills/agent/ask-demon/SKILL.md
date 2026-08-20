@@ -1,6 +1,6 @@
 ---
 name: ask-demon
-description: Ask which skill or flow fits your situation. A router over the docs/Agent-Note maintenance flow, the prose-and-docs tool layer, and the standalone git and game skills in this pack.
+description: Ask which skill or flow fits your situation. A router over the docs/Agent-Note maintenance flow, the documentation governance run, the prose-and-docs tool layer, and the standalone git and game skills in this pack.
 disable-model-invocation: true
 ---
 
