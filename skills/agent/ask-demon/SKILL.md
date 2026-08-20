@@ -10,6 +10,17 @@ You don't remember every skill, so ask. This pack complements Matt's engineering
 
 A **flow** is a path through the skills. One **main flow** carries the documentation work; a **governance run** brings a whole repository's docs in line with its standard; everything else is standalone, or a prose-and-docs tool layer that runs underneath.
 
+## Session discipline
+
+Four standing-order lines in the host repository's root `AGENTS.md` gate every action; `setup-demon-skills` writes them into a repository. Operationally:
+
+- **Before acting** — answer questions and analyze proposals without writing; treat only an explicit execution signal with a confirmed scope as authorization; unclear intent gets one clarifying question first.
+- **Before committing** — stop on any red check; the fix or its explanation ships in the same turn, and the final report names every failed check.
+- **Before claiming** — inspect files before editing or describing them; report only work that was actually done.
+- **Before destructive moves** — deletions, history rewrites, and force-push wait for the user to name the action.
+
+Every flow in this pack obeys the gate: findings and plans come first, fixes run after confirmation.
+
 ## The main flow: maintain a change
 
 The route documentation work travels: review a change, simplify what it surfaces, archive what it supersedes, sync the bilingual pairs.
@@ -26,7 +37,7 @@ The flow cascades — `repo-standards-review → doc-standards (when docs touche
 
 A whole-repository pass when asked to govern, standardize, or audit the repository's documentation:
 
-1. **Foundation** — the four conventions (root `AGENTS.md` pointer, the documentation standard, the Agent Note tree, the bilingual pairing contract) must exist; missing ones come from `setup-demon-skills`.
+1. **Foundation** — the root `AGENTS.md` pointer, the documentation standard, the Agent Note tree, the bilingual pairing contract, and the session-discipline lines must exist; missing ones come from `setup-demon-skills`.
 2. **Audit** — `doc-standards` runs the structural pass and the six corpus probes; report a non-compliance list naming each document, the violated clause, and the owning fix skill.
 3. **Fix by domain, after the user confirms scope** — structure, placement, budgets → `doc-standards`; prose → `prose-standard`; leakage → `trim-cot-leakage`; dead surface → `find-simplifications`; pairs → `translate-docs`; superseded notes → `archive-agent-notes`.
 4. **Close out** — the documentation gates and `git diff --check`, re-record touched pairs, one Agent Note per non-trivial change, word deltas in the PR body — then the main flow takes the change home.
@@ -58,4 +69,4 @@ Off the main flow; reach for each on its own trigger.
 
 ## Setup
 
-The maintenance flow needs a repository's conventions in place first — the Agent Note tree, the bilingual pairing contract, and the documentation standard. Run **`setup-demon-skills`** once to scaffold them and record where they live.
+The maintenance flow needs a repository's conventions in place first — the Agent Note tree, the bilingual pairing contract, the documentation standard, and the session-discipline lines. Run **`setup-demon-skills`** once to scaffold them and record where they live.
