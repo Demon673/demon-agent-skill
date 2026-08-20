@@ -103,4 +103,4 @@ Do not expand a skill spec speculatively. Prefer this loop:
 
 When changing synced upstream skills, preserve upstream compatibility unless the user explicitly wants a local fork.
 
-Ask one clarifying question only when acting without clarity would go wrong.
+Act only on an explicit execution signal and confirmed scope; otherwise ask one clarifying question.
