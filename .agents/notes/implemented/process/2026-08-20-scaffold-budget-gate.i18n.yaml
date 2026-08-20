@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-20-scaffold-budget-gate.md
+2026-08-20-scaffold-budget-gate.md: 765980f4d1ee9134ea010594bc3b71e5411a361d
+2026-08-20-scaffold-budget-gate.zh.md: 3cab8b8276b2ecb7fd88ff7b44264aa7cd487e23

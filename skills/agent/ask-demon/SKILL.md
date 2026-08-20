@@ -37,7 +37,7 @@ The flow cascades — `repo-standards-review → doc-standards (when docs touche
 
 A whole-repository pass when asked to govern, standardize, or audit the repository's documentation:
 
-1. **Foundation** — the root `AGENTS.md` pointer, the documentation standard, the Agent Note tree, the bilingual pairing contract, and the session-discipline lines must exist; missing ones come from `setup-demon-skills`.
+1. **Foundation** — the root `AGENTS.md` pointer, the documentation standard, the Agent Note tree, the bilingual pairing contract, the session-discipline lines, and the documentation budget gate must exist; missing ones come from `setup-demon-skills`.
 2. **Audit** — `doc-standards` runs the structural pass and the six corpus probes; report a non-compliance list naming each document, the violated clause, and the owning fix skill.
 3. **Fix by domain, after the user confirms scope** — structure, placement, budgets → `doc-standards`; prose → `prose-standard`; leakage → `trim-cot-leakage`; dead surface → `find-simplifications`; pairs → `translate-docs`; superseded notes → `archive-agent-notes`.
 4. **Close out** — the documentation gates and `git diff --check`, re-record touched pairs, one Agent Note per non-trivial change, word deltas in the PR body — then the main flow takes the change home.
@@ -69,4 +69,4 @@ Off the main flow; reach for each on its own trigger.
 
 ## Setup
 
-The maintenance flow needs a repository's conventions in place first — the Agent Note tree, the bilingual pairing contract, the documentation standard, and the session-discipline lines. Run **`setup-demon-skills`** once to scaffold them and record where they live.
+The maintenance flow needs a repository's conventions in place first — the Agent Note tree, the bilingual pairing contract, the documentation standard, the session-discipline lines, and the documentation budget gate. Run **`setup-demon-skills`** once to scaffold them and record where they live.

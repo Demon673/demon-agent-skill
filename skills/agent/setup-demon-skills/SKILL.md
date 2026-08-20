@@ -1,6 +1,6 @@
 ---
 name: setup-demon-skills
-description: Configure a repository for the docs-maintenance skills — scaffold the Agent Note decision tree, the bilingual pairing convention, the documentation standard, and the session-discipline lines, and record where they live. Run once before first use of the maintenance flow.
+description: Configure a repository for the docs-maintenance skills — scaffold the Agent Note decision tree, the bilingual pairing convention, the documentation standard, the session-discipline lines, and the documentation budget gate, and record where they live. Run once before first use of the maintenance flow.
 disable-model-invocation: true
 ---
 
@@ -12,7 +12,8 @@ Scaffold the per-repository conventions the maintenance flow assumes:
 - **Bilingual pairing** — the `foo.md` + `foo.zh.md` + `foo.i18n.yaml` triplet convention and both switcher lines.
 - **Documentation standard** — the `docs/AGENTS.md` structure, tier, budget, and slop rules that `doc-standards` applies.
 - **Session discipline** — the four standing-order lines that gate execution, verification, and destructive actions.
-- **Where they live** — a line in the repository's root `AGENTS.md` pointing at all four.
+- **Documentation budget gate** — the self-contained `verify-doc-budgets` script plus its manifest that enforce the standard's ceilings.
+- **Where they live** — a line in the repository's root `AGENTS.md` pointing at the four doc locations.
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
 
@@ -27,6 +28,7 @@ Read what exists; do not assume:
 - `docs/i18n/` — does a bilingual pairing convention already exist?
 - `docs/AGENTS.md` — does a documentation standard already exist?
 - The root `AGENTS.md` — does a session-discipline block already exist?
+- `scripts/` — does a documentation budget gate already exist?
 
 ### 2. Scaffold what is missing
 
@@ -42,6 +44,7 @@ Inspect a file before editing or describing it; never present content as read or
 Destructive or irreversible actions (deletions, history rewrites, force-push) require an explicit, named confirmation.
 ```
 
+- **Documentation budget gate**: copy this skill's `scripts/verify-doc-budgets.mjs` into the host's `scripts/` and `scripts/doc-budgets.manifest.template.json` to `scripts/doc-budgets.manifest.json`; then adjust the ceilings to the host's always-loaded docs. The gate runs as `node scripts/verify-doc-budgets.mjs`, and `--list` prints the table.
 - **Record the pointers**: add a line to the root `AGENTS.md` pointing at the note rules, the pairing contract, the documentation standard, and the session discipline.
 
 ### 3. Confirm before writing
