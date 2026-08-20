@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Ask Demon
 
-You don't remember every skill, so ask. This pack complements Matt's engineering skills: Matt owns the engineering loop (grill → spec → tickets → implement → code-review — the single review entry point); this pack owns the documentation and Agent-Note maintenance loop and game-domain work. The full absorption map and seams are in the pack's skills map (`docs/skills-map.md` in the source repository).
+You don't remember every skill, so ask. This pack complements Matt's engineering skills: Matt owns the engineering loop (grill → spec → tickets → implement → code-review — the single review entry point) and the writing skills; this pack owns the documentation and Agent-Note maintenance loop and game-domain work. The full absorption map and seams are in the pack's skills map (`docs/skills-map.md` in the source repository).
 
 A **flow** is a path through the skills. One **main flow** carries the documentation work; a **governance run** brings a whole repository's docs in line with its standard; everything else is standalone, or a prose-and-docs tool layer that runs underneath.
 

@@ -26,3 +26,4 @@
 - Matt 的 pack 拥有工程循环（grill → spec → tickets → implement → code-review）；本 pack 拥有仓库维护流（repo-standards-review → find-simplifications → archive-agent-notes → translate-docs）、行文工具层与独立工具。ask-demon 负责路由两者。
 - code-review：Matt 的 code-review 是唯一 review 入口。deepseek-harness 的 review 检查清单已泛化进 repo-standards-review 的 references，任何 Standards 轴审查在面向代码的变更时都可以加载它。
 - translate-docs：deepseek-harness 原版仅用户可触发；此处保持 model+user 可达，因为维护流级联需要它。
+- writing：Matt 的写作技能（`writing-for-agents` 及其同族）拥有 agent-facing 交付框架——指针措辞、信息层级、渐进披露、剪枝；`prose-standard` 拥有 agent-facing 文档必须说什么。
