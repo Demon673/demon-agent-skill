@@ -34,7 +34,7 @@ foo.zh.md: 89e6c98d92887913cadf06b2adb97f26cde4849b
 
 ## 范围与排除项
 
-**纳入范围**：根目录的 `README.md` 和 `CONTRIBUTING.md`、`docs/` 下的所有内容文档，以及 `.agents/notes/` 中活跃的 Agent Note 生命周期目录（`proposed/`、`implemented/`、`rejected/`）。
+**纳入范围**：根目录的 `README.md`、`CONTRIBUTING.md` 和 `CONTEXT.md`、`docs/` 下的所有内容文档，以及 `.agents/notes/` 中活跃的 Agent Note 生命周期目录（`proposed/`、`implemented/`、`rejected/`）。
 
 **排除项**（永不配对，门禁会拒绝它们的 `.zh.md` 或 `.i18n.yaml`）：
 
