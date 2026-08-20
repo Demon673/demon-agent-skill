@@ -1,6 +1,6 @@
 ---
 name: doc-standards
-description: 'Use when writing, moving, reviewing, or auditing documentation in a repository — choosing hierarchy and detail, separating tutorials from references, checking tutorial progression, trimming doc slop, responding to a documentation-budget gate failure, or requests like "improve the docs", "audit the docs", "where should this be documented", or "this doc is too long".'
+description: 'Use when writing, moving, reviewing, or auditing documentation in a repository — choosing hierarchy and detail, separating tutorials from references, checking tutorial progression, trimming doc slop, responding to a documentation-budget gate failure, or requests like "improve the docs", "audit the docs", "govern the docs", "standardize the documentation of a repository", "where should this be documented", or "this doc is too long".'
 ---
 
 # Applying the documentation standard

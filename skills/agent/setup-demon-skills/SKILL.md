@@ -36,3 +36,7 @@ Read what exists; do not assume:
 ### 3. Confirm before writing
 
 Present each scaffolded piece and its destination; write only after the user confirms.
+
+### 4. Hand off
+
+Once scaffolded, the governance run (ask `ask-demon` to govern the docs) audits and enforces the standard going forward.
