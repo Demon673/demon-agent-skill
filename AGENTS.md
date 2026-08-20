@@ -104,3 +104,9 @@ Do not expand a skill spec speculatively. Prefer this loop:
 When changing synced upstream skills, preserve upstream compatibility unless the user explicitly wants a local fork.
 
 Act only on an explicit execution signal and confirmed scope; otherwise ask one clarifying question.
+
+A red check blocks the commit: fix it or explain it in the same turn, and name every failed check in the final report.
+
+Inspect a file before editing or describing it; never present content as read or work as done that you have not verified.
+
+Destructive or irreversible actions (deletions, history rewrites, force-push) require an explicit, named confirmation.
