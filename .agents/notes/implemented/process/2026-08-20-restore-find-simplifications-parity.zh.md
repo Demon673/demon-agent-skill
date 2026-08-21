@@ -10,12 +10,12 @@ Status: implemented
 
 ## 决策
 
-重写 `find-simplifications`，承载 `dsh-find-simplifications` 的完整工作流，并把宿主引用参数化：根 `AGENTS.md` 约定、架构文档、Agent Note 树、依赖政策与仓库 gate（门禁）取代 deepseek-harness 的路径、命令与架构事实。具体的宿主事实只以具名示例保留（`packages/*/src`、`knip`、pnpm gate 命令、`.agents/notes/<lifecycle>/<class>/` 布局）。正文保持 `SKILL.md` 自包含、不拆 `references/`，因为工作流的每个分支都会到达每一节。发布名称与调用默认值不变，Codex 元数据（`agents/openai.yaml`）同步更新。本记录落实而非推翻 [2026-08-19-fuse-find-simplifications](2026-08-19-fuse-find-simplifications.md) 记录的融合决策。
+重写 `find-simplifications`，承载 `dsh-find-simplifications` 的完整工作流，并把宿主引用参数化：根 `AGENTS.md` 约定、架构文档、Agent Note 树、依赖政策与仓库 gate（门禁）取代 deepseek-harness 的路径、命令与架构事实。具体的宿主事实只以具名示例保留（`packages/*/src`、`knip`、pnpm gate 命令、`.agents/notes/<lifecycle>/<class>/` 布局）。正文保持 `SKILL.md` 自包含；两个条件章节（合并被取代笔记、折合另一个 PR 或分支）后来移入 `references/`——见 [2026-08-20-split-find-simplifications-references](2026-08-20-split-find-simplifications-references.md)——survey+证明 核心保持内联。发布名称与调用默认值不变，Codex 元数据（`agents/openai.yaml`）同步更新。本记录落实而非推翻 [2026-08-19-fuse-find-simplifications](2026-08-19-fuse-find-simplifications.md) 记录的融合决策。
 
 ## 备选方案
 
 - **保留漂移后的正文。** 否决：用户要求与 `dsh-find-simplifications` 功能一致并通用化，被删的几节——信任与生命周期审计、依赖门槛、合并算法、PR 卫生——正是主要价值。
-- **把详细章节拆进 `references/`。** 否决：融合记录将本 skill 发布为自包含，且每节都是工作流每个分支都会到达的步骤，不是条件性参考。正文因此保持 146 行——高于简洁默认值，但在发布先例之内（`agent-doorbell` 165 行、`merging-stacked-prs` 127 行），且为对等规格所要求。
+- **把详细章节拆进 `references/`。** 否决：融合记录将本 skill 发布为自包含，且每节都是工作流每个分支都会到达的步骤，不是条件性参考。正文因此在治理审计前保持 146 行；两个条件章节随后拆入 `references/`（见拆分笔记），survey+证明 核心保持内联。
 - **改名为 `dsh-find-simplifications`。** 否决：`dsh-` 前缀标记 deepseek-harness 内部 skill；本仓库以普通名称发布可移植 skill。
 
 ## 后果
