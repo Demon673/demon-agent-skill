@@ -2,7 +2,7 @@
 
 English | [中文](skills-map.zh.md)
 
-This reference maps every deepseek-harness skill to its disposition in this repository. One home per capability: where Matt's pack owns a capability, this pack records a seam instead of a second skill. Absorption means: 1:1 port, generalized (no deepseek-harness paths, commands, or architecture facts except named examples), plain name, and an implemented Agent Note recording the disposition.
+This reference maps every deepseek-harness skill to its disposition in this repository. The governing concepts — absorption, seam, host repository — are defined in [CONTEXT.md](../CONTEXT.md).
 
 | deepseek-harness skill | Disposition | Counterpart here | Record |
 |---|---|---|---|

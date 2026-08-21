@@ -41,8 +41,9 @@ The gate's limit, stated plainly: a green gate means the pair was confirmed cons
 - Instruction files named `AGENTS.md` (root, `docs/`, `.agents/notes/**/`) — maintained in English only, like the root `AGENTS.md`.
 - `SKILL.md` files — English only, because frontmatter `name` and `description` must be English for discovery.
 - `docs/i18n/terminology.md` — bilingual by construction; it is one table, not a translated pair.
+- `docs/i18n/style-samples.md` — translation style samples; exempt from pairing by the manifest.
 - `.agents/notes/archived/` — sealed historical triplets; the archive gate validates their completeness and content seals.
 
 ## Division of labor
 
-Routine counterparts are updated directly by the working agent in one pass after loading [terminology.md](terminology.md); it does not invoke a translation skill or delegate to a subagent for an ordinary update. The extended [`translate-docs`](../../skills/agent/translate-docs/SKILL.md) workflow — whole-document translation, briefings, delegated prose — is reserved for explicit user invocation. Review still owns translation quality and terminology.
+An ordinary update never invokes a translation skill or delegates to a subagent; whole-document translation, briefings, and delegated prose stay in the extended workflow. Review still owns translation quality and terminology.

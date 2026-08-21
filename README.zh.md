@@ -44,10 +44,8 @@ npx skills@latest add Demon673/demon-agent-skill
 
 ## 文档与决策记录
 
-仓库遵循一套从官方 deepseek-harness 忠实移植的文档规范（Node ESM 门禁脚本复用官方 mdast/GFM 解析器）——见 [`docs/AGENTS.md`](docs/AGENTS.md)：一个事实一个归属、教程/参考分类、写作规则和 slop 清单。
+文档规范在 [`docs/AGENTS.md`](docs/AGENTS.md)；双语配对规则在 [`docs/i18n/README.md`](docs/i18n/README.md)；Agent Note 规则在 [.agents/notes/README.md](.agents/notes/README.md)。
 
-- 内容文档和活跃的 Agent Note 都是双语三件套（`foo.md` + `foo.zh.md` + `foo.i18n.yaml`，见 [`docs/i18n/README.md`](docs/i18n/README.md)）；`AGENTS.md` 指令文件和 `SKILL.md` 保持英文。
-- 决策记录（Agent Note）放在 `.agents/notes/`，按 `生命周期/分类/日期-主题` 组织（见 [.agents/notes/README.md](.agents/notes/README.md)）。
 - 事故复盘放在 [`docs/postmortem/`](docs/postmortem/README.md)；防御模式见 [`docs/defensive-patterns.md`](docs/defensive-patterns.md)，领域词汇见 [`docs/glossary.md`](docs/glossary.md)，翻译语体样例见 [`docs/i18n/style-samples.md`](docs/i18n/style-samples.md)。
 
 ## 常用命令
@@ -117,9 +115,7 @@ Bash 脚本会把 skill 链接到 `${AGENT_SKILLS_DIR:-$HOME/.agents/skills}`。
 
 ## Skill 编写规则
 
-新的 `SKILL.md` 文件默认用英文书写，尤其是 frontmatter 中的 `name` 和 `description`。
-
-描述应定义基于行为的触发条件，而不是依赖某种自然语言的关键词列表。优先保持 skill 简洁；把详细、有条件或平台特定的材料移到 `references/` 下直接链接的文件中。
+Skill 编写规则在根目录 [AGENTS.md](AGENTS.md)。
 
 ## License
 

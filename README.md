@@ -44,10 +44,8 @@ Private learning material, long-term context, and session records do not belong 
 
 ## Documentation and decisions
 
-The repository follows a documentation standard ported from the official deepseek-harness (the Node ESM gate scripts reuse the official mdast/GFM parser) — see [`docs/AGENTS.md`](docs/AGENTS.md): one home per fact, tutorial/reference classification, writing rules, and the slop checklist.
+The documentation standard lives in [`docs/AGENTS.md`](docs/AGENTS.md); bilingual pairing rules in [`docs/i18n/README.md`](docs/i18n/README.md); Agent Note rules in [.agents/notes/README.md](.agents/notes/README.md).
 
-- Content documents and active Agent Notes are bilingual triplets (`foo.md` + `foo.zh.md` + `foo.i18n.yaml`, see [`docs/i18n/README.md`](docs/i18n/README.md)); `AGENTS.md` instruction files and `SKILL.md` stay English.
-- Decision records (Agent Notes) live under `.agents/notes/`, organized by `lifecycle/class/date-topic` (see [.agents/notes/README.md](.agents/notes/README.md)).
 - Incident post-mortems live under [`docs/postmortem/`](docs/postmortem/README.md); defensive patterns are in [`docs/defensive-patterns.md`](docs/defensive-patterns.md), domain vocabulary in [`docs/glossary.md`](docs/glossary.md), and translation style samples in [`docs/i18n/style-samples.md`](docs/i18n/style-samples.md).
 
 ## Common commands
@@ -117,9 +115,7 @@ The Bash scripts link skills into `${AGENT_SKILLS_DIR:-$HOME/.agents/skills}`. U
 
 ## Skill writing rules
 
-New `SKILL.md` files should be written in English by default, especially the frontmatter `name` and `description`.
-
-Descriptions should define behavior-based trigger conditions instead of relying on keyword lists from one natural language. Prefer concise skills; move detailed, conditional, or platform-specific material into directly linked files under `references/`.
+Skill authoring rules live in the root [AGENTS.md](AGENTS.md).
 
 ## License
 

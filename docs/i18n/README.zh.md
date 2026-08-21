@@ -41,8 +41,9 @@ foo.zh.md: 89e6c98d92887913cadf06b2adb97f26cde4849b
 - 名为 `AGENTS.md` 的指令文件（根目录、`docs/`、`.agents/notes/**/`）——与根目录 `AGENTS.md` 一样仅维护英文。
 - `SKILL.md` 文件——仅英文，因为 frontmatter 中的 `name` 和 `description` 必须使用英文以便被发现。
 - `docs/i18n/terminology.md`——本身就是双语结构；它是一张表，不是翻译配对。
+- `docs/i18n/style-samples.md`——翻译语体样例；由清单豁免配对。
 - `.agents/notes/archived/`——封存的历史三件套；封存门禁校验它们的完整性和内容封印。
 
 ## 分工
 
-常规的对应版本由工作 agent 在加载 [terminology.md](terminology.md) 后单次直接更新；普通的更新不调用翻译 skill，也不委派给子 agent。扩展的 [`translate-docs`](../../skills/agent/translate-docs/SKILL.md) 工作流——整篇翻译、简报、委派翻译——仅用于用户显式调用。翻译质量和术语仍由评审负责。
+普通更新不调用翻译 skill，也不委派给子 agent；整篇翻译、简报与委派翻译属于扩展工作流。翻译质量与术语仍由评审负责。

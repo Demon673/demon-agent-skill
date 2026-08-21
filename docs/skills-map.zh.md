@@ -2,7 +2,7 @@
 
 [English](skills-map.md) | 中文
 
-本参考文档把每个 deepseek-harness skill（技能）对应到它在本仓库的处置结果。一个能力一个归属：Matt 的 pack 已拥有的能力，本 pack 只记录 seam（边界）而不造第二个 skill。吸收的含义是：1:1 移植、泛化（除具名示例外不保留 deepseek-harness 路径、命令或架构事实）、普通命名、以及一条 implemented Agent Note（决策记录）记录处置。
+本参考文档把每个 deepseek-harness skill（技能）对应到它在本仓库的处置结果。治理概念——absorption（吸收）、seam（边界）、host repository（宿主仓库）——定义在 [CONTEXT.md](../CONTEXT.md)。
 
 | deepseek-harness skill | 处置 | 本仓库对应物 | 记录 |
 |---|---|---|---|

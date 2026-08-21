@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-把两者融合为一个发布、自包含的 [`find-simplifications`](../../../../skills/agent/find-simplifications/SKILL.md)，放在 `skills/agent/` 下：它 survey 代码、文档和 skill，用消费方证据证明或否决每个候选，并把提案记录到宿主仓库的决策记录系统或行内 `TODO(tag)` 标记。删除内部 `doc-standards`；它的定位与预算规则保留在 `docs/AGENTS.md` 里，根 `AGENTS.md` 已指向该文件。本次融合的 doc-standards 半部分后来被推翻——操作工作流已以完整对等恢复于 [2026-08-20-absorb-doc-standards](2026-08-20-absorb-doc-standards.md)；仅 find-simplifications 半部分保留。
+把两者融合为一个发布、自包含的 [`find-simplifications`](../../../../skills/agent/find-simplifications/SKILL.md)，放在 `skills/agent/` 下：它 survey 代码、文档和 skill，用消费方证据证明或否决每个候选，并把提案记录到宿主仓库的决策记录系统或行内 `TODO(tag)` 标记。find-simplifications 半部分成立；doc-standards 半部分由 [2026-08-20-absorb-doc-standards](2026-08-20-absorb-doc-standards.md) 取代——它以完整对等恢复为已发布 skill。
 
 ## 备选方案
 
@@ -19,6 +19,6 @@ Status: implemented
 
 ## 后果
 
-- 发布清单从 16 增至 17 个 skill；内部集合从 5 减至 3 个。
 - 一个自洽的通用「找简化」skill 覆盖代码、文档和 skill，且无任何跨引用。
-- 文档的定位与预算由 `docs/AGENTS.md` 直接管辖，不再靠 wrapper skill；文档侧手段保留在 `docs/AGENTS.md` 的层级分类与 slop checklist，以及 `prose-standard`、`trim-cot-leakage` 中。
+- doc-standards 重新成为已发布的流程 skill（见吸收它的笔记）；本记录剩余的声明仅为 find-simplifications 的融合。
+- 文档的定位与预算由 `docs/AGENTS.md` 直接管辖；文档侧手段住在 `docs/AGENTS.md` 的层级分类与 slop checklist，以及 `prose-standard`、`trim-cot-leakage` 中。

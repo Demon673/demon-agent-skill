@@ -10,7 +10,7 @@ English | [中文](2026-08-19-fuse-find-simplifications.zh.md)
 
 ## Decision
 
-Fuse the two into one published, self-contained [`find-simplifications`](../../../../skills/agent/find-simplifications/SKILL.md) under `skills/agent/`: it surveys code, docs, and skills, proves or rejects each candidate with consumer evidence, and records proposals into the host repository's decision-record system or inline `TODO(tag)` markers. Delete the internal `doc-standards`; its placement and budget rules stay in `docs/AGENTS.md`, which the root `AGENTS.md` already points to. The doc-standards half of this fusion was later reversed — the operational workflow was revived at full parity in [2026-08-20-absorb-doc-standards](2026-08-20-absorb-doc-standards.md); only the find-simplifications half of this decision remains.
+Fuse the two into one published, self-contained [`find-simplifications`](../../../../skills/agent/find-simplifications/SKILL.md) under `skills/agent/`: it surveys code, docs, and skills, proves or rejects each candidate with consumer evidence, and records proposals into the host repository's decision-record system or inline `TODO(tag)` markers. The find-simplifications half of this decision stands; the doc-standards half is superseded by [2026-08-20-absorb-doc-standards](2026-08-20-absorb-doc-standards.md), which revived doc-standards at full parity as a published skill.
 
 ## Alternatives considered
 
@@ -19,6 +19,6 @@ Fuse the two into one published, self-contained [`find-simplifications`](../../.
 
 ## Consequences
 
-- The published manifest grows from 16 to 17 skills; the internal set shrinks from 5 to 3.
 - One coherent general "find simplifications" skill spans code, docs, and skills, with no cross-references.
-- Documentation placement and budgets are governed directly by `docs/AGENTS.md`, not by a wrapper skill; the doc-side means stay in the `docs/AGENTS.md` tier taxonomy and slop checklist plus `prose-standard` and `trim-cot-leakage`.
+- doc-standards is a published workflow skill again (see the absorbing note); this note's remaining claim is the find-simplifications fusion only.
+- Documentation placement and budgets are governed directly by `docs/AGENTS.md`; the doc-side means live in the `docs/AGENTS.md` tier taxonomy and slop checklist plus `prose-standard` and `trim-cot-leakage`.
