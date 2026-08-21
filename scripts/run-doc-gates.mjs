@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Run every documentation gate once (`doc-sync` equivalent). Faithful in shape
-// to deepseek-harness scripts/run-gates.ts, but running this repository's six
+// to deepseek-harness scripts/run-gates.ts, but running this repository's seven
 // gate scripts and aggregating their results.
 
 import { spawnSync } from 'node:child_process'
@@ -14,6 +14,7 @@ const GATES = [
   'verify-agent-note-format.mjs',
   'verify-md-wrap.mjs',
   'verify-md-links.mjs',
+  'verify-doc-refs.mjs',
   'verify-doc-budgets.mjs',
   'verify-archived-agent-notes.mjs',
 ]

@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-20-absorb-dsh-tooling.md
+2026-08-20-absorb-dsh-tooling.md: 9e09f5dd5e1e8abdd0d169341ca2cf13598bb601
+2026-08-20-absorb-dsh-tooling.zh.md: c2177b2571ec083ec709a8bfc5ac510ae44578fc

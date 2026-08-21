@@ -1,6 +1,6 @@
 ---
 name: setup-demon-skills
-description: Configure a repository for the docs-maintenance skills — scaffold the Agent Note decision tree, the bilingual pairing convention, the documentation standard, the session-discipline lines, and the documentation budget gate, and record where they live. Run once before first use of the maintenance flow.
+description: Configure a repository for the docs-maintenance skills — scaffold the Agent Note decision tree, the bilingual pairing convention, the documentation standard, the session-discipline lines, the documentation budget gate, the change-scope tool, and the git hooks, and record where they live. Run once before first use of the maintenance flow.
 disable-model-invocation: true
 ---
 
@@ -13,6 +13,8 @@ Scaffold the per-repository conventions the maintenance flow assumes:
 - **Documentation standard** — the `docs/AGENTS.md` structure, tier, budget, and slop rules that `doc-standards` applies.
 - **Session discipline** — the four standing-order lines that gate execution, verification, and destructive actions.
 - **Documentation budget gate** — the self-contained `verify-doc-budgets` script plus its manifest that enforce the standard's ceilings.
+- **Change-scope tool** — the `change-scope` script that reports a change's committed and worktree scope; `pre-push-checks` and `code-review` read it.
+- **Git hooks** — the `lefthook.yml` jobs that verify translation pairing, archived notes, and whitespace before commit.
 - **Where they live** — a line in the repository's root `AGENTS.md` pointing at the four doc locations.
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
@@ -29,6 +31,8 @@ Read what exists; do not assume:
 - `docs/AGENTS.md` — does a documentation standard already exist?
 - The root `AGENTS.md` — does a session-discipline block already exist?
 - `scripts/` — does a documentation budget gate already exist?
+- `scripts/change-scope.mjs` — does a change-scope helper already exist?
+- `lefthook.yml` — do git hooks already exist?
 
 ### 2. Scaffold what is missing
 
@@ -45,6 +49,8 @@ Destructive or irreversible actions (deletions, history rewrites, force-push) re
 ```
 
 - **Documentation budget gate**: copy this skill's `scripts/verify-doc-budgets.mjs` into the host's `scripts/` and `scripts/doc-budgets.manifest.template.json` to `scripts/doc-budgets.manifest.json`; then adjust the ceilings to the host's always-loaded docs. The gate runs as `node scripts/verify-doc-budgets.mjs`, and `--list` prints the table.
+- **Change-scope tool**: copy this skill's `scripts/change-scope.mjs` into the host's `scripts/`; `pre-push-checks` and `code-review` run `node scripts/change-scope.mjs --base <ref>` (optionally with `--head <ref>`) to report the committed and worktree scope of a change.
+- **Git hooks**: copy this skill's `scripts/lefthook.template.yml` to the host's `lefthook.yml`; it verifies translation pairing on staged consistency records, verifies archived notes, and checks staged whitespace.
 - **Record the pointers**: add a line to the root `AGENTS.md` pointing at the note rules, the pairing contract, the documentation standard, and the session discipline.
 
 ### 3. Confirm before writing

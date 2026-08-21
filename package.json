@@ -5,6 +5,7 @@
   "description": "Public Agent skills source repository. Documentation gates are faithful ports of the deepseek-harness pnpm gates.",
   "scripts": {
     "doc-gates": "node scripts/run-doc-gates.mjs",
+    "install-lefthook": "node scripts/install-lefthook.mjs",
     "verify-translation-pairing": "node scripts/verify-translation-pairing.mjs",
     "verify-agent-note-format": "node scripts/verify-agent-note-format.mjs",
     "verify-md-wrap": "node scripts/verify-md-wrap.mjs",

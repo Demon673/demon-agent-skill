@@ -1,0 +1,18 @@
+# Git hooks (lefthook). Keep these local checkpoints fast; CI owns the full
+# repository-wide gate matrix.
+# Install: `npm run install-lefthook` (runs scripts/install-lefthook.mjs).
+
+pre-commit:
+  jobs:
+    - name: translation pairing (staged records)
+      glob: '*.i18n.yaml'
+      exclude:
+        - '.agents/notes/archived/**'
+      run: node scripts/verify-translation-pairing.mjs --check {staged_files}
+
+    - name: archived agent notes
+      glob: '.agents/notes/archived/**'
+      run: node scripts/verify-archived-agent-notes.mjs
+
+    - name: whitespace (staged)
+      run: git diff --cached --check
