@@ -15,7 +15,7 @@ Scaffold the per-repository conventions the maintenance flow assumes:
 - **Documentation budget gate** — the self-contained `verify-doc-budgets` script plus its manifest that enforce the standard's ceilings.
 - **Change-scope tool** — the `change-scope` script that reports a change's committed and worktree scope; `pre-push-checks` and `code-review` read it.
 - **Git hooks** — the `lefthook.yml` jobs that verify translation pairing, archived notes, and whitespace before commit.
-- **Where they live** — a line in the repository's root `AGENTS.md` pointing at the four doc locations.
+- **Where they live** — a line in the repository's root `AGENTS.md` pointing at the four doc locations; the tools land in `scripts/` and `lefthook.yml`, which need no pointer.
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
 
@@ -50,7 +50,7 @@ Destructive or irreversible actions (deletions, history rewrites, force-push) re
 
 - **Documentation budget gate**: copy this skill's `scripts/verify-doc-budgets.mjs` into the host's `scripts/` and `scripts/doc-budgets.manifest.template.json` to `scripts/doc-budgets.manifest.json`; then adjust the ceilings to the host's always-loaded docs. The gate runs as `node scripts/verify-doc-budgets.mjs`, and `--list` prints the table.
 - **Change-scope tool**: copy this skill's `scripts/change-scope.mjs` into the host's `scripts/`; `pre-push-checks` and `code-review` run `node scripts/change-scope.mjs --base <ref>` (optionally with `--head <ref>`) to report the committed and worktree scope of a change.
-- **Git hooks**: copy this skill's `scripts/lefthook.template.yml` to the host's `lefthook.yml`; it verifies translation pairing on staged consistency records, verifies archived notes, and checks staged whitespace.
+- **Git hooks**: copy this skill's `scripts/lefthook.template.yml` to the host's `lefthook.yml` and `scripts/install-lefthook.mjs` beside it; it verifies translation pairing on staged consistency records, verifies archived notes, and checks staged whitespace. The pairing and archive jobs need the host's pairing and archive gates copied into its `scripts/` first; the whitespace job runs everywhere. Activate with `npm run install-lefthook`.
 - **Record the pointers**: add a line to the root `AGENTS.md` pointing at the note rules, the pairing contract, the documentation standard, and the session discipline.
 
 ### 3. Confirm before writing

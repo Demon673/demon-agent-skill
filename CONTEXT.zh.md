@@ -1,8 +1,8 @@
 # Demon Agent Skill Pack
 
-demon-agent-skill 仓库：一个公开的 skill（技能）源，发布可移植的维护 skill pack（技能包），并以本仓库作为其参考实现与第一个宿主。
-
 [English](CONTEXT.md) | 中文
+
+demon-agent-skill 仓库：一个公开的 skill（技能）源，发布可移植的维护 skill pack（技能包），并以本仓库作为其参考实现与第一个宿主。「_Avoid_」列列出英文近义词；中文译法以 [术语表](docs/i18n/terminology.md) 为准。
 
 ## Skill 与宿主
 

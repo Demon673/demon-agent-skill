@@ -62,4 +62,4 @@ Hunt these in any doc; [`doc-standards`](../skills/agent/doc-standards/SKILL.md)
 
 ## Validation
 
-Run `npm run doc-gates` for the documentation gates (pairing, note format, budgets, links, wrap, archive) and `.\scripts\validate-skills.ps1` for skill frontmatter and manifest consistency. See [README.md](../README.md) for the exact commands.
+Run `npm run doc-gates` for the documentation gates (pairing, note format, doc refs, budgets, links, wrap, archive) and `.\scripts\validate-skills.ps1` for skill frontmatter and manifest consistency. See [README.md](../README.md) for the exact commands.

@@ -9,8 +9,6 @@
 
 import { parseMarkdown } from './markdown.mjs'
 
-/** One block-level span of a Markdown document, in document order. */
-
 function linesOf(markdown) {
   const lines = markdown.replaceAll('\r\n', '\n').split('\n')
   if (lines[lines.length - 1] === '') lines.pop()
@@ -176,8 +174,6 @@ export function computeMechanicalUpdate(confirmedSource, currentSource, counterp
   if (changed.length === 0) return undefined
   return replaceSpanTexts(counterpart, target, new Map(changed.map((span) => [span.index, span.text])))
 }
-
-/** One parsed terminology-table data row. */
 
 /** Strip Markdown emphasis and code markers from a terminology cell. */
 function plainTerm(cell) {

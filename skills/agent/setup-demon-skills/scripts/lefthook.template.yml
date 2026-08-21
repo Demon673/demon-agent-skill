@@ -1,5 +1,8 @@
 # Git hooks (lefthook). Keep these local checkpoints fast; CI owns the full
 # repository-wide gate matrix.
+# The first two jobs need the pack's pairing and archive gates copied into the
+# host's scripts/ first (setup ships only the budget gate); the whitespace job
+# runs everywhere.
 pre-commit:
   jobs:
     - name: translation pairing (staged records)

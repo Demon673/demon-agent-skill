@@ -17,6 +17,7 @@ import { basename, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { runGit } from './lib/git.mjs'
+import { isExcluded, isScopeFile, pairAnchorOfArgument, parseTranslationPairingManifest, walk } from './lib/scope.mjs'
 import { parseMarkdown, translationStructureDiff, translationStructureSignature } from './lib/markdown.mjs'
 import { parseTranslationPairingRecord, translationPairPaths } from './lib/record.mjs'
 import {
@@ -36,48 +37,6 @@ const terminology = readFileSync(join(root, 'docs/i18n/terminology.md'), 'utf8')
 
 // --- scope and discovery ---------------------------------------------------
 
-/** Whether a repository-relative path belongs to the bilingual source corpus. */
-function isScopeFile(file) {
-  if (file.startsWith('.agents/notes/archived/')) return false
-  return file.startsWith('docs/') || file.startsWith('.agents/notes/')
-    || /^CONTRIBUTING(\.zh)?\.md$/.test(file)
-    || /^README(\.zh)?\.md$/i.test(file)
-    || /^CONTEXT(\.zh)?\.md$/i.test(file)
-}
-
-function isExcluded(file) {
-  return manifest.excluded.some((entry) => (entry.endsWith('/') ? file.startsWith(entry) : file === entry))
-}
-
-/** Parse and validate the checked-in bilingual manifest. */
-function parseTranslationPairingManifest(content) {
-  const value = JSON.parse(content)
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
-    throw new Error('translation-pairing.manifest.json: expected an object')
-  }
-  const unsupported = Object.keys(value).filter((field) => field !== 'excluded')
-  if (unsupported.length > 0) {
-    throw new Error(`translation-pairing.manifest.json: unsupported field(s): ${unsupported.join(', ')}; every in-scope document is required`)
-  }
-  const excluded = value.excluded
-  if (!Array.isArray(excluded) || !excluded.every((entry) => typeof entry === 'string')) {
-    throw new Error('translation-pairing.manifest.json: excluded must be an array of strings')
-  }
-  return { excluded }
-}
-
-/** Recursively list regular files under a directory as posix relative paths. */
-function walk(dir, base, out) {
-  if (!existsSync(dir)) return out
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const abs = join(dir, entry.name)
-    const rel = `${base}${base ? '/' : ''}${entry.name}`
-    if (entry.isDirectory()) walk(abs, rel, out)
-    else out.push(rel)
-  }
-  return out
-}
-
 /** Discover every in-scope pair via its consistency record, as English anchors. */
 function discoverAnchors() {
   const discovered = new Set()
@@ -95,15 +54,6 @@ function discoverAnchors() {
     if (isScopeFile(anchor)) discovered.add(anchor)
   }
   return [...discovered].sort()
-}
-
-/** Normalize one CLI pair argument to its English anchor path. */
-function pairAnchorOfArgument(argument) {
-  const normalized = argument.split('\\').join('/').replace(/^\.\//, '')
-  if (normalized.endsWith('.zh.md')) return `${normalized.slice(0, -'.zh.md'.length)}.md`
-  if (normalized.endsWith('.i18n.yaml')) return `${normalized.slice(0, -'.i18n.yaml'.length)}.md`
-  if (normalized.endsWith('.md')) return normalized
-  return `${normalized}.md`
 }
 
 // --- last-confirmed state --------------------------------------------------
@@ -137,7 +87,7 @@ function loadPair(anchor) {
   const paths = translationPairPaths(anchor)
   const zh = paths.zh
   const meta = paths.meta
-  if (!isScopeFile(anchor) || isExcluded(anchor)) {
+  if (!isScopeFile(anchor) || isExcluded(manifest, anchor)) {
     return `${anchor}: not an in-scope documentation pair (docs/i18n/README.md)`
   }
   const missing = [anchor, zh, meta].filter((file) => !existsSync(join(root, file)))

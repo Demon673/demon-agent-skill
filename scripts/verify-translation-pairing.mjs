@@ -12,6 +12,7 @@ import { basename, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { gitBlobHash, storeGitBlob } from './lib/git.mjs'
+import { isExcluded, isScopeFile, pairAnchorOfArgument, parseTranslationPairingManifest, walk } from './lib/scope.mjs'
 import { parseTranslationPairingRecord, renderTranslationPairingRecord, translationPairPaths } from './lib/record.mjs'
 import {
   languageSwitcherTargets,
@@ -24,14 +25,6 @@ import {
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)))
 
 // --- CLI argument parsing (port of parseTranslationPairingCliArgs) ----------
-
-function pairAnchorOfArgument(argument) {
-  const normalized = argument.split('\\').join('/').replace(/^\.\//, '')
-  if (normalized.endsWith('.zh.md')) return `${normalized.slice(0, -'.zh.md'.length)}.md`
-  if (normalized.endsWith('.i18n.yaml')) return `${normalized.slice(0, -'.i18n.yaml'.length)}.md`
-  if (normalized.endsWith('.md')) return normalized
-  return `${normalized}.md`
-}
 
 function parseCliArgs(argv) {
   const flags = argv.filter((argument) => argument.startsWith('--'))
@@ -60,32 +53,7 @@ function parseCliArgs(argv) {
 
 // --- scope and discovery ---------------------------------------------------
 
-/** Whether a repository-relative path belongs to the bilingual source corpus. */
-function isScopeFile(file) {
-  if (file.startsWith('.agents/notes/archived/')) return false
-  return file.startsWith('docs/') || file.startsWith('.agents/notes/')
-    || /^CONTRIBUTING(\.zh)?\.md$/.test(file)
-    || /^README(\.zh)?\.md$/i.test(file)
-    || /^CONTEXT(\.zh)?\.md$/i.test(file)
-}
-
-/** Recursively list regular files under a directory as posix relative paths. */
-function walk(dir, base, out) {
-  if (!existsSync(dir)) return out
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const abs = join(dir, entry.name)
-    const rel = `${base}${base ? '/' : ''}${entry.name}`
-    if (entry.isDirectory()) walk(abs, rel, out)
-    else out.push(rel)
-  }
-  return out
-}
-
-const manifest = JSON.parse(readFileSync(join(root, 'scripts/translation-pairing.manifest.json'), 'utf8'))
-
-function isExcluded(file) {
-  return manifest.excluded.some((entry) => (entry.endsWith('/') ? file.startsWith(entry) : file === entry))
-}
+const manifest = parseTranslationPairingManifest(readFileSync(join(root, 'scripts/translation-pairing.manifest.json'), 'utf8'))
 
 const request = parseCliArgs(process.argv.slice(2))
 const listMode = request.mode === 'list'
@@ -109,7 +77,7 @@ const metas = [...files].filter((f) => f.endsWith('.i18n.yaml')).sort()
 const sources = [...files].filter((f) => f.endsWith('.md') && !f.endsWith('.zh.md')).sort()
 
 if (request.scope === 'pairs') {
-  const rejected = request.anchors.filter((anchor) => !isScopeFile(anchor) || isExcluded(anchor))
+  const rejected = request.anchors.filter((anchor) => !isScopeFile(anchor) || isExcluded(manifest, anchor))
   const absent = request.anchors.filter((anchor) => {
     const { source, zh, meta } = translationPairPaths(anchor)
     return ![source, zh, meta].some((f) => existsSync(join(root, f)))
@@ -126,7 +94,7 @@ if (request.scope === 'pairs') {
 if (writeMode) {
   let written = 0
   for (const source of sources) {
-    if (isExcluded(source)) continue
+    if (isExcluded(manifest, source)) continue
     const paths = translationPairPaths(source)
     const { zh, meta } = paths
     if (!existsSync(join(root, source)) || !existsSync(join(root, zh))) {
@@ -157,7 +125,7 @@ const errors = []
 const state = new Map()
 
 for (const source of sources) {
-  if (isExcluded(source)) continue
+  if (isExcluded(manifest, source)) continue
   const { zh } = translationPairPaths(source)
   if (!existsSync(join(root, zh))) {
     errors.push(`${source}: in-scope documentation must merge bilingual (docs/i18n/README.md); add the counterpart and record the pair`)
@@ -178,7 +146,7 @@ for (const source of [...pairAnchors].sort()) {
     meta: existsSync(join(root, meta)),
   }
 
-  if (isExcluded(source)) {
+  if (isExcluded(manifest, source)) {
     if (have.zh) errors.push(`${zh}: ${source} is excluded from pairing; this translation must not exist`)
     if (have.meta) errors.push(`${meta}: ${source} is excluded from pairing; this consistency record must not exist`)
     continue
@@ -232,7 +200,7 @@ for (const source of [...pairAnchors].sort()) {
 }
 
 for (const source of sources) {
-  if (!isExcluded(source) && !state.has(source)) state.set(source, 'missing')
+  if (!isExcluded(manifest, source) && !state.has(source)) state.set(source, 'missing')
 }
 
 if (listMode) {

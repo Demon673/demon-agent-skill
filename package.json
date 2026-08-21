@@ -10,6 +10,7 @@
     "verify-agent-note-format": "node scripts/verify-agent-note-format.mjs",
     "verify-md-wrap": "node scripts/verify-md-wrap.mjs",
     "verify-md-links": "node scripts/verify-md-links.mjs",
+    "verify-doc-refs": "node scripts/verify-doc-refs.mjs",
     "verify-doc-budgets": "node scripts/verify-doc-budgets.mjs",
     "verify-archived-agent-notes": "node scripts/verify-archived-agent-notes.mjs"
   },

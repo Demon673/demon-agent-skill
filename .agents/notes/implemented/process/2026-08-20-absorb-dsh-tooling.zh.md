@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-把四个工具全部移植进 scripts/，零依赖 ESM，输出契约与 dsh 原版一致；verify-doc-refs 接进 run-doc-gates 成为第七道门禁；change-scope 与 lefthook 模板打包进 setup-demon-skills，让宿主也能获得。verify-mermaid 与 doc-typecheck 继续搁置：本仓库没有 mermaid 栅栏、文档里没有 TypeScript 样例，且两个门禁都带着宿主不应继承的依赖重量。
+把四个工具全部移植进 scripts/，零依赖 ESM。change-scope、gen-translation-brief 与 verify-doc-refs 保持 dsh 输出契约（verify-doc-refs 按本仓库文件类型扫描，而非 dsh 的包布局）；install-lefthook 是刻意精简的安装器——dsh 原版带着 worktree 本地钩子、配对合并驱动与迁移机制，宿主并不需要——lefthook 模板用配对门禁的工作区模式检查暂存文件，因为门禁没有 index 模式。verify-doc-refs 接进 run-doc-gates 成为第七道门禁；change-scope 与 lefthook 模板打包进 setup-demon-skills，让宿主也能获得。verify-mermaid 与 doc-typecheck 继续搁置：本仓库没有 mermaid 栅栏、文档里没有 TypeScript 样例，且两个门禁都带着宿主不应继承的依赖重量。
 
 ## 备选方案
 
@@ -23,4 +23,4 @@ Status: implemented
 - 本仓库的 pre-push-checks 与 code-review 现在有了确定性的范围输入；translate-docs 的简报路径端到端完整。
 - doc-gates 检查第七个表面：源码注释中的文档引用。
 - lefthook.yml 与安装器已落地但未激活；需要时运行 npm run install-lefthook 安装钩子。
-- 每个移植都复用现有 lib 助手（record、git、markdown），不新增任何 npm 依赖。
+- gen-translation-brief 复用现有 lib 助手（record、git、markdown）；其余三个保持自包含，使其 setup 模板持续可复制。未新增任何 npm 依赖。
