@@ -13,6 +13,7 @@
     "./skills/agent/record-browser-gif",
     "./skills/agent/repo-standards-review",
     "./skills/agent/setup-demon-skills",
+    "./skills/agent/show-me",
     "./skills/agent/translate-docs",
     "./skills/agent/trim-cot-leakage",
     "./skills/agent/workflow-capture",
