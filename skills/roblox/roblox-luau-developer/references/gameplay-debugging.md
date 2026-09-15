@@ -19,6 +19,14 @@ Diagnose runtime issues in Roblox experiences. Establish a reproducible path fir
 - Performance regressions: check `Heartbeat`/`RenderStepped` handlers, infinite loops, excessive Instance creation, and frequent pathfinding.
 - Save data loss: check DataStore throttling, `pcall`, `BindToClose`, save-on-player-leave, and session locking.
 
+## Respawn races
+
+The player is durable; the character is replaceable. `CharacterAdded` can fire again while an earlier handler is still yielding, so an unguarded handler writes stale state onto a new character.
+
+- Read the character from `player.Character` inside the handler instead of capturing it before a `task.wait` or a remote round trip.
+- Keep a per-player generation counter: increment it on `CharacterAdded` and `CharacterRemoving`, capture it before every yield, and re-check it afterwards before applying anything.
+- Disconnect the removed character's connections when it goes, so the current character only ever receives state from its own handler.
+
 ## Output
 
 - Reproduce path: how to trigger the issue.

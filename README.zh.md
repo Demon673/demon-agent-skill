@@ -38,7 +38,7 @@ npx skills@latest add Demon673/demon-agent-skill
 | 路径 | 职责 |
 |---|---|
 | `skills/agent/` | 通用 Agent 工作流技能 |
-| `skills/roblox/` | 本仓库维护的 Roblox Luau 与 TypeScript (roblox-ts) 工作流技能 |
+| `skills/roblox/` | 本仓库维护的 Roblox Luau、TypeScript (roblox-ts) 与屏幕界面工作流技能 |
 | `skills/dota2/` | DOTA2 custom game 开发技能 |
 | `skills/unreal/` | Unreal Blueprint 只读分析技能 |
 

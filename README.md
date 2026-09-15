@@ -38,7 +38,7 @@ Private learning material, long-term context, and session records do not belong 
 | Path | Purpose |
 |---|---|
 | `skills/agent/` | General agent workflow skills |
-| `skills/roblox/` | Roblox Luau and TypeScript (roblox-ts) workflow skills maintained by this repository |
+| `skills/roblox/` | Roblox Luau, TypeScript (roblox-ts), and on-screen UI workflow skills maintained by this repository |
 | `skills/dota2/` | DOTA2 custom game development skills |
 | `skills/unreal/` | Read-only Unreal Blueprint analysis skills |
 

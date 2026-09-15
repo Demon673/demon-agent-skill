@@ -20,6 +20,7 @@
     "./skills/dota2/dota2-custom-game-dev",
     "./skills/roblox/roblox-luau-developer",
     "./skills/roblox/roblox-typescript-developer",
+    "./skills/roblox/roblox-ui-developer",
     "./skills/unreal/unreal-blueprint-analyzer"
   ]
 }

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roblox UI Developer"
+  short_description: "Roblox UI: layout, focus, motion, and verification"
+  default_prompt: "Use $roblox-ui-developer when building or fixing Roblox interfaces — HUDs, menus, shops, inventories, settings — or when Roblox UI clips, duplicates after respawn, or cannot be driven by a gamepad."

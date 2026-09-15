@@ -65,6 +65,7 @@ Off the main flow; reach for each on its own trigger.
 - **`dota2-custom-game-dev`** — DOTA2 custom game addons.
 - **`roblox-luau-developer`** — Roblox Luau development, debugging, and Rojo sync.
 - **`roblox-typescript-developer`** — Roblox TypeScript (roblox-ts) development.
+- **`roblox-ui-developer`** — Roblox on-screen interfaces: layout, focus, motion, verification.
 - **`unreal-blueprint-analyzer`** — read-only Unreal Blueprint asset analysis.
 
 ## Setup

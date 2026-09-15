@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/feature/2026-09-16-add-roblox-ui-skill.md
+2026-09-16-add-roblox-ui-skill.md: 6a1df00eba8d960310801fb91edda04c7784016b
+2026-09-16-add-roblox-ui-skill.zh.md: bcc648d32a776f3429945c567d409ea3fac74c39

@@ -16,8 +16,4 @@ Some Roblox API methods behave differently when wrapped as TypeScript functions;
 
 ## Imports and Rojo paths
 
-A TypeScript import resolves through the compiled `out/` directory into a Rojo Instance path. Keep the import path aligned with the Rojo tree so the emitted `require` points at the right Instance; do not rely on the `.ts` filesystem path.
-
-## Source of truth
-
-Generated Luau under `out/` is a build artifact. Prefer editing the `.ts` source and running the project's build command; only patch generated Luau when the user asks for an emergency generated-output patch.
+A TypeScript import resolves through the compiled `out/` directory into a Rojo Instance path. Keep the import path aligned with the Rojo tree so the emitted `require` points at the right Instance; the Rojo tree, not the `.ts` filesystem path, is what resolves.
