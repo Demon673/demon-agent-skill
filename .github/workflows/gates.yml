@@ -1,0 +1,32 @@
+# The repository-wide gate matrix. The local lefthook jobs are the fast staged
+# subset; this workflow owns the full pass over every document, skill, and note.
+#
+# windows-latest: the skill validator resolves a Windows virtualenv layout
+# (.venv/skill-validation/Scripts/python.exe) and the maintenance scripts are
+# PowerShell.
+name: gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  gates:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: npm ci
+      - name: Documentation gates
+        run: npm run doc-gates
+      - name: Skill validation
+        shell: pwsh
+        run: .\scripts\validate-skills.ps1
