@@ -10,7 +10,7 @@ The 2026-08-17 port from deepseek-harness rewrote nine maintenance skills into r
 
 ## Decision
 
-Absorb the deepseek-harness skill set per the disposition table in [docs/skills-map.md](../../../../docs/skills-map.md): restore the drifted skills as generalized 1:1 ports, absorb dsh-code-review as a checklist reference under repo-standards-review (the review flow stays with Matt's code-review), port record-browser-gif with its encoder, defer doc-site-sync until a host has a docs-site projection, and skip the Cordis product skills and the badge. Each skill change carries its own implemented note; this note records the set-level decisions and seams.
+Absorb the deepseek-harness skill set per the disposition table in [docs/skills-map.md](../../../../docs/skills-map.md): restore the drifted skills as generalized 1:1 ports, absorb dsh-code-review as a checklist reference under workspace-standards-review (the review flow stays with Matt's code-review), port record-browser-gif with its encoder, defer doc-site-sync until a host has a docs-site projection, and skip the Cordis product skills and the badge. Each skill change carries its own implemented note; this note records the set-level decisions and seams.
 
 ## Alternatives considered
 

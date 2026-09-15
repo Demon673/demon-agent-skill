@@ -6,7 +6,7 @@ English | [中文](2026-08-19-package-maintenance-flow-as-pack.zh.md)
 
 ## Problem
 
-The four flow skills — `find-simplifications`, `archive-agent-notes`, `repo-standards-review`, `translate-docs` — lived in the internal `.agents/skills/` set, bound to this repository's paths and therefore not installable as part of the published pack. The pack also lacked the two structural skills Matt's suite uses — a router and a setup skill — so there was no entry point into the flow.
+The four flow skills — `find-simplifications`, `archive-agent-notes`, `workspace-standards-review`, `translate-docs` — lived in the internal `.agents/skills/` set, bound to this repository's paths and therefore not installable as part of the published pack. The pack also lacked the two structural skills Matt's suite uses — a router and a setup skill — so there was no entry point into the flow.
 
 ## Decision
 
@@ -21,5 +21,5 @@ Publish the flow as a coordinated pack. Move the four flow skills into `skills/a
 ## Consequences
 
 - The published manifest grows from 11 to 17 skills; the internal `.agents/skills/` set is empty and removed.
-- `ask-demon` is the single entry point; the maintenance flow cascades `repo-standards-review` → `find-simplifications` → `archive-agent-notes` → `translate-docs`.
+- `ask-demon` is the single entry point; the maintenance flow cascades `workspace-standards-review` → `find-simplifications` → `archive-agent-notes` → `translate-docs`.
 - The historical "internal vs published" notes are superseded by this decision; their links now point at `skills/agent/`.

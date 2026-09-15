@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-19-bind-flow-skills.md
-2026-08-19-bind-flow-skills.md: 39935288e77ad7ee43660725d5d8c3adda55d860
-2026-08-19-bind-flow-skills.zh.md: 44c0c99d397bc12f0e551cc533ea531e5ed16b98
+2026-08-19-bind-flow-skills.md: 7ef838242769acd7016b60f1fe9782a36bf79b0e
+2026-08-19-bind-flow-skills.zh.md: 282a78ec3e202c3ded531e0191154409169867c3

@@ -1,22 +1,24 @@
 ---
-name: repo-standards-review
-description: Review a pull request or a branch against the repository's standards — skill frontmatter and body, docs and bilingual pairs, Agent Notes, and scripts — and report blockers separately from suggestions, prioritizing correctness and required behavior over style.
+name: workspace-standards-review
+description: Review a change against this workspace's documented standards — skill frontmatter and bodies, docs and bilingual pairs, Agent Notes, and scripts — and supply the Standards axis of a two-axis review. Use when a change needs a standards-compliance pass, when a pre-push semantic review is due, or when another review needs this workspace's standards sources.
 ---
 
-# Reviewing a repository against its standards
+# Reviewing a change against the workspace's standards
 
-**This skill is guidance, not a complete checklist.** Verify the PR's live base and head, then read the diff and enough surrounding context to understand the design before judging. A short review with one substantiated blocker beats a list of nits.
+**This skill is guidance, not a complete checklist.** Verify the change's live base and head, then read the diff and enough surrounding context to understand the design before judging. A short review with one substantiated blocker beats a list of nits.
 
 For code-facing reviews — lifecycle, concurrency, invariants, disposal, and other implementation semantics — also load [the code review checklist](references/code-review-checklist.md).
 
 ## Sources of truth
 
-- The repository's root `AGENTS.md`: skill authoring, validation, and quality-gate rules.
-- The repository's documentation standard (usually `docs/AGENTS.md`): placement and prose discipline.
+- The workspace's root `AGENTS.md`: skill authoring, validation, and quality-gate rules.
+- The documentation standard (usually `docs/AGENTS.md`), with `doc-standards` for placement, structure, and budget audits.
 - `prose-standard`: required coverage and editorial judgment.
 - `trim-cot-leakage` and `prune-prompt-pollution`: reasoning-transcript and prompt-pollution smells respectively.
-- The repository's Agent Note rules (usually `.agents/notes/README.md`): format and scope. Treat disagreement with a note as a design discussion, not an automatic veto.
-- The repository's bilingual pairing contract and terminology table (usually `docs/i18n/README.md` and `docs/i18n/terminology.md`).
+- The Agent Note rules (usually `.agents/notes/README.md`), with `archive-agent-notes` for supersession and archival. Treat disagreement with a note as a design discussion, not an automatic veto.
+- The bilingual pairing contract and terminology table (usually `docs/i18n/README.md` and `docs/i18n/terminology.md`), with `translate-docs` for counterpart updates.
+- `setup-demon-skills`: the scaffold that installs the conventions above. When a workspace lacks one, report the gap rather than inventing a standard.
+- `pre-push-checks`: which checks cover a given diff, so the review can ask what the change should have carried before it was pushed.
 
 ## Blocking requirements
 
@@ -29,7 +31,7 @@ For code-facing reviews — lifecycle, concurrency, invariants, disposal, and ot
 ## Manual checks
 
 - **Intent and contract:** trace both sides of every changed rule or workflow; confirm the change matches the PR description and any Agent Note.
-- **Trigger quality:** a description's triggers are behavior-based and one per distinct branch, not a keyword pile or repo identity the body already carries.
+- **Trigger quality:** a description's triggers are behavior-based and one per distinct branch, not a keyword pile or workspace identity the body already carries; when Matt's writing pack is installed, `writing-for-agents` owns the delivery frame those descriptions are written in.
 - **One home per fact:** no rule restated in a second location without a link to its owner; no reasoning transcript, change narration, or duplicated rationale.
 - **Scope and necessity:** challenge speculative generality and unrelated edits; each change maps to a current consumer or a recorded decision.
 - **Scripts:** deterministic helpers handle failures loudly and state non-obvious contracts; generated files are not hand-edited.

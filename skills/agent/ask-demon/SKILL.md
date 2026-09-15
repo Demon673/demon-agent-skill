@@ -25,13 +25,13 @@ Every flow in this pack obeys the gate: findings and plans come first, fixes run
 
 The route documentation work travels: review a change, simplify what it surfaces, archive what it supersedes, sync the bilingual pairs.
 
-1. **`repo-standards-review`** — review a PR or branch against the repository's standards (skill frontmatter and body, docs, bilingual pairs, Agent Notes, scripts). Produces blockers plus suggestions. Run when a change is ready for review, or as a pre-push gate.
+1. **`workspace-standards-review`** — review a change against this workspace's documented standards (skill frontmatter and body, docs, bilingual pairs, Agent Notes, scripts), and supply the Standards axis when a two-axis review runs. Produces blockers plus suggestions. Run when a change needs a standards-compliance pass, or as a pre-push gate. Matt's `code-review` owns the review flow itself.
 2. **`doc-standards`** — when the change touches documentation, run the structural pass and audit probes so the docs land in the right home, at the right detail, under budget. The review hands off here for doc changes.
 3. **`find-simplifications`** — take the dead, duplicated, speculative, or over-built surface the review surfaced, and turn the worthwhile ones into proposed Agent Notes or TODO markers. The review and docs steps hand off here.
 4. **`archive-agent-notes`** — when a change makes an owning note obsolete, classify and archive the superseded records. A simplification hands off here.
 5. **`translate-docs`** — after the earlier steps touched docs or notes, sync their English↔Chinese pairs. The archive step hands off here when link repair edited a bilingual doc.
 
-The flow cascades — `repo-standards-review → doc-standards (when docs touched) → find-simplifications → archive-agent-notes → translate-docs` — and each step is also independently invocable.
+The flow cascades — `workspace-standards-review → doc-standards (when docs touched) → find-simplifications → archive-agent-notes → translate-docs` — and each step is also independently invocable.
 
 ## The governance run
 

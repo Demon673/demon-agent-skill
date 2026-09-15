@@ -65,4 +65,4 @@ When translations need to be written from scratch, the orchestrating agent does 
 
 ## How to respond to translation review
 
-Follow the review reporting guidance in `repo-standards-review`: evaluate each comment on its merits. For terminology comments, the terminology table is the contract — apply a reviewer's rendering decision to the terminology table, not only to one file.
+Follow the review reporting guidance in `workspace-standards-review`: evaluate each comment on its merits. For terminology comments, the terminology table is the contract — apply a reviewer's rendering decision to the terminology table, not only to one file.

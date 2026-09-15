@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-19-restore-flow-cascade.md
-2026-08-19-restore-flow-cascade.md: f98c253c50574450414ae1222a261f4a5da2c7b4
-2026-08-19-restore-flow-cascade.zh.md: e19697e333d8b269518ce34a36f6a3aa93de1ebf
+2026-08-19-restore-flow-cascade.md: 394bdf519548cee778f41a016a8d4f875f3782d4
+2026-08-19-restore-flow-cascade.zh.md: 1a398364c2003c4e8f12f91ecbdd705711dde7d1

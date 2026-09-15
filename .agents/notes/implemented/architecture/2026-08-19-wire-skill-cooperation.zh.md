@@ -12,15 +12,15 @@ Status: implemented
 
 接通四条配合边，同时保持每个 skill 独立可调用：description 不变，交接只是正文里的软指针，不是硬依赖。
 
-- `repo-standards-review` → `find-simplifications`：审查发现死面、重复、投机或过度构建的表面时，把这些候选交给 `find-simplifications`。
-- `repo-standards-review` → `trim-cot-leakage` 与 `prune-prompt-pollution`：这两个分别负责审查所检查的「推理转录」和「提示污染」两类臭味。
+- `workspace-standards-review` → `find-simplifications`：审查发现死面、重复、投机或过度构建的表面时，把这些候选交给 `find-simplifications`。
+- `workspace-standards-review` → `trim-cot-leakage` 与 `prune-prompt-pollution`：这两个分别负责审查所检查的「推理转录」和「提示污染」两类臭味。
 - `archive-agent-notes` → `translate-docs`：入链修复若编辑了活跃的双语文档，就把 counterpart 更新交给 `translate-docs`。
-- `pre-push-checks` → `repo-standards-review`：因 `pre-push-checks` 是发布且自包含的 skill、不能引用内部的 `repo-standards-review`，这条边落在根 `AGENTS.md` 里，作为 push 前的语义门禁。
+- `pre-push-checks` → `workspace-standards-review`：因 `pre-push-checks` 是发布且自包含的 skill、不能引用内部的 `workspace-standards-review`，这条边落在根 `AGENTS.md` 里，作为 push 前的语义门禁。
 
 ## 备选方案
 
 - **单一固定顺序的线性管道。** 否决：每个 skill 有各自的触发且必须保持独立可调用；强行排成一个顺序会增加路由层，并把本可单独使用的 skill 耦合起来。
-- **把 pre-push 边写进 `pre-push-checks`。** 否决：`pre-push-checks` 是发布且自包含的 skill；引用内部的 `repo-standards-review` 会破坏它在别处的安装，所以这条边落在根 `AGENTS.md`。
+- **把 pre-push 边写进 `pre-push-checks`。** 否决：`pre-push-checks` 是发布且自包含的 skill；引用内部的 `workspace-standards-review` 会破坏它在别处的安装，所以这条边落在根 `AGENTS.md`。
 
 ## 后果
 

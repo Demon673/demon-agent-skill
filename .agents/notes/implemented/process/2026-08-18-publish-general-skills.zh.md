@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-把 [`prose-standard`](../../../../skills/agent/prose-standard/SKILL.md)、[`trim-cot-leakage`](../../../../skills/agent/trim-cot-leakage/SKILL.md) 和 [`pre-push-checks`](../../../../skills/agent/pre-push-checks/SKILL.md) 发布到 `skills/agent/` 下，各自解耦为自包含：跨 skill 引用改为内联，工具命令泛化为「你仓库的 …」。把内部的 [`code-review`](../../../../skills/agent/repo-standards-review/SKILL.md) 重命名为 `repo-standards-review` 并保留在 `skills/agent/` 下，使其不再遮蔽全局的 `code-review`。
+把 [`prose-standard`](../../../../skills/agent/prose-standard/SKILL.md)、[`trim-cot-leakage`](../../../../skills/agent/trim-cot-leakage/SKILL.md) 和 [`pre-push-checks`](../../../../skills/agent/pre-push-checks/SKILL.md) 发布到 `skills/agent/` 下，各自解耦为自包含：跨 skill 引用改为内联，工具命令泛化为「你仓库的 …」。把内部的 [`code-review`](../../../../skills/agent/workspace-standards-review/SKILL.md) 重命名为 `workspace-standards-review` 并保留在 `skills/agent/` 下，使其不再遮蔽全局的 `code-review`。
 
 ## 备选方案
 
@@ -21,5 +21,5 @@ Status: implemented
 ## 后果
 
 - 发布清单从 12 增至 15 个 skill；内部集合从 9 减至 6 个。
-- `repo-standards-review` 现在成为本仓库专属的产物评审 skill，与通用 `code-review` 区分开。
+- `workspace-standards-review` 现在成为本仓库专属的产物评审 skill，与通用 `code-review` 区分开。
 - 三个发布的 skill 自包含，可干净装进 global。

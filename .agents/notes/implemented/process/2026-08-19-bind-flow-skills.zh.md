@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-把 `find-simplifications` 回退为内部且绑定：恢复 Agent Note 提案格式和 `archive-agent-notes` 交接。把四个流程 skill——`find-simplifications`、`archive-agent-notes`、`repo-standards-review`、`translate-docs`——用 `disable-model-invocation: true` 标记为用户调用。判据已写入根 `AGENTS.md`：独立能力是 agent 调用且解耦（发布）；刻意的流程步骤是用户调用且绑定本仓库。
+把 `find-simplifications` 回退为内部且绑定：恢复 Agent Note 提案格式和 `archive-agent-notes` 交接。把四个流程 skill——`find-simplifications`、`archive-agent-notes`、`workspace-standards-review`、`translate-docs`——用 `disable-model-invocation: true` 标记为用户调用。判据已写入根 `AGENTS.md`：独立能力是 agent 调用且解耦（发布）；刻意的流程步骤是用户调用且绑定本仓库。
 
 ## 备选方案
 

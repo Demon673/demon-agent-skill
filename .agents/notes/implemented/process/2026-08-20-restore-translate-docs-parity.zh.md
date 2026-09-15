@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-重写 `translate-docs`，承载 `dsh-translate-docs` 的完整工作流并把宿主引用参数化：仓库的配对 gate、翻译规则、术语表、文体样例与文档 gate 取代 deepseek-harness 的路径、命令与架构事实。简报驱动的更新路径把 `pnpm run gen-translation-brief --apply` 泛化为「仓库的 translation-brief 脚本（如存在），使用其 apply 标志」，并为没有该脚本的宿主（本仓库即没有）提供 diff 回退。行文更新与整篇批次的子 agent 委派恢复；`.i18n.yaml` 一致性记录、gate 的 `--write`/`--list` 标志与配对 manifest 作为具名细节恢复；新增的回应评审一节把「术语表即契约」规则链接到 `repo-standards-review`。调用边界保持 [restore-flow-cascade](2026-08-19-restore-flow-cascade.md) 已定的默认 model 与 user 可达，而非来源的 `disable-model-invocation: true`。本记录落实而非推翻 [absorb-dsh-skill-set](2026-08-20-absorb-dsh-skill-set.md) 记录的集合级吸收决策。
+重写 `translate-docs`，承载 `dsh-translate-docs` 的完整工作流并把宿主引用参数化：仓库的配对 gate、翻译规则、术语表、文体样例与文档 gate 取代 deepseek-harness 的路径、命令与架构事实。简报驱动的更新路径把 `pnpm run gen-translation-brief --apply` 泛化为「仓库的 translation-brief 脚本（如存在），使用其 apply 标志」，并为没有该脚本的宿主（本仓库即没有）提供 diff 回退。行文更新与整篇批次的子 agent 委派恢复；`.i18n.yaml` 一致性记录、gate 的 `--write`/`--list` 标志与配对 manifest 作为具名细节恢复；新增的回应评审一节把「术语表即契约」规则链接到 `workspace-standards-review`。调用边界保持 [restore-flow-cascade](2026-08-19-restore-flow-cascade.md) 已定的默认 model 与 user 可达，而非来源的 `disable-model-invocation: true`。本记录落实而非推翻 [absorb-dsh-skill-set](2026-08-20-absorb-dsh-skill-set.md) 记录的集合级吸收决策。
 
 ## 备选方案
 

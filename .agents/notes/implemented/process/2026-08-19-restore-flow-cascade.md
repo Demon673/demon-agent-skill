@@ -6,7 +6,7 @@ English | [中文](2026-08-19-restore-flow-cascade.zh.md)
 
 ## Problem
 
-[bind-flow-skills](2026-08-19-bind-flow-skills.md) marked the four flow skills — `find-simplifications`, `archive-agent-notes`, `repo-standards-review`, `translate-docs` — user-invoked with `disable-model-invocation: true`. A user-invoked skill has no model-facing description, so no other skill can reach it; the flow that note meant to formalize could not cascade, and `find-simplifications` could not hand off to `archive-agent-notes` on its own.
+[bind-flow-skills](2026-08-19-bind-flow-skills.md) marked the four flow skills — `find-simplifications`, `archive-agent-notes`, `workspace-standards-review`, `translate-docs` — user-invoked with `disable-model-invocation: true`. A user-invoked skill has no model-facing description, so no other skill can reach it; the flow that note meant to formalize could not cascade, and `find-simplifications` could not hand off to `archive-agent-notes` on its own.
 
 ## Decision
 

@@ -18,6 +18,10 @@ _Avoid_: product skill（产品技能）
 任何被 pack 脚手架约定、维护 skill 在其中运行的仓库。本仓库是第一个宿主。
 _Avoid_: target repo（目标仓库）、consumer repo（消费仓库）
 
+**Workspace（工作区）**：
+agent 会话实际操作的根——通常是宿主仓库，有时是它的子目录或不处于版本控制下的目录。维护 skill 读取它的约定；不是宿主仓库的工作区，沿用其外层宿主的约定。
+_Avoid_: working directory（工作目录）、local checkout（本地检出）
+
 **Absorption（吸收）**：
 以完整对等移植 skill 方法论、并把其宿主特定事实参数化为具名示例的过程。
 _Avoid_: port（移植）、copy（复制）——当指该过程时

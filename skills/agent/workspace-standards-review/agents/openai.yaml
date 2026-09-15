@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workspace Standards Review"
+  short_description: "Review a change against this workspace's standards"
+  default_prompt: "Use $workspace-standards-review to review a change against this workspace's standards."

@@ -6,7 +6,7 @@ Status: implemented
 
 ## 问题
 
-四个流程 skill——`find-simplifications`、`archive-agent-notes`、`repo-standards-review`、`translate-docs`——一直待在内部 `.agents/skills/` 集合里，绑定本仓库路径，因此无法作为发布 pack 的一部分安装。这个 pack 也缺少 Matt 套件用到的两个结构性 skill——路由和 setup skill——所以流程没有入口。
+四个流程 skill——`find-simplifications`、`archive-agent-notes`、`workspace-standards-review`、`translate-docs`——一直待在内部 `.agents/skills/` 集合里，绑定本仓库路径，因此无法作为发布 pack 的一部分安装。这个 pack 也缺少 Matt 套件用到的两个结构性 skill——路由和 setup skill——所以流程没有入口。
 
 ## 决策
 
@@ -21,5 +21,5 @@ Status: implemented
 ## 后果
 
 - 发布清单从 11 增至 17 个 skill；内部 `.agents/skills/` 集合清空并移除。
-- `ask-demon` 是唯一入口；维护流程级联 `repo-standards-review` → `find-simplifications` → `archive-agent-notes` → `translate-docs`。
+- `ask-demon` 是唯一入口；维护流程级联 `workspace-standards-review` → `find-simplifications` → `archive-agent-notes` → `translate-docs`。
 - 历史「内部 vs 发布」note 被本决策取代；其链接现在指向 `skills/agent/`。

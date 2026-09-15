@@ -18,6 +18,10 @@ _Avoid_: product skill
 Any repository whose conventions the pack scaffolds and where the maintenance skills then run. This repository is the first host.
 _Avoid_: target repo, consumer repo
 
+**Workspace**:
+The root an agent session operates in — normally a host repository, sometimes a subdirectory of one or a directory outside version control. The maintenance skills read its conventions; a workspace that is not a host repository inherits the enclosing one's.
+_Avoid_: working directory, local checkout
+
 **Absorption**:
 Porting a skill's methodology at full parity while generalizing its host-specific facts into parameters and named examples.
 _Avoid_: port, copy (when meaning this process)

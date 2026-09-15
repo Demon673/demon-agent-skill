@@ -36,6 +36,7 @@
 | slop | slop | slop（冗余） | |
 | switcher | switcher | switcher（切换链接） | |
 | trigger | trigger | trigger（触发条件） | |
+| workspace | workspace | workspace（工作区） | 工作空间、工作目录 |
 
 ## 中文类（中文译文使用中文）
 

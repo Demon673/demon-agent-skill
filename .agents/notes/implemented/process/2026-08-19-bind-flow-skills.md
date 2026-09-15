@@ -10,7 +10,7 @@ The previous turn published `find-simplifications` as a general skill, but it is
 
 ## Decision
 
-Revert `find-simplifications` to internal and bound: restore the Agent Note proposal format and the `archive-agent-notes` handoff. Mark the four flow skills — `find-simplifications`, `archive-agent-notes`, `repo-standards-review`, `translate-docs` — user-invoked with `disable-model-invocation: true`. The criterion, recorded in the root `AGENTS.md`: independent capabilities are agent-invoked and decoupled (published); deliberate flow steps are user-invoked and bound to this repository.
+Revert `find-simplifications` to internal and bound: restore the Agent Note proposal format and the `archive-agent-notes` handoff. Mark the four flow skills — `find-simplifications`, `archive-agent-notes`, `workspace-standards-review`, `translate-docs` — user-invoked with `disable-model-invocation: true`. The criterion, recorded in the root `AGENTS.md`: independent capabilities are agent-invoked and decoupled (published); deliberate flow steps are user-invoked and bound to this repository.
 
 ## Alternatives considered
 

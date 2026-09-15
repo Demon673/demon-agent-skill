@@ -10,7 +10,7 @@ The internal `skills/agent/` set held four skills with general-purpose cores cou
 
 ## Decision
 
-Publish [`prose-standard`](../../../../skills/agent/prose-standard/SKILL.md), [`trim-cot-leakage`](../../../../skills/agent/trim-cot-leakage/SKILL.md), and [`pre-push-checks`](../../../../skills/agent/pre-push-checks/SKILL.md) under `skills/agent/`, each decoupled to be self-contained: cross-skill references are inlined and tool commands are generalized to "your repository's …". Rename the internal [`code-review`](../../../../skills/agent/repo-standards-review/SKILL.md) to `repo-standards-review` and keep it under `skills/agent/`, so it no longer shadows the global `code-review`.
+Publish [`prose-standard`](../../../../skills/agent/prose-standard/SKILL.md), [`trim-cot-leakage`](../../../../skills/agent/trim-cot-leakage/SKILL.md), and [`pre-push-checks`](../../../../skills/agent/pre-push-checks/SKILL.md) under `skills/agent/`, each decoupled to be self-contained: cross-skill references are inlined and tool commands are generalized to "your repository's …". Rename the internal [`code-review`](../../../../skills/agent/workspace-standards-review/SKILL.md) to `workspace-standards-review` and keep it under `skills/agent/`, so it no longer shadows the global `code-review`.
 
 ## Alternatives considered
 
@@ -21,5 +21,5 @@ Publish [`prose-standard`](../../../../skills/agent/prose-standard/SKILL.md), [`
 ## Consequences
 
 - The published manifest grows from 12 to 15 skills; the internal set shrinks from 9 to 6.
-- `repo-standards-review` is now the repository's own artifact-review skill, distinct from the general `code-review`.
+- `workspace-standards-review` is now the repository's own artifact-review skill, distinct from the general `code-review`.
 - The three published skills are self-contained and install cleanly into global.

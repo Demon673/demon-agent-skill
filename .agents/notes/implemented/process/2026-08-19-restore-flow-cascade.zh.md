@@ -6,7 +6,7 @@ Status: implemented
 
 ## 问题
 
-[bind-flow-skills](2026-08-19-bind-flow-skills.md) 把四个流程 skill——`find-simplifications`、`archive-agent-notes`、`repo-standards-review`、`translate-docs`——用 `disable-model-invocation: true` 标记为用户调用。用户调用的 skill 没有面向模型的描述，其他 skill 无法触达它；那条 note 本想固化的流程因此无法级联，`find-simplifications` 也无法自行把记录交给 `archive-agent-notes`。
+[bind-flow-skills](2026-08-19-bind-flow-skills.md) 把四个流程 skill——`find-simplifications`、`archive-agent-notes`、`workspace-standards-review`、`translate-docs`——用 `disable-model-invocation: true` 标记为用户调用。用户调用的 skill 没有面向模型的描述，其他 skill 无法触达它；那条 note 本想固化的流程因此无法级联，`find-simplifications` 也无法自行把记录交给 `archive-agent-notes`。
 
 ## 决策
 

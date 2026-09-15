@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-按 [docs/skills-map.md](../../../../docs/skills-map.md) 的处置表吸收 deepseek-harness 技能集：把漂移的 skill 恢复为泛化的 1:1 移植；把 dsh-code-review 吸收为 repo-standards-review 下的检查清单参考（review 流程仍归 Matt 的 code-review）；移植 record-browser-gif 及其编码器；等某宿主有文档站点投影时再移植 doc-site-sync；跳过两个 Cordis 产品 skill 与 badge。每个 skill 的变更各自携带 implemented note（决策记录）；本记录保存集合级决策与 seam（边界）。
+按 [docs/skills-map.md](../../../../docs/skills-map.md) 的处置表吸收 deepseek-harness 技能集：把漂移的 skill 恢复为泛化的 1:1 移植；把 dsh-code-review 吸收为 workspace-standards-review 下的检查清单参考（review 流程仍归 Matt 的 code-review）；移植 record-browser-gif 及其编码器；等某宿主有文档站点投影时再移植 doc-site-sync；跳过两个 Cordis 产品 skill 与 badge。每个 skill 的变更各自携带 implemented note（决策记录）；本记录保存集合级决策与 seam（边界）。
 
 ## 备选方案
 

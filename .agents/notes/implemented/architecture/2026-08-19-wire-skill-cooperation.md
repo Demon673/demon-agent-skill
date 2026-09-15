@@ -12,15 +12,15 @@ The skills each fired on their own trigger; only `find-simplifications` → `arc
 
 Wire four cooperation edges, keeping every skill independently invocable: descriptions are unchanged, and handoffs are body-only pointers, not hard dependencies.
 
-- `repo-standards-review` → `find-simplifications`: a review that surfaces dead, duplicated, speculative, or over-built surface hands those candidates to `find-simplifications`.
-- `repo-standards-review` → `trim-cot-leakage` and `prune-prompt-pollution`: those two own the reasoning-transcript and prompt-pollution smells the review checks.
+- `workspace-standards-review` → `find-simplifications`: a review that surfaces dead, duplicated, speculative, or over-built surface hands those candidates to `find-simplifications`.
+- `workspace-standards-review` → `trim-cot-leakage` and `prune-prompt-pollution`: those two own the reasoning-transcript and prompt-pollution smells the review checks.
 - `archive-agent-notes` → `translate-docs`: inbound-link repair that edited an active bilingual doc hands the counterpart update to `translate-docs`.
-- `pre-push-checks` → `repo-standards-review`: expressed in the root `AGENTS.md` as a pre-push semantic gate, because `pre-push-checks` is published and self-contained and cannot reference the internal `repo-standards-review`.
+- `pre-push-checks` → `workspace-standards-review`: expressed in the root `AGENTS.md` as a pre-push semantic gate, because `pre-push-checks` is published and self-contained and cannot reference the internal `workspace-standards-review`.
 
 ## Alternatives considered
 
 - **One linear pipeline with a fixed order.** Rejected: each skill has its own trigger and must stay independently invocable; forcing one sequence would add a router layer and couple skills that are also used alone.
-- **Wire the pre-push edge inside `pre-push-checks`.** Rejected: `pre-push-checks` is a published, self-contained skill; referencing the internal `repo-standards-review` would break it when installed elsewhere, so the edge lives in the root `AGENTS.md`.
+- **Wire the pre-push edge inside `pre-push-checks`.** Rejected: `pre-push-checks` is a published, self-contained skill; referencing the internal `workspace-standards-review` would break it when installed elsewhere, so the edge lives in the root `AGENTS.md`.
 
 ## Consequences
 

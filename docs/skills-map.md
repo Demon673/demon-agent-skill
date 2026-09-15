@@ -13,7 +13,7 @@ This reference maps every deepseek-harness skill to its disposition in this repo
 | dsh-archive-agent-notes | absorbed; i18n sidecar step restored | skills/agent/archive-agent-notes/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-restore-archive-agent-notes-sidecar.md) |
 | dsh-trim-cot-leakage | absorbed; non-leakage boundary list restored | skills/agent/trim-cot-leakage/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-restore-trim-cot-leakage-boundaries.md) |
 | dsh-merging-stacked-prs | absorbed; minor generalization kept | skills/agent/merging-stacked-prs/SKILL.md | — |
-| dsh-code-review | checklist absorbed; review flow owned by Matt's code-review | skills/agent/repo-standards-review/references/code-review-checklist.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-code-review-checklist.md) |
+| dsh-code-review | checklist absorbed; review flow owned by Matt's code-review | skills/agent/workspace-standards-review/references/code-review-checklist.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-code-review-checklist.md) |
 | dsh-doc-standards | absorbed; operational workflow revived as doc-standards at full parity | skills/agent/doc-standards/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-doc-standards.md) |
 | dsh-doc-site-sync | deferred: port when a host repo has a docs-site projection | — | — |
 | record-browser-gif | absorbed including the deterministic encoder | skills/agent/record-browser-gif/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-record-browser-gif.md) |
@@ -23,7 +23,7 @@ This reference maps every deepseek-harness skill to its disposition in this repo
 
 ## Seams
 
-- Matt's pack owns the engineering loop (grill → spec → tickets → implement → code-review); this pack owns the repository-maintenance flow (repo-standards-review → find-simplifications → archive-agent-notes → translate-docs), the prose tool layer, and standalone tools. ask-demon routes both.
-- code-review: Matt's code-review is the single review entry point. The deepseek-harness review checklist is generalized into repo-standards-review's references so any Standards-axis review can load it for code-facing changes.
+- Matt's pack owns the engineering loop (grill → spec → tickets → implement → code-review); this pack owns the repository-maintenance flow (workspace-standards-review → find-simplifications → archive-agent-notes → translate-docs), the prose tool layer, and standalone tools. ask-demon routes both.
+- code-review: Matt's code-review is the single review entry point. The deepseek-harness review checklist is generalized into workspace-standards-review's references so any Standards-axis review can load it for code-facing changes.
 - translate-docs: the deepseek-harness original is user-only; here it stays model+user reachable because the maintenance-flow cascade needs it.
 - writing: Matt's writing skills (`writing-for-agents` and its siblings) own the agent-facing delivery frame — pointer wording, information hierarchy, progressive disclosure, pruning; `prose-standard` owns what agent-facing docs must say.

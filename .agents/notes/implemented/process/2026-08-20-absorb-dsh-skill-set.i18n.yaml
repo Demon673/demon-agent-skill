@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-20-absorb-dsh-skill-set.md
-2026-08-20-absorb-dsh-skill-set.md: 276b591ba56e8ea2fb8311609b122d2557961bfa
-2026-08-20-absorb-dsh-skill-set.zh.md: e6cbceaed181214220636a5899b1340a5862010f
+2026-08-20-absorb-dsh-skill-set.md: 0266e6f1f949fe32ba0ee0f502db4a7933a3573e
+2026-08-20-absorb-dsh-skill-set.zh.md: 262b808176309624011bf166cc67ba575edfddaa

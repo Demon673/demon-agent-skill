@@ -13,7 +13,7 @@
 | dsh-archive-agent-notes | 已吸收；i18n sidecar 步骤已恢复 | skills/agent/archive-agent-notes/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-restore-archive-agent-notes-sidecar.md) |
 | dsh-trim-cot-leakage | 已吸收；非泄漏边界清单已恢复 | skills/agent/trim-cot-leakage/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-restore-trim-cot-leakage-boundaries.md) |
 | dsh-merging-stacked-prs | 已吸收；保留轻微泛化 | skills/agent/merging-stacked-prs/SKILL.md | — |
-| dsh-code-review | 仅吸收检查清单；review（审查）流程归 Matt 的 code-review | skills/agent/repo-standards-review/references/code-review-checklist.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-code-review-checklist.md) |
+| dsh-code-review | 仅吸收检查清单；review（审查）流程归 Matt 的 code-review | skills/agent/workspace-standards-review/references/code-review-checklist.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-code-review-checklist.md) |
 | dsh-doc-standards | 已吸收；操作工作流以完整对等恢复为 doc-standards | skills/agent/doc-standards/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-doc-standards.md) |
 | dsh-doc-site-sync | 暂缓：等某宿主仓库有文档站点投影时再移植 | — | — |
 | record-browser-gif | 已吸收（含确定性编码器） | skills/agent/record-browser-gif/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-record-browser-gif.md) |
@@ -23,7 +23,7 @@
 
 ## seam
 
-- Matt 的 pack 拥有工程循环（grill → spec → tickets → implement → code-review）；本 pack 拥有仓库维护流（repo-standards-review → find-simplifications → archive-agent-notes → translate-docs）、行文工具层与独立工具。ask-demon 负责路由两者。
-- code-review：Matt 的 code-review 是唯一 review 入口。deepseek-harness 的 review 检查清单已泛化进 repo-standards-review 的 references，任何 Standards 轴审查在面向代码的变更时都可以加载它。
+- Matt 的 pack 拥有工程循环（grill → spec → tickets → implement → code-review）；本 pack 拥有仓库维护流（workspace-standards-review → find-simplifications → archive-agent-notes → translate-docs）、行文工具层与独立工具。ask-demon 负责路由两者。
+- code-review：Matt 的 code-review 是唯一 review 入口。deepseek-harness 的 review 检查清单已泛化进 workspace-standards-review 的 references，任何 Standards 轴审查在面向代码的变更时都可以加载它。
 - translate-docs：deepseek-harness 原版仅用户可触发；此处保持 model+user 可达，因为维护流级联需要它。
 - writing：Matt 的写作技能（`writing-for-agents` 及其同族）拥有 agent-facing 交付框架——指针措辞、信息层级、渐进披露、剪枝；`prose-standard` 拥有 agent-facing 文档必须说什么。

@@ -11,7 +11,7 @@
     "./skills/agent/prose-standard",
     "./skills/agent/prune-prompt-pollution",
     "./skills/agent/record-browser-gif",
-    "./skills/agent/repo-standards-review",
+    "./skills/agent/workspace-standards-review",
     "./skills/agent/setup-demon-skills",
     "./skills/agent/show-me",
     "./skills/agent/translate-docs",
