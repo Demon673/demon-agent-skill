@@ -80,6 +80,8 @@ Link local skills into the user's installed skills directory:
 
 Use `-Copy` only when a real file copy is needed instead of a Junction.
 
+Editing a skill here changes the source only: the installed copy updates when the pack is installed or released, so a skill under development stays uninstalled until that install, and the repository's install scripts stay the only writers of the installed directory.
+
 ## Context Policy
 
 - Do not store private learning material, personal context, session state, or durable workspace notes in this public repository.
