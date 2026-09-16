@@ -17,7 +17,7 @@ Adopt the DeepSeek Harness documentation conventions and port its pnpm gate tool
 - A documentation standard at [`docs/AGENTS.md`](../../../../docs/AGENTS.md): tutorial/reference classification, one-home-per-fact taxonomy, writing rules, word-budget ceilings, and a slop checklist.
 - A bilingual pairing contract at [`docs/i18n/README.md`](../../../../docs/i18n/README.md): English `foo.md` plus Chinese `foo.zh.md` plus a `foo.i18n.yaml` consistency record holding both sides' git blob hashes, mutual switchers, and a machine-checked mdast structural signature; [`translation-rules.md`](../../../../docs/i18n/translation-rules.md) and [`terminology.md`](../../../../docs/i18n/terminology.md) complete the i18n docs.
 - An Agent Note decision-record system under [`.agents/notes/`](../../README.md): path-encoded `{lifecycle}/{class}/date-topic`, a fixed header block and per-lifecycle skeleton, and a mandatory Alternatives-considered section.
-- Node ESM gate scripts ported from the upstream pnpm gates, using the official mdast/GFM parser: [`verify-translation-pairing.mjs`](../../../../scripts/verify-translation-pairing.mjs) with `scripts/lib/{markdown,record,git}.mjs` (`--list` / `--write` / `--check`), plus `verify-agent-note-format`, `verify-md-wrap`, `verify-md-links`, `verify-doc-budgets`, and `verify-archived-agent-notes`, orchestrated by [`run-doc-gates.mjs`](../../../../scripts/run-doc-gates.mjs) as `npm run doc-gates`.
+- Node ESM gate scripts ported from the upstream pnpm gates, using the official mdast/GFM parser: [`verify-translation-pairing.mjs`](../../../../scripts/verify-translation-pairing.mjs) with `scripts/lib/{markdown,record,git}.mjs` (`--list` / `--write` / `--check`), the remaining `verify-*` gates, and [`run-doc-gates.mjs`](../../../../scripts/run-doc-gates.mjs) orchestrating them as `npm run doc-gates` — that script is the gate list.
 - Maintenance skills repurposed from the upstream `dsh-*` skills and renamed to generic prefixes; they now ship as published skills under [`skills/agent/`](../../../../skills/agent/) — see [package-maintenance-flow-as-pack](../architecture/2026-08-19-package-maintenance-flow-as-pack.md).
 
 Instruction files named `AGENTS.md` and `SKILL.md` files remain English-only; content documents under `docs/` and active Agent Notes are bilingual triplets.
@@ -32,5 +32,5 @@ Instruction files named `AGENTS.md` and `SKILL.md` files remain English-only; co
 ## Consequences
 
 - Documentation now has one home per fact, a reviewable bilingual convention, and a machine-checked decision-record format.
-- `npm run doc-gates` enforces pairing (triplet, hashes, mdast structure), note format, budgets, links, wrap, and archive seals; review still owns parity and translation quality.
+- `npm run doc-gates` enforces every gate in one pass; review still owns parity and translation quality.
 - The gate scripts carry the same mdast/GFM structural signature as upstream without a TypeScript workspace.

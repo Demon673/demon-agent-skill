@@ -35,5 +35,5 @@
 
 ## gates（门禁）
 
-- **gate（门禁）** — 一个确定性的文档检查（配对、note 格式、预算、链接、换行、封存），由 `npm run doc-gates` 运行。
+- **gate（门禁）** — 一个确定性的文档检查，由 `npm run doc-gates` 运行；脚本本身即清单。
 - **mdast** — 这些门禁通过官方 GFM 解析器构建结构签名所用的 Markdown AST。

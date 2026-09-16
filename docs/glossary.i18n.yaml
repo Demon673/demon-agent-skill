@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write docs/glossary.md
 glossary.md: a5232fab772cca227468e93e8b49feefb6d74cce
-glossary.zh.md: 22c19d0c2bbb8b398a0a3d440762dcc4be9660e3
+glossary.zh.md: d7cf93b201b5290d21270910f7526057d6c5e86d

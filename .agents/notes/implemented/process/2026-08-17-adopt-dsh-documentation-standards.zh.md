@@ -17,7 +17,7 @@ Status: implemented
 - 位于 [`docs/AGENTS.md`](../../../../docs/AGENTS.md) 的文档标准：教程/参考分类、一个事实一个归属的分层法、写作规则、字数预算上限和冗余清单。
 - 位于 [`docs/i18n/README.md`](../../../../docs/i18n/README.md) 的双语配对契约：英文 `foo.md` 加中文 `foo.zh.md`，再加一份保存两侧 git blob 哈希的 `foo.i18n.yaml` 一致性记录，配相互切换链接和机器检查的 mdast 结构签名；[`translation-rules.md`](../../../../docs/i18n/translation-rules.md) 和 [`terminology.md`](../../../../docs/i18n/terminology.md) 补齐 i18n 文档。
 - 位于 [`.agents/notes/`](../../README.md) 的 Agent Note 决策记录体系：路径编码的 `{lifecycle}/{class}/date-topic`、固定头部块和按生命周期的骨架，以及必需的 Alternatives considered 章节。
-- 由上游 pnpm 门禁移植而来的 Node ESM 门禁脚本，使用官方 mdast/GFM 解析器：[`verify-translation-pairing.mjs`](../../../../scripts/verify-translation-pairing.mjs) 配 `scripts/lib/{markdown,record,git}.mjs`（`--list` / `--write` / `--check`），外加 `verify-agent-note-format`、`verify-md-wrap`、`verify-md-links`、`verify-doc-budgets` 和 `verify-archived-agent-notes`，由 [`run-doc-gates.mjs`](../../../../scripts/run-doc-gates.mjs) 编排为 `npm run doc-gates`。
+- 由上游 pnpm 门禁移植而来的 Node ESM 门禁脚本，使用官方 mdast/GFM 解析器：[`verify-translation-pairing.mjs`](../../../../scripts/verify-translation-pairing.mjs) 配 `scripts/lib/{markdown,record,git}.mjs`（`--list` / `--write` / `--check`）、其余 `verify-*` 门禁，以及把它们编排为 `npm run doc-gates` 的 [`run-doc-gates.mjs`](../../../../scripts/run-doc-gates.mjs)——该脚本本身即门禁清单。
 - 由上游 `dsh-*` skill 改造而来、改为通用前缀的维护类 skill；它们现在作为发布 skill 发布在 [`skills/agent/`](../../../../skills/agent/) 下——见 [package-maintenance-flow-as-pack](../architecture/2026-08-19-package-maintenance-flow-as-pack.md)。
 
 名为 `AGENTS.md` 的指令文件和 `SKILL.md` 文件保持纯英文；`docs/` 下的内容文档和活跃的 Agent Note 为双语三件套。
@@ -32,5 +32,5 @@ Status: implemented
 ## 后果
 
 - 文档现在遵循一个事实一个归属、可评审的双语约定，以及机器可检查的决策记录格式。
-- `npm run doc-gates` 强制执行配对（三件套、哈希、mdast 结构）、note 格式、预算、链接、换行和封存封印；内容一致性和翻译质量仍由评审负责。
+- `npm run doc-gates` 一次强制执行全部门禁；内容一致性和翻译质量仍由评审负责。
 - 门禁脚本在不依赖 TypeScript workspace 的前提下，承载了与上游相同的 mdast/GFM 结构签名。
