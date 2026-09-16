@@ -137,7 +137,7 @@ if (writeMode) {
     process.exit(1)
   }
   writeFileSync(manifestPath, renderManifest(nextFiles))
-  console.log(`verify-archived-agent-notes: sealed ${added.length} artifact(s); ${Object.keys(nextFiles.files).length} total in manifest.`)
+  console.log(`verify-archived-agent-notes: sealed ${added.length} artifact(s); ${Object.keys(nextFiles).length} total in manifest.`)
   process.exit(0)
 }
 

@@ -2,6 +2,8 @@
 
 Status: implemented
 
+Archived: 2026-09-16
+
 English | [中文](2026-08-20-absorb-code-review-checklist.zh.md)
 
 ## Problem

@@ -15,8 +15,13 @@ function walk(dir, out) {
   if (!existsSync(dir)) return out
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const abs = join(dir, entry.name)
-    if (entry.isDirectory()) walk(abs, out)
-    else if (entry.name.endsWith('.md')) out.push(abs)
+    if (entry.isDirectory()) {
+      // Frozen archived notes are historical snapshots: their own relative links
+      // are not maintained, so they stay out of this check. Inbound links from
+      // active prose are still verified and repaired when a triplet is archived.
+      if (entry.name === 'archived' && /[\\/]\.agents[\\/]notes$/.test(dir)) continue
+      walk(abs, out)
+    } else if (entry.name.endsWith('.md')) out.push(abs)
   }
   return out
 }

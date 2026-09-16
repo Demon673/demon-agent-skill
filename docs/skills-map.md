@@ -13,7 +13,7 @@ This reference maps every deepseek-harness skill to its disposition in this repo
 | dsh-archive-agent-notes | absorbed; i18n sidecar step restored | skills/agent/archive-agent-notes/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-restore-archive-agent-notes-sidecar.md) |
 | dsh-trim-cot-leakage | absorbed; non-leakage boundary list restored | skills/agent/trim-cot-leakage/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-restore-trim-cot-leakage-boundaries.md) |
 | dsh-merging-stacked-prs | absorbed; minor generalization kept | skills/agent/merging-stacked-prs/SKILL.md | — |
-| dsh-code-review | checklist absorbed; review flow owned by Matt's code-review | skills/agent/workspace-standards-review/references/code-review-checklist.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-code-review-checklist.md) |
+| dsh-code-review | checklist absorbed; review flow owned by Matt's code-review | skills/agent/workspace-standards-review/references/code-review-checklist.md | [note](../.agents/notes/archived/process/2026-08-20-absorb-code-review-checklist.md) |
 | dsh-doc-standards | absorbed; operational workflow revived as doc-standards at full parity | skills/agent/doc-standards/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-doc-standards.md) |
 | dsh-doc-site-sync | deferred: port when a host repo has a docs-site projection | — | — |
 | record-browser-gif | absorbed including the deterministic encoder | skills/agent/record-browser-gif/SKILL.md | [note](../.agents/notes/implemented/process/2026-08-20-absorb-record-browser-gif.md) |

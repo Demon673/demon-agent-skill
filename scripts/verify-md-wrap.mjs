@@ -15,7 +15,7 @@ function walk(dir, out) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const abs = join(dir, entry.name)
     if (entry.isDirectory()) {
-      if (entry.name === 'archived' && dir.endsWith('.agents/notes')) continue
+      if (entry.name === 'archived' && /[\\/]\.agents[\\/]notes$/.test(dir)) continue
       walk(abs, out)
     } else if (entry.name.endsWith('.md')) {
       out.push(abs)
