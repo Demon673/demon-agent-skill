@@ -112,7 +112,7 @@ When folding simplification ideas from a sibling PR or branch, follow [the foldi
 
 ## Validation and PR hygiene
 
-For docs-only Agent Note work, run at least the repository's documentation gates, lint, and `git diff --check` — for example `pnpm run doc-sync` plus `pnpm run lint` in a pnpm repo. For code or skill changes, also run the relevant validator when one exists. Select any other evidence from the outgoing diff; the pre-push hook contributes typecheck only.
+For docs-only Agent Note work, run at least the repository's documentation gates, lint, and `git diff --check` — for example `pnpm run doc-sync` plus `pnpm run lint` in a pnpm repo. For code or skill changes, also run the relevant validator when one exists. Select any other evidence from the outgoing diff.
 
 When opening or updating a PR, summarize:
 

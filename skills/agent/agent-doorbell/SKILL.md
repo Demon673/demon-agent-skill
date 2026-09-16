@@ -1,6 +1,6 @@
 ---
 name: agent-doorbell
-description: Install, update, or uninstall hook-based desktop/audio reminders for Agent stop and attention events. Use only when the user explicitly invokes agent-doorbell or asks to configure, enable, install, update, disable, remove, or uninstall automatic Agent doorbell hooks. Do not use for ordinary final responses or manual stop ringing.
+description: Install, update, or uninstall hook-based desktop and audio reminders for Agent stop and attention events.
 disable-model-invocation: true
 ---
 

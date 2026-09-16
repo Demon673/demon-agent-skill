@@ -1,6 +1,6 @@
 ---
 name: workspace-standards-review
-description: Review a change against this workspace's documented standards — skill frontmatter and bodies, docs and bilingual pairs, Agent Notes, and scripts — and supply the Standards axis of a two-axis review. Use when a change needs a standards-compliance pass, when a pre-push semantic review is due, or when another review needs this workspace's standards sources.
+description: Review a change against this workspace's documented standards and supply the Standards axis of a two-axis review. Use when a change needs a standards-compliance pass, when a pre-push semantic review is due, or when another review needs this workspace's standards sources.
 ---
 
 # Reviewing a change against the workspace's standards
@@ -23,7 +23,7 @@ For code-facing reviews — lifecycle, concurrency, invariants, disposal, and ot
 ## Blocking requirements
 
 1. **New prose receives semantic review.** Critically review every added or changed `SKILL.md`, description, doc, Agent Note, and comment with `prose-standard`. Automated checks do not establish coverage, accuracy, or placement.
-2. **Skills follow the layout and manifest.** A new skill has a valid `name` (hyphen-case) and a trigger-focused `description`; it is listed in the skill manifest; and its install name is unique across categories. Flag platform-specific metadata, runtime branding, and hard local paths unless justified.
+2. **Skills follow the layout and manifest.** A new skill has a valid `name` (hyphen-case) and a trigger-focused `description`; it is listed in the skill manifest; and its install name is unique across categories. Flag platform-specific metadata, runtime branding, and hard local paths unless justified — `rg -n "C:\\|C:/|Users/|Users\\|\.agents|\.codex|OpenAI|Codex|Claude|Cursor|openai\.yaml|agents/openai|must use|must install|requires? .*skill|depends? on .*skill" "skills/<category>/<skill-name>"` finds them, and a legitimate match needs its reason stated.
 3. **Bilingual pairs update together.** A change to either side of a pair updates the counterpart and keeps both switcher lines; the documentation gates are green. A green pairing check does not prove translation quality.
 4. **Every non-trivial change carries an Agent Note** in the same diff, updated to shipped present-tense state when a proposal is implemented.
 5. **Required evidence exists.** The author ran the relevant checks for the diff (documentation gates, skill validator, `git diff --check`); review covers the semantic gaps those cannot detect.

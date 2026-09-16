@@ -1,6 +1,6 @@
 ---
 name: merging-stacked-prs
-description: Use when landing a stack of dependent GitHub PRs, merging a PR whose base is another open PR's branch, or a request mentions stacked or dependent PRs. Requires each same-repository dependency chain to use GitHub's official stacked-PR feature before landing.
+description: Use when landing a stack of dependent GitHub PRs or merging a PR whose base is another open PR's branch. Requires each same-repository dependency chain to use GitHub's official stacked-PR feature before landing.
 ---
 
 # Landing an official GitHub PR stack

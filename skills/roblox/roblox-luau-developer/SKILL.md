@@ -1,6 +1,6 @@
 ---
 name: roblox-luau-developer
-description: Roblox Luau development — implement, review, and refactor Luau gameplay scripts; diagnose Roblox gameplay, replication, performance, DataStore, and runtime issues; and understand or sync Rojo-managed Roblox codebases. Use when working on Roblox, Luau, Roblox Studio code, or Rojo projects, or when debugging Roblox runtime issues; for on-screen interfaces use `roblox-ui-developer`, and for TypeScript-authored projects use `roblox-typescript-developer`.
+description: Roblox Luau development — implement, review, and refactor Luau gameplay scripts; diagnose Roblox gameplay, replication, performance, DataStore, and runtime issues; and understand or sync Rojo-managed Roblox codebases. Use when working on Roblox, Luau, Roblox Studio code, or Rojo projects, or when debugging Roblox runtime issues.
 ---
 
 # Roblox Luau Developer

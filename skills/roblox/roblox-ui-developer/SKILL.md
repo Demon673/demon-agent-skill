@@ -1,6 +1,6 @@
 ---
 name: roblox-ui-developer
-description: Roblox UI development — author, review, and fix on-screen interfaces such as HUDs, menus, shops, inventories, settings, and notifications, with ScreenGui/BillboardGui/SurfaceGui, UDim2 layout, UIListLayout/UIGridLayout, AutomaticSize, safe-area insets, gamepad focus, touch targets, and reduced-motion-aware tweens. Use when building Roblox UI, when an interface breaks on a phone or another device, when it duplicates or vanishes after respawn, when a controller cannot drive a menu, or when the UI was generated as one giant LocalScript.
+description: Roblox UI development — author, review, and fix on-screen interfaces such as HUDs, menus, shops, and inventories. Use when building Roblox UI, when an interface breaks on a phone or another device, when it duplicates or vanishes after respawn, when a controller cannot drive a menu, or when the UI was generated as one giant LocalScript.
 ---
 
 # Roblox UI Developer
@@ -65,7 +65,7 @@ Read `references/input-selection-motion.md` for the modal focus recipe, the depr
 - Name the configurations actually exercised — desktop, narrow portrait, mobile landscape, tablet-like, console/gamepad — and respawn once during the pass.
 - Exercise open and close, empty and full content, long text, disabled and error states, and both scroll ends.
 - Use Studio's Device Emulator and Controller Emulator; a real controller or phone when available.
-- Grade the evidence: executed in Studio, statically checked, prepared but not run, or unverified. Never present the latter three as a visual pass.
+- Grade the evidence: executed in Studio, statically checked, prepared but not run, or unverified. Never present the latter three as a Studio pass.
 
 ## Output
 

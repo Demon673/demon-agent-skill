@@ -1,6 +1,6 @@
 ---
 name: dota2-custom-game-dev
-description: Use when working on DOTA2 custom game addons, including server Lua, TypeScriptToLua/TSTL vscripts, SolidJS Panorama UI, TypeScript Panorama, Panorama JavaScript, Panorama CSS/XML, KV files, abilities, modifiers, custom game events, net tables, Dota2 MCP live status/testing, and API lookup against Dota 2 runtime or BigCiba/vscode-dota2-tools references.
+description: Use when working on DOTA2 custom game addons — server Lua and TypeScriptToLua/TSTL vscripts, KV data, abilities, modifiers, and net tables — or on scripted Panorama UI. Covers live Dota2 MCP testing and API lookup.
 ---
 
 # DOTA2 Custom Game Dev

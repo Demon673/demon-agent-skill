@@ -1,6 +1,6 @@
 ---
 name: unreal-blueprint-analyzer
-description: Read-only analysis of Unreal Engine Blueprint assets, including .uasset, .umap, Widget Blueprint, Animation Blueprint, Behavior Tree, Data Asset, and map assets. Use structured parsers (CUE4Parse, UAssetAPI, FModel), binary strings, editor exports, C++ or scripting source, project docs, config, and asset references to infer Blueprint purpose. Use when the user asks to parse, inspect, explain, reverse-read, or understand any Unreal Engine Blueprint or Blueprint-related asset.
+description: Read-only analysis of Unreal Engine Blueprint assets. Use when the user asks to explain what a Blueprint or Blueprint-related asset does, working from structured parsers, binary strings, editor exports, and adjacent source.
 ---
 
 # Unreal Blueprint Analyzer

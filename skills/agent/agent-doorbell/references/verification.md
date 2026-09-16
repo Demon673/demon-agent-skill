@@ -167,7 +167,7 @@ Expected behavior:
 - The script exits successfully.
 - The output includes agent, reason, summary, mode, title, pattern, and message.
 - No desktop notification or sound is emitted.
-- On Windows, real delivery may use `ring.ps1`; hook configs still call Node, not Python.
+- On Windows, real delivery may use `ring.ps1`; hook configs call the OS-native runner, never Python.
 
 ## Hook Runner Dry Run
 

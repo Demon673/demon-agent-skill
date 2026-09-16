@@ -1,11 +1,11 @@
 ---
 name: roblox-typescript-developer
-description: TypeScript-for-Roblox (roblox-ts) development workflow — compile TypeScript to Luau with rbxtsc, work with @rbxts/types, and apply TypeScript-to-Luau interop idioms in Rojo-synced Roblox projects. Use when working on a Roblox project that uses roblox-ts, rbxtsc, @rbxts packages, or a tsconfig targeting roblox-ts, when the user asks about TypeScript for Roblox, or when Roblox UI is authored in TypeScript; UI structure, focus, and motion follow `roblox-ui-developer`.
+description: TypeScript-for-Roblox (roblox-ts) development workflow — compile TypeScript to Luau with rbxtsc, work with @rbxts/types, and apply TypeScript-to-Luau interop idioms in Rojo-synced Roblox projects. Use when working on a Roblox project that uses roblox-ts, rbxtsc, @rbxts packages, or a tsconfig targeting roblox-ts, when the user asks about TypeScript for Roblox, or when Roblox UI is authored in TypeScript.
 ---
 
 # Roblox TypeScript Developer
 
-Workflow for Roblox projects authored in TypeScript and compiled to Luau with roblox-ts. The build pipeline, package ecosystem, and interop surface differ from plain Luau.
+Workflow for Roblox projects authored in TypeScript and compiled to Luau with roblox-ts. The build pipeline, package ecosystem, and interop surface differ from plain Luau. This skill covers the compiler, `@rbxts/*` packages, and the interop surface; framework layers built on top of roblox-ts, such as Flamework, are out of scope.
 
 ## Build pipeline
 
@@ -51,6 +51,11 @@ The Roblox authority model is unchanged by TypeScript: authoritative state and v
 - Array-shaped assumptions about Roblox APIs: they answer 1-indexed and can return several values — use `LuaTuple<[A, B]>` and the `@rbxts/types` members.
 - Services looked up by string lose their type: import them from `@rbxts/services`.
 - A stale build while Rojo serves leaves Studio on the previous behaviour: run the project's build or watch command.
+
+## Related
+
+- `roblox-luau-developer` — gameplay scripting, the server/client boundary, replication, DataStore, and Rojo projects in plain Luau.
+- `roblox-ui-developer` — on-screen interfaces: layout, safe-area insets, focus, motion, and the verification matrix.
 
 ## Verify
 

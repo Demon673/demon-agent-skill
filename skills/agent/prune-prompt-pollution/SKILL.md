@@ -1,6 +1,6 @@
 ---
 name: prune-prompt-pollution
-description: Use when writing or reviewing agent instructions and current-state docs — rules files (AGENTS.md/CLAUDE.md), skill bodies and descriptions, prompts, and design/plan/process docs — or on request to prune a task or session file. Restates negation priming, absence declarations, stale meta-narrative, and strawman warnings as positive targets or consequences.
+description: Use when writing or reviewing agent instructions and current-state docs — or on request to prune a task or session file. Restates negation priming, absence declarations, stale meta-narrative, and strawman warnings as positive targets or consequences.
 ---
 
 # Prune Prompt Pollution

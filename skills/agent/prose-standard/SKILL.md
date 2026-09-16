@@ -1,6 +1,6 @@
 ---
 name: prose-standard
-description: Use when writing, reviewing, restoring, trimming, or auditing prose — deciding where documentation or comments are required across Markdown, skill frontmatter and bodies, JSDoc, code and test comments, prompts, descriptions, diagnostics, and CLI or UI strings, and preserving complete contracts while removing reasoning transcripts and repetition.
+description: Use when writing, reviewing, restoring, trimming, or auditing prose — deciding where documentation or comments are required, and preserving complete contracts while removing reasoning transcripts and repetition.
 ---
 
 # Prose Standard

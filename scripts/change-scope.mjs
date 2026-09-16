@@ -1,5 +1,8 @@
 #!/usr/bin/env node
-/** Report the explicit committed and worktree scope of a repository change. */
+// Report the explicit committed and worktree scope of a repository change. It
+// never fetches or guesses a base: pass a ref you verified with `--base`, and add
+// `--head` only to inspect a commit other than HEAD. An ambiguous or missing ref
+// fails loudly instead of resolving to a default.
 
 import { spawnSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
