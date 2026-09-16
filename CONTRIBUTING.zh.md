@@ -15,6 +15,7 @@
 - `SKILL.md` 默认用英文书写；frontmatter 的 `name` 用连字符命名，`description` 以行为为基础、以触发为焦点。
 - 开 PR 前，对变更的 skill 运行 `.\scripts\validate-skills.ps1`，对任何文档或 Agent Note 变更运行 `npm run doc-gates`。
 - CI 会在每次 push 与 pull request 时跑这两道门禁；本地 git 钩子覆盖暂存内容的快速路径，每次克隆后运行一次 `npm run install-lefthook` 即可启用。
+- 在这里编辑 skill 只改变源码：已安装副本在 pack 被安装或发布时更新，因此开发中的 skill 在那之前保持未安装，安装脚本始终是已安装目录的唯一写入者。
 - 每个非平凡变更都要新增或更新一个 [Agent Note](.agents/notes/README.md)。
 
 ## 许可

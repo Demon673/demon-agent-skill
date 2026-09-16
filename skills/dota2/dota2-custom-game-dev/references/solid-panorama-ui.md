@@ -9,13 +9,12 @@ Use this reference when a DOTA2 custom game addon builds Panorama UI with SolidJ
 - SolidJS createSignal: `https://docs.solidjs.com/reference/basic-reactivity/create-signal`
 - SolidJS createEffect: `https://docs.solidjs.com/reference/basic-reactivity/create-effect`
 - SolidJS fine-grained reactivity: `https://docs.solidjs.com/advanced-concepts/fine-grained-reactivity`
-- Local case study: `tui12-style SolidJS Panorama project`
 
 Use official SolidJS docs for core reactivity semantics, but use the project build/runtime for Panorama-specific behavior.
 
-## tui12 Case Study
+## Observed case study
 
-`tui12` was the local reference project used to distill this skill's SolidJS Panorama conventions; keep this reference path-free so the skill remains portable across machines.
+The conventions below are distilled from a real SolidJS Panorama project. They stay project-agnostic and path-free so the reference ports across machines.
 
 Observed structure:
 
@@ -30,7 +29,7 @@ Observed structure:
 - UI entries import `render` from `@bigciba/solid-panorama-runtime` and mount into `$.GetContextPanel()`.
 - Helpers such as `solid/src/utils/solid_utils.ts` wrap `CustomNetTables`, `GameEvents`, player data, and service data into Solid signals/stores with cleanup.
 
-Do not copy tui12 business logic into other projects. Reuse the structural conventions only.
+These are structural conventions: reuse the structure, and leave the observed project's business logic where it is.
 
 ## Detection
 
@@ -58,7 +57,7 @@ Treat Solid TSX and style sources as source of truth.
 
 ## Entry Flow
 
-For a UI panel named `hud_setting` in the tui12-style layout:
+For a UI panel named `hud_setting` in this layout:
 
 1. `package.json.panorama.Hud` contains `"hud_setting"`.
 2. Source entry is `solid/src/ui/hud_setting/hud_setting.tsx`.
@@ -81,7 +80,7 @@ For tooltips and context menus, preserve nested output paths such as `tooltips/<
 ## Styling And XML
 
 - Panorama CSS is not browser CSS. Validate properties with `search_dota2_api.py --kind css`.
-- Use project-supported generated XML behavior. In tui12-style builds, XML plugins inject `eomstyle.css`, per-entry CSS, `panorama-polyfill.js`, `common.js`, and sequence actions when needed.
+- Use project-supported generated XML behavior. Where the build adds XML plugins, they inject `eomstyle.css`, per-entry CSS, `panorama-polyfill.js`, `common.js`, and sequence actions when needed.
 - Keep source XML includes minimal when the build plugin already injects common scripts/styles.
 - Check generated XML only to confirm includes and output paths.
 

@@ -15,6 +15,7 @@ Thanks for your interest in contributing. This repository is a public source of 
 - Write `SKILL.md` in English by default; the frontmatter `name` is hyphen-case and the `description` is behavior-based and trigger-focused.
 - Run `.\scripts\validate-skills.ps1` for the changed skill and `npm run doc-gates` for any documentation or Agent Note change before opening a PR.
 - CI runs both gates on every push and pull request; the local git hooks cover the staged fast path, and `npm run install-lefthook` activates them once per clone.
+- Editing a skill here changes the source only: the installed copy updates when the pack is installed or released, so a skill under development stays uninstalled until then, and the install scripts stay the only writers of the installed directory.
 - Add or update an [Agent Note](.agents/notes/README.md) for every non-trivial change.
 
 ## License
