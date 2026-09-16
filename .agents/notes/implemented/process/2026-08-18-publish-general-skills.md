@@ -10,7 +10,7 @@ The internal `skills/agent/` set held four skills with general-purpose cores cou
 
 ## Decision
 
-Publish [`prose-standard`](../../../../skills/agent/prose-standard/SKILL.md), [`trim-cot-leakage`](../../../../skills/agent/trim-cot-leakage/SKILL.md), and [`pre-push-checks`](../../../../skills/agent/pre-push-checks/SKILL.md) under `skills/agent/`, each decoupled to be self-contained: cross-skill references are inlined and tool commands are generalized to "your repository's …". Rename the internal [`code-review`](../../../../skills/agent/workspace-standards-review/SKILL.md) to `workspace-standards-review` and keep it under `skills/agent/`, so it no longer shadows the global `code-review`.
+Publish [`prose-standard`](../../../../skills/agent/prose-standard/SKILL.md), [`trim-cot-leakage`](../../../../skills/agent/trim-cot-leakage/SKILL.md), and [`pre-push-checks`](../../../../skills/agent/pre-push-checks/SKILL.md) under `skills/agent/`, each decoupled to be self-contained: cross-skill references are inlined and tool commands are generalized to "your repository's …". Rename the internal `code-review` to `repo-standards-review` and keep it under `.agents/skills/`, so it no longer shadows the global `code-review`; after the later rename recorded in [rename-to-workspace-standards-review](../architecture/2026-09-16-rename-to-workspace-standards-review.md), the skill carries the current name and path [`workspace-standards-review`](../../../../skills/agent/workspace-standards-review/SKILL.md).
 
 ## Alternatives considered
 

@@ -19,5 +19,5 @@ Every skill carries a Codex metadata file `agents/openai.yaml` beside `SKILL.md`
 
 ## Consequences
 
-- The nine developed skills now carry `agents/openai.yaml`; the four flow skills are `allow_implicit_invocation: false`, the five capabilities default to allowed.
+- Every skill carries `agents/openai.yaml`; `allow_implicit_invocation: false` is set on the three pack flow skills alone (`agent-doorbell`, `ask-demon`, `setup-demon-skills`), and the flow skills' default invocation is recorded in [restore-flow-cascade](2026-08-19-restore-flow-cascade.md).
 - The two-harness mapping is durable documentation, so future skills keep it without re-deriving it.

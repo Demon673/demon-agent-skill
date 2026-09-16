@@ -22,5 +22,5 @@ Status: implemented
 
 - 本仓库的 pre-push-checks 与 code-review 现在有了确定性的范围输入；translate-docs 的简报路径端到端完整。
 - doc-gates 检查第七个表面：源码注释中的文档引用。
-- lefthook.yml 与安装器已落地但未激活；需要时运行 npm run install-lefthook 安装钩子。
+- lefthook.yml 与安装器已落地并在本仓库生效：lefthook 是 devDependency，预提交钩子已运行，新克隆需运行一次 npm run install-lefthook 激活（[activate-hooks-and-ci](2026-09-16-activate-hooks-and-ci.md)）。
 - gen-translation-brief 复用现有 lib 助手（record、git、markdown）；其余三个保持自包含，使其 setup 模板持续可复制。未新增任何 npm 依赖。

@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-把 [`prose-standard`](../../../../skills/agent/prose-standard/SKILL.md)、[`trim-cot-leakage`](../../../../skills/agent/trim-cot-leakage/SKILL.md) 和 [`pre-push-checks`](../../../../skills/agent/pre-push-checks/SKILL.md) 发布到 `skills/agent/` 下，各自解耦为自包含：跨 skill 引用改为内联，工具命令泛化为「你仓库的 …」。把内部的 [`code-review`](../../../../skills/agent/workspace-standards-review/SKILL.md) 重命名为 `workspace-standards-review` 并保留在 `skills/agent/` 下，使其不再遮蔽全局的 `code-review`。
+把 [`prose-standard`](../../../../skills/agent/prose-standard/SKILL.md)、[`trim-cot-leakage`](../../../../skills/agent/trim-cot-leakage/SKILL.md) 和 [`pre-push-checks`](../../../../skills/agent/pre-push-checks/SKILL.md) 发布到 `skills/agent/` 下，各自解耦为自包含：跨 skill 引用改为内联，工具命令泛化为「你仓库的 …」。把内部的 `code-review` 重命名为 `repo-standards-review` 并保留在 `.agents/skills/` 下，使其不再遮蔽全局的 `code-review`；该 skill 在之后由 [rename-to-workspace-standards-review](../architecture/2026-09-16-rename-to-workspace-standards-review.md) 记录的改名后，带着当前的名称与路径 [`workspace-standards-review`](../../../../skills/agent/workspace-standards-review/SKILL.md)。
 
 ## 备选方案
 

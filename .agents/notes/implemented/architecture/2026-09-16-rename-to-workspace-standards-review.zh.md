@@ -24,7 +24,7 @@ Status: implemented
 
 ## 后果
 
-- pack 的标准评审 skill 现为 `workspace-standards-review`；24 个文件中的 58 处提及——根 `AGENTS.md`、插件清单、技能地图双语对、`ask-demon`、`translate-docs`，以及八组历史 Agent Note 三件套——都带着当前的名称与路径。
+- pack 的标准评审 skill 现为 `workspace-standards-review`；当前的名称与路径由根 `AGENTS.md`、插件清单、技能地图双语对、`ask-demon`、`translate-docs` 以及各组历史 Agent Note 三件套承载。
 - 发现路径按意图分开：Matt 的 `code-review` 拥有「审查自某个固定点以来的 diff」，带它的 Spec 轴与 smell 基线；本 skill 拥有本 workspace 的标准出处，以及标准审查所要加载的代码面检查清单。
 - 文档治理集从评审即可触达：`doc-standards`、`translate-docs`、`archive-agent-notes`、`find-simplifications` 都在其判断适用的位置被点名。
 - `CONTEXT.md` 在 **Host repository**（约定的归属）之外定义 **Workspace**——会话操作的根；术语表固定 `workspace（工作区）`。

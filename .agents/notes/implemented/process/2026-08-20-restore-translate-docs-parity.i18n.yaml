@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-20-restore-translate-docs-parity.md
-2026-08-20-restore-translate-docs-parity.md: f57f1fc4251cd48469d7625cf631b6cf999700f6
-2026-08-20-restore-translate-docs-parity.zh.md: 65d299d9ba973746ecef219f026702686209dccf
+2026-08-20-restore-translate-docs-parity.md: adeb12af8d6d973247ac1de8963614c5bb5a0576
+2026-08-20-restore-translate-docs-parity.zh.md: cf8ee0df30533d13f6949bb7f340cde5288eca93

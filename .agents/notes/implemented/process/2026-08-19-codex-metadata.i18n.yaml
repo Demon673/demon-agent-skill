@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-19-codex-metadata.md
-2026-08-19-codex-metadata.md: 0ed7a4aed13958ff91ff5585342e1d18e0af3c40
-2026-08-19-codex-metadata.zh.md: 8b83307125280f081c66f672b79c89370846ecaf
+2026-08-19-codex-metadata.md: bde26dd51d1155c6801d1b6811ccce0cde06624d
+2026-08-19-codex-metadata.zh.md: b6db059f0e39508b634a1a24d6be5a01c8228daf

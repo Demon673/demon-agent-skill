@@ -22,4 +22,4 @@ The pack carries the four standing-order lines: setup-demon-skills appends them 
 
 - Every repository set up by the pack starts with the four-line session discipline in its standing orders.
 - ask-demon explains the discipline without duplicating its home; the rules stay one line each in the host AGENTS.md.
-- This repository already carries the first line; the remaining three arrive when setup next runs here or elsewhere.
+- This repository's root `AGENTS.md` carries all four lines.

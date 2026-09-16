@@ -19,5 +19,5 @@ skill 只携带 DeepSeek Harness 的 frontmatter（`name`、`description`、`dis
 
 ## 后果
 
-- 九个开发 skill 现在都携带 `agents/openai.yaml`；四个流程 skill 为 `allow_implicit_invocation: false`，五个能力默认允许。
+- 每个 skill 都携带 `agents/openai.yaml`；`allow_implicit_invocation: false` 只设在三个 pack 流程 skill（`agent-doorbell`、`ask-demon`、`setup-demon-skills`）上，流程 skill 的默认调用记录在 [restore-flow-cascade](2026-08-19-restore-flow-cascade.md)。
 - 双 harness 映射是持久文档，未来 skill 无需重新推导即可保留它。

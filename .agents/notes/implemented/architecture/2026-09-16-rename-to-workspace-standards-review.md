@@ -24,7 +24,7 @@ Wire the governance skills into `## Sources of truth`, each beside the artifact 
 
 ## Consequences
 
-- The pack's standards-review skill is `workspace-standards-review`; 58 mentions across 24 files — root `AGENTS.md`, the plugin manifest, the skills map pair, `ask-demon`, `translate-docs`, and eight historical Agent Note triplets — carry the current name and path.
+- The pack's standards-review skill is `workspace-standards-review`; the current name and path are carried by root `AGENTS.md`, the plugin manifest, the skills map pair, `ask-demon`, `translate-docs`, and the historical Agent Note triplets.
 - Discovery splits by intent: Matt's `code-review` owns a review of the diff since a fixed point, with its Spec axis and smell baseline; this skill owns the workspace's standards sources and the code-facing checklist a standards pass loads.
 - The documentation-governance set is reachable from the review: `doc-standards`, `translate-docs`, `archive-agent-notes`, and `find-simplifications` are named where their judgment applies.
 - `CONTEXT.md` defines **Workspace** — the root a session operates in — beside **Host repository**, which keeps conventions' ownership; the terminology table pins `workspace（工作区）`.

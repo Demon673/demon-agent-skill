@@ -22,5 +22,5 @@ Port all four to scripts/ as zero-dependency ESM. change-scope, gen-translation-
 
 - pre-push-checks and code-review now have their deterministic scope input in this repository; translate-docs' briefing path is complete end to end.
 - doc-gates checks a seventh surface: documentation citations in source comments.
-- lefthook.yml and its installer are landed but not activated; run npm run install-lefthook to install the hooks when wanted.
+- lefthook.yml and its installer are landed and active in this repository: lefthook is a devDependency, the pre-commit hook runs, and a fresh clone activates it with npm run install-lefthook once ([activate-hooks-and-ci](2026-09-16-activate-hooks-and-ci.md)).
 - gen-translation-brief reuses the existing lib helpers (record, git, markdown); the other three stay self-contained so their setup templates remain copy-compatible. No npm dependency was added.
