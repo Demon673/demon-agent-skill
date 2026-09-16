@@ -35,5 +35,5 @@ Domain vocabulary for this repository uses one canonical term per concept. Terms
 
 ## gates
 
-- **gate** — one deterministic documentation check (pairing, note format, budgets, links, wrap, archive), run by `npm run doc-gates`.
+- **gate** — one deterministic documentation check, run by `npm run doc-gates`; that script is the list.
 - **mdast** — the Markdown AST these gates build the structural signature from, via the official GFM parser.

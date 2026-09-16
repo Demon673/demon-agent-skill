@@ -74,7 +74,7 @@ npx skills@latest add Demon673/demon-agent-skill
 .\scripts\validate-skills.ps1
 ```
 
-校验文档门禁（配对 / 格式 / 预算 / 链接 / 换行 / 封存）：
+校验文档门禁：
 
 ```bash
 npm install   # install mdast/GFM deps before first run

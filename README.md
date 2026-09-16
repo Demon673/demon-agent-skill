@@ -74,7 +74,7 @@ Validate the whole repository:
 .\scripts\validate-skills.ps1
 ```
 
-Run the documentation gates (pairing / format / budgets / links / wrap / archive):
+Run the documentation gates:
 
 ```bash
 npm install   # install mdast/GFM deps before first run
