@@ -106,15 +106,87 @@ def check_transient_context():
     print("Transient resource continuity passed: missing samples, valid resets, isolated sessions, expiry and cache failures.")
 
 
+def check_interrupted_setup():
+    with tempfile.TemporaryDirectory(prefix="demon statusline interruption ") as temporary:
+        root = Path(temporary)
+        fault = root / "interrupt.py"
+        fault.write_text('import os,runpy,sys\nfrom pathlib import Path\nscript,point,*arguments=sys.argv[1:]\nmodule=runpy.run_path(script)\nwriter=module["write_json"]\nsettings_written=False\ndef interrupt(path,value):\n    global settings_written\n    if point=="before-settings" and path.name=="settings.json": os._exit(86)\n    if point=="after-settings" and settings_written and path.name=="state.json": os._exit(86)\n    writer(path,value)\n    if path.name=="settings.json": settings_written=True\nmodule["main"].__globals__["write_json"]=interrupt\nsys.argv=[script,*arguments]\nmodule["main"]()\n', encoding="utf-8")
+        original = {"statusLine": {"type": "command", "command": "original renderer", "padding": 2}, "permissions": {"allow": ["unchanged"]}}
+        for point in ("before-settings", "after-settings"):
+            for operation in ("install", "restore"):
+                for retry in ("install", "restore"):
+                    config = root / f"{point}-{operation}-{retry}"
+                    config.mkdir()
+                    settings_path = config / "settings.json"
+                    settings_path.write_text(json.dumps(original), encoding="utf-8")
+                    install = ["--config-dir", str(config), "--mode", "replace", "--shell-kind", "posix"]
+                    restore = ["--config-dir", str(config), "--action", "restore"]
+                    if operation == "restore":
+                        ok(run_script(SCRIPTS / "install-statusline.py", *install))
+                    result = run_script(fault, str(SCRIPTS / "install-statusline.py"), point, *(install if operation == "install" else restore))
+                    assert result.returncode == 86
+                    state_path = config / "statusline-demon" / "state.json"
+                    interrupted_settings = settings_path.read_bytes()
+                    interrupted_state = state_path.read_bytes()
+                    resume = install if retry == "install" else restore
+                    ok(run_script(SCRIPTS / "install-statusline.py", *resume, "--dry-run"))
+                    assert settings_path.read_bytes() == interrupted_settings and state_path.read_bytes() == interrupted_state
+                    ok(run_script(SCRIPTS / "install-statusline.py", *resume))
+                    recovered = json.loads(state_path.read_text())
+                    assert "pending" not in recovered and recovered["active"] == (retry == "install")
+                    assert recovered["original"] == original["statusLine"]
+                    if retry == "install":
+                        assert json.loads(settings_path.read_text())["statusLine"] == recovered["installed"]
+                        ok(run_script(SCRIPTS / "install-statusline.py", *restore))
+                    assert json.loads(settings_path.read_text()) == original
+                    settings_path.write_bytes(interrupted_settings)
+                    state_path.write_bytes(interrupted_state)
+                    external = {**original, "statusLine": {"type": "command", "command": "external renderer"}}
+                    settings_path.write_text(json.dumps(external), encoding="utf-8")
+                    for arguments in (install, restore):
+                        result = run_script(SCRIPTS / "install-statusline.py", *arguments)
+                        assert result.returncode == 1 and b"changed by another tool" in result.stderr
+                        assert json.loads(settings_path.read_text()) == external and state_path.read_bytes() == interrupted_state
+        config = root / "no-original"
+        install = ["--config-dir", str(config), "--mode", "replace", "--shell-kind", "posix"]
+        result = run_script(fault, str(SCRIPTS / "install-statusline.py"), "before-settings", *install)
+        assert result.returncode == 86 and not (config / "settings.json").exists()
+        ok(run_script(SCRIPTS / "install-statusline.py", "--config-dir", str(config), "--action", "restore"))
+        assert json.loads((config / "settings.json").read_text()) == {}
+    print("Interrupted setup passed: install/restore at both write boundaries, dry-run, original retention and foreign-edit refusal.")
+
+
+def check_malformed_composition():
+    with tempfile.TemporaryDirectory(prefix="demon statusline malformed ") as temporary:
+        root = Path(temporary)
+        renderer = root / "statusline.py"
+        shutil.copyfile(SCRIPTS / "statusline.py", renderer)
+        environment = {**os.environ, "CLAUDE_CONFIG_DIR": str(root)}
+        payload = {"model": {"display_name": "Model"}, "context_window": {"used_percentage": 42, "context_window_size": 200000}}
+        invalid = ["oops", 1, ["oops"], {"kind": "posix", "shell": ["invalid"], "command": "ignored"}, {"kind": "posix", "shell": "missing-shell", "command": ["invalid"]}, {"kind": "unknown", "shell": "missing-shell", "command": "ignored"}, {"kind": "posix", "shell": "", "command": "ignored"}, {"kind": "posix", "shell": "missing-shell", "command": "ignored\x00"}]
+        for previous in invalid:
+            (root / "state.json").write_text(json.dumps({"active": True, "previous": previous, "config_dir": str(root)}), encoding="utf-8")
+            result = run_script(renderer, payload=payload, env=environment)
+            output = re.sub(r"\x1b\[[0-9;]*m", "", ok(result))
+            assert "Model" in output and "] 42%" in output and not result.stderr
+    print("Malformed composition passed: invalid previous-command types preserve the current row without a traceback.")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--transient-context", action="store_true")
+    parser.add_argument("--review-regressions", choices=("install", "composition"))
     parser.add_argument("--shell-kind", choices=("posix", "powershell"), default="powershell" if os.name == "nt" else "posix")
     parser.add_argument("--shell-path")
     args = parser.parse_args()
+    if args.review_regressions:
+        (check_interrupted_setup if args.review_regressions == "install" else check_malformed_composition)()
+        return
     check_transient_context()
     if args.transient_context:
         return
+    check_interrupted_setup()
+    check_malformed_composition()
     with tempfile.TemporaryDirectory(prefix="demon statusline ") as temporary:
         root = Path(temporary)
         config = root / "config"

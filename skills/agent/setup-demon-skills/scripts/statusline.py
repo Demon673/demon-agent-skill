@@ -244,6 +244,8 @@ def ponytail(config_dir):
 
 
 def previous_output(raw, previous):
+    if not isinstance(previous, dict) or previous.get("kind") not in ("posix", "powershell") or not all(isinstance(previous.get(key), str) and previous[key] and "\x00" not in previous[key] for key in ("shell", "command")):
+        return ""
     argv = [previous["shell"], "-NoProfile", "-NonInteractive", "-Command", previous["command"]] if previous["kind"] == "powershell" else [previous["shell"], "-c", previous["command"]]
     try:
         with tempfile.TemporaryFile() as output:

@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/feature/2026-10-14-optional-claude-statusline.md
-2026-10-14-optional-claude-statusline.md: a28bc9ef30f57721ae114fea9f4a92a3c2c46d85
-2026-10-14-optional-claude-statusline.zh.md: 1ca53a39d4f499113c22cc01e8b2d6cc31474fe9
+2026-10-14-optional-claude-statusline.md: e772cef8fd129811627871304f208fc13e86ad47
+2026-10-14-optional-claude-statusline.zh.md: e1016f1f3f0bc5720dc3c16f2e7648f0e93334c2

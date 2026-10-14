@@ -45,11 +45,24 @@ def main():
     settings = read_object(settings_path)
     state = read_object(state_path)
     current = settings.get("statusLine")
+    pending = state.get("pending")
+    if pending is not None:
+        if not isinstance(pending, dict) or not all(key in pending for key in ("before", "after", "state")) or not isinstance(pending["state"], dict):
+            raise ValueError("Invalid pending status line operation; review the state before retrying.")
+        if current == pending["after"]:
+            state = {key: value for key, value in state.items() if key != "pending"}
+        elif current == pending["before"]:
+            state = pending["state"]
+        else:
+            raise ValueError("The status line was changed by another tool; keep it and review before installing or restoring.")
     if state.get("active") and current != state.get("installed"):
         raise ValueError("The status line was changed by another tool; keep it and review before installing or restoring.")
+    previous_state = dict(state)
     if args.action == "restore":
         if not state.get("active"):
-            raise ValueError("No active Demon status line installation to restore.")
+            if pending is None:
+                raise ValueError("No active Demon status line installation to restore.")
+            state["original"] = current
         original = state.get("original")
         if original is None:
             settings.pop("statusLine", None)
@@ -99,13 +112,14 @@ def main():
         folder.mkdir(exist_ok=True)
         if args.action == "install":
             shutil.copy2(Path(__file__).with_name("statusline.py"), folder / "statusline.py")
-        previous_state = read_object(state_path)
-        write_json(state_path, state)
+        # Keep both endpoints so retries can recover either side of an interrupted write.
+        write_json(state_path, {**state, "pending": {"before": current, "after": settings.get("statusLine"), "state": previous_state}})
         try:
             write_json(settings_path, settings)
         except OSError:
             write_json(state_path, previous_state)
             raise
+        write_json(state_path, state)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
