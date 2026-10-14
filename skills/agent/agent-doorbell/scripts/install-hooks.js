@@ -2,24 +2,17 @@
 const fs = require("fs");
 const path = require("path");
 
-const CLAUDE_DEFAULT_EVENTS = ["Elicitation", "PermissionRequest", "Stop", "StopFailure"];
-const GEMINI_DEFAULT_EVENTS = ["AfterAgent", "Notification"];
+const CLAUDE_DEFAULT_EVENTS = ["Elicitation", "PermissionRequest", "Stop", "StopFailure", "Notification"];
+const GEMINI_DEFAULT_EVENTS = ["AfterAgent"];
 const CODEX_DEFAULT_EVENTS = ["Stop"];
-const CLAUDE_ALLOWED_EVENTS = new Set(["Stop", "StopFailure", "SubagentStop", "TeammateIdle", "PermissionRequest", "Elicitation"]);
-const CODEX_ALLOWED_EVENTS = new Set(["Stop", "SubagentStop", "PermissionRequest"]);
-const GEMINI_ALLOWED_EVENTS = new Set([
-  "SessionStart",
-  "SessionEnd",
-  "BeforeAgent",
-  "AfterAgent",
-  "BeforeModel",
-  "AfterModel",
-  "BeforeToolSelection",
-  "BeforeTool",
-  "AfterTool",
-  "PreCompress",
-  "Notification",
-]);
+const COPILOT_DEFAULT_EVENTS = ["agentStop"];
+const CURSOR_DEFAULT_EVENTS = ["stop"];
+// Only Claude payloads identify the emitting agent, so the other adapters expose completion events only.
+const CLAUDE_ALLOWED_EVENTS = new Set(CLAUDE_DEFAULT_EVENTS);
+const CODEX_ALLOWED_EVENTS = new Set(CODEX_DEFAULT_EVENTS);
+const COPILOT_ALLOWED_EVENTS = new Set(COPILOT_DEFAULT_EVENTS);
+const CURSOR_ALLOWED_EVENTS = new Set(CURSOR_DEFAULT_EVENTS);
+const GEMINI_ALLOWED_EVENTS = new Set(GEMINI_DEFAULT_EVENTS);
 const STATUS_MESSAGE = "Agent Doorbell";
 
 function parseArgs(argv) {
@@ -80,9 +73,10 @@ function parseArgs(argv) {
   if (positional[0]) args.action = positional[0];
   if (args.action === "remove") args.action = "uninstall";
   if (!["install", "uninstall"].includes(args.action)) fail(`Unsupported action: ${args.action}`);
-  if (!["claude", "gemini", "codex"].includes(args.runtime)) fail(`Unsupported runtime: ${args.runtime}`);
+  if (!["claude", "gemini", "codex", "copilot", "cursor"].includes(args.runtime)) fail(`Unsupported runtime: ${args.runtime}`);
   if (!["user", "project-local", "project"].includes(args.scope)) fail(`Unsupported scope: ${args.scope}`);
-  if (args.runtime === "codex" && args.scope === "project-local") fail("Codex does not have a project-local hooks file; use user or project scope");
+  if (["codex", "copilot", "cursor"].includes(args.runtime) && args.scope === "project-local") fail(`${args.runtime} does not have a project-local hooks file; use user or project scope`);
+  if (args.runtime === "cursor" && args.runner !== "node") fail("Cursor status-aware hooks require an explicit --runner node selection");
   if (!["native", "node", "powershell", "shell"].includes(args.runner)) fail(`Unsupported runner: ${args.runner}`);
   if (!Number.isFinite(args.timeout) || args.timeout <= 0) fail("--timeout must be a positive integer");
   args.events = validateEvents(args.runtime, args.events || defaultEvents(args.runtime));
@@ -99,11 +93,13 @@ function parseEvents(value) {
 function defaultEvents(runtime) {
   if (runtime === "claude") return [...CLAUDE_DEFAULT_EVENTS];
   if (runtime === "codex") return [...CODEX_DEFAULT_EVENTS];
+  if (runtime === "copilot") return [...COPILOT_DEFAULT_EVENTS];
+  if (runtime === "cursor") return [...CURSOR_DEFAULT_EVENTS];
   return [...GEMINI_DEFAULT_EVENTS];
 }
 
 function validateEvents(runtime, events) {
-  const allowed = runtime === "claude" ? CLAUDE_ALLOWED_EVENTS : runtime === "codex" ? CODEX_ALLOWED_EVENTS : GEMINI_ALLOWED_EVENTS;
+  const allowed = { claude: CLAUDE_ALLOWED_EVENTS, codex: CODEX_ALLOWED_EVENTS, gemini: GEMINI_ALLOWED_EVENTS, copilot: COPILOT_ALLOWED_EVENTS, cursor: CURSOR_ALLOWED_EVENTS }[runtime];
   const invalid = events.filter((event) => !allowed.has(event));
   if (invalid.length) fail(`Unsupported ${runtime} event(s): ${invalid.join(", ")}`);
   return events;
@@ -116,8 +112,9 @@ function resolveRunner(runner) {
 
 function reasonForEvent(event) {
   if (event === "AfterAgent") return "done";
-  if (event === "Elicitation" || event === "Notification" || event === "PermissionRequest") return "needs-input";
-  if (event === "StopFailure") return "blocked";
+  if (event === "Elicitation" || event === "Notification" || event === "notification") return "needs-input";
+  if (event === "PermissionRequest" || event === "permissionRequest") return "approval";
+  if (event === "StopFailure" || event === "errorOccurred") return "failed";
   return "done";
 }
 
@@ -137,6 +134,8 @@ function settingsPath(runtime, scope, projectRoot) {
   if (runtime === "codex") {
     return scope === "user" ? path.join(home, ".codex", "hooks.json") : path.join(root, ".codex", "hooks.json");
   }
+  if (runtime === "copilot") return scope === "user" ? path.join(process.env.COPILOT_HOME || path.join(home, ".copilot"), "hooks", "agent-doorbell.json") : path.join(root, ".github", "hooks", "agent-doorbell.json");
+  if (runtime === "cursor") return path.join(scope === "user" ? home : root, ".cursor", "hooks.json");
   if (scope === "user") return path.join(home, ".gemini", "settings.json");
   return path.join(root, ".gemini", "settings.json");
 }
@@ -181,6 +180,10 @@ function buildCommandParts(args, event, output) {
     return [
       args.nodeCommand,
       path.join(__dirname, "hook-runner.js"),
+      "--event",
+      event,
+      "--reason",
+      reason,
       "--mode",
       args.mode,
       "--intensity",
@@ -226,8 +229,16 @@ function buildCommandParts(args, event, output) {
 }
 
 function buildHookEntry(args, event) {
-  const output = args.runtime === "gemini" ? "gemini" : "none";
+  const output = args.runtime === "gemini" ? "gemini" : args.runtime === "cursor" ? "cursor" : "none";
   const commandParts = buildCommandParts(args, event, output);
+  if (args.runtime === "copilot") return {
+    type: "command",
+    exec: commandParts[0],
+    args: commandParts.slice(1),
+    timeoutSec: args.timeout,
+    ...(event === "notification" ? { matcher: "elicitation_dialog" } : {}),
+  };
+  if (args.runtime === "cursor") return { type: "command", command: commandParts.map(quoteForCommand).join(" "), timeout: args.timeout };
   if (args.runtime === "gemini" || args.runtime === "codex") {
     return {
       type: "command",
@@ -262,7 +273,7 @@ function isDoorbellRunnerReference(value) {
   return /(^|\/)agent-doorbell\/scripts\/hook-runner\.(js|py|ps1|sh)(["'\s]|$)/.test(text);
 }
 
-function removeDoorbellHooks(settings) {
+function removeDoorbellHooks(settings, flat = false) {
   const updated = structuredClone(settings);
   let removed = 0;
   assertHooksShape(updated);
@@ -272,6 +283,13 @@ function removeDoorbellHooks(settings) {
 
   for (const event of Object.keys(updated.hooks)) {
     const groups = updated.hooks[event];
+    if (flat) {
+      const kept = groups.filter(hook => !isDoorbellHook(hook));
+      removed += groups.length - kept.length;
+      if (kept.length) updated.hooks[event] = kept;
+      else delete updated.hooks[event];
+      continue;
+    }
     const keptGroups = [];
     for (const group of groups) {
       if (!group || typeof group !== "object" || !Array.isArray(group.hooks)) {
@@ -293,13 +311,19 @@ function removeDoorbellHooks(settings) {
 }
 
 function installHooks(settings, events, args) {
-  const result = removeDoorbellHooks(settings);
+  const flat = args.runtime === "copilot" || args.runtime === "cursor";
+  const result = removeDoorbellHooks(settings, flat);
   const updated = result.settings;
+  if (flat) updated.version = 1;
   if (!updated.hooks) updated.hooks = {};
   for (const event of events) {
     if (!updated.hooks[event]) updated.hooks[event] = [];
     if (!Array.isArray(updated.hooks[event])) fail(`Cannot update hooks.${event}: expected a list`);
-    updated.hooks[event].push({ hooks: [structuredClone(buildHookEntry(args, event))] });
+    const entry = structuredClone(buildHookEntry(args, event));
+    updated.hooks[event].push(flat ? entry : {
+      ...(args.runtime === "claude" && event === "Notification" ? { matcher: "permission_prompt|idle_prompt|elicitation_dialog|elicitation_url_dialog" } : {}),
+      hooks: [entry],
+    });
   }
   return { settings: updated, removed: result.removed };
 }
@@ -308,8 +332,10 @@ function main() {
   const args = parseArgs(process.argv.slice(2));
   const target = settingsPath(args.runtime, args.scope, args.projectRoot);
   const original = loadSettings(target);
+  const flat = args.runtime === "copilot" || args.runtime === "cursor";
+  if (flat && original.version !== undefined && original.version !== 1) fail("Unsupported hooks file version; expected version 1");
   const result = args.action === "uninstall"
-    ? removeDoorbellHooks(original)
+    ? removeDoorbellHooks(original, flat)
     : installHooks(original, args.events, args);
   const changed = JSON.stringify(original) !== JSON.stringify(result.settings);
 

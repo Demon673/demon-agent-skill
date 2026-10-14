@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-20-pack-session-discipline.md
-2026-08-20-pack-session-discipline.md: a4513f5797bed6d597acf27493e1a264c0e558ed
-2026-08-20-pack-session-discipline.zh.md: f6bb5b0c82320bc19faa9266dd6a4c65445f177e
+2026-08-20-pack-session-discipline.md: 83b2e6828778e4536e80d84c4a5e36d993368be6
+2026-08-20-pack-session-discipline.zh.md: cdd34e5319e3169604b2b7d770d1bde17298e03e

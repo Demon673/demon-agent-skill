@@ -82,7 +82,17 @@ Use `-Copy` only when a real file copy is needed instead of a Junction.
 
 ## Agent skills
 
-Issue tracker, triage labels, and domain-doc layout for Matt's engineering skills: see `docs/agents/`.
+### Issue tracker
+
+Issues and specs live in GitHub Issues, managed with `gh`. See [issue tracker](docs/agents/issue-tracker.md).
+
+### Triage labels
+
+Use the five default triage labels. See [triage labels](docs/agents/triage-labels.md).
+
+### Domain docs
+
+Single-context: `GLOSSARY.md` and `docs/adr/`. See [domain docs](docs/agents/domain.md).
 
 ## Iteration Policy
 
@@ -96,10 +106,14 @@ Do not expand a skill spec speculatively. Prefer this loop:
 
 When changing synced upstream skills, preserve upstream compatibility unless the user explicitly wants a local fork.
 
+## Session discipline
+
 Act only on an explicit execution signal and confirmed scope; otherwise ask one clarifying question.
 
-A red check blocks the commit: fix it or explain it in the same turn, and name every failed check in the final report.
+Failed checks block commits: fix or explain them this turn and name each failed check in the final report.
 
-Inspect a file before editing or describing it; never present content as read or work as done that you have not verified.
+Inspect files before editing or describing them; report only verified reading and completed work.
 
 Destructive or irreversible actions (deletions, history rewrites, force-push) require an explicit, named confirmation.
+
+Own small tasks; reuse valid context; delegate substantial independent work. Default: 2–3 active subagents, descendants included; ask before exceeding three. Prioritize fixes and observable real-entry acceptance.

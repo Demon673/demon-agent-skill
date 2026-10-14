@@ -1,6 +1,6 @@
 # Demon Agent Skill Pack
 
-English | [中文](CONTEXT.zh.md)
+English | [中文](GLOSSARY.zh.md)
 
 The demon-agent-skill repository: a public skills source that publishes a portable maintenance-skill pack, with this repository as its reference implementation and first host. The _Avoid_ columns list English near-synonyms; Chinese renderings follow [the terminology table](docs/i18n/terminology.md).
 

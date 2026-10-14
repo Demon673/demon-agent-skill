@@ -2,26 +2,7 @@
 const { spawnSync } = require("child_process");
 const path = require("path");
 
-const PATTERNS = {
-  done: [
-    [880, 120],
-    [1175, 160],
-  ],
-  "needs-input": [
-    [988, 90],
-    [988, 90],
-    [1319, 120],
-  ],
-  blocked: [
-    [392, 160],
-    [659, 120],
-    [392, 220],
-  ],
-  cancelled: [
-    [523, 120],
-    [392, 180],
-  ],
-};
+const REASONS = ["done", "needs-input", "approval", "blocked", "failed", "cancelled"];
 
 function parseArgs(argv) {
   const args = {
@@ -56,6 +37,9 @@ function parseArgs(argv) {
     }
   }
 
+  if (!REASONS.includes(args.reason)) throw new Error(`Unsupported reason: ${args.reason}`);
+  if (!["auto", "toast", "sound", "both", "none"].includes(args.mode)) throw new Error(`Unsupported mode: ${args.mode}`);
+  if (!["quiet", "normal", "loud"].includes(args.intensity)) throw new Error(`Unsupported intensity: ${args.intensity}`);
   return args;
 }
 
@@ -63,10 +47,6 @@ function limitText(text, maxLength) {
   const value = String(text || "").trim();
   if (value.length <= maxLength) return value;
   return `${value.slice(0, Math.max(0, maxLength - 3))}...`;
-}
-
-function patternSummary(reason) {
-  return (PATTERNS[reason] || PATTERNS.done).map(([freq, duration]) => `${freq}x${duration}`).join(",");
 }
 
 function powershellCommand() {
@@ -102,16 +82,16 @@ function runWindowsHelper(payload) {
 function runDarwinCue(payload) {
   let delivered = false;
   if (payload.mode === "auto" || payload.mode === "toast" || payload.mode === "both") {
-    const title = payload.title.replaceAll('"', '\\"');
-    const message = payload.message.replaceAll('"', '\\"');
-    const result = spawnSync("osascript", ["-e", `display notification "${message}" with title "${title}"`], {
-      stdio: "ignore",
+    const result = spawnSync("osascript", ["-", payload.title, payload.message], {
+      input: "on run argv\n  display notification (item 2 of argv) with title (item 1 of argv)\nend run\n",
+      stdio: ["pipe", "ignore", "ignore"],
     });
     delivered = result.status === 0 || delivered;
   }
   if (payload.mode === "auto" || payload.mode === "sound" || payload.mode === "both") {
-    const repeats = payload.intensity === "loud" ? "2" : "1";
-    const result = spawnSync("osascript", ["-e", `beep ${repeats}`], { stdio: "ignore" });
+    let result = spawnSync("afplay", [payload.sound], { stdio: "ignore" });
+    if (result.status === 0 && payload.intensity === "loud") spawnSync("afplay", [payload.sound], { stdio: "ignore" });
+    if (result.status !== 0) result = spawnSync("osascript", ["-e", "beep 1"], { stdio: "ignore" });
     delivered = result.status === 0 || delivered;
   }
   return delivered;
@@ -124,8 +104,21 @@ function runLinuxCue(payload) {
     delivered = result.status === 0 || delivered;
   }
   if (payload.mode === "auto" || payload.mode === "sound" || payload.mode === "both") {
-    process.stdout.write("\u0007");
-    delivered = true;
+    let played = false;
+    for (const player of ["paplay", "aplay"]) {
+      const result = spawnSync(player, [payload.sound], { stdio: "ignore" });
+      if (result.status === 0) {
+        if (payload.intensity === "loud") spawnSync(player, [payload.sound], { stdio: "ignore" });
+        played = true;
+        break;
+      }
+    }
+    if (!played) {
+      try {
+        require("node:fs").writeFileSync("/dev/tty", "\u0007");
+      } catch (_error) {}
+    }
+    delivered = played || delivered;
   }
   return delivered;
 }
@@ -142,7 +135,7 @@ function main() {
     summary,
     mode: args.mode,
     intensity: args.intensity,
-    pattern: patternSummary(args.reason),
+    sound: args.reason === "cancelled" ? "" : path.join(__dirname, "..", "assets", `${args.reason}.wav`),
     title,
     message,
   };
@@ -152,18 +145,17 @@ function main() {
     return;
   }
 
+  if (args.mode === "none" || args.reason === "cancelled") return;
   let delivered = false;
-  if (args.mode !== "none") {
-    if (process.platform === "win32") {
-      delivered = runWindowsHelper(payload);
-    } else if (process.platform === "darwin") {
-      delivered = runDarwinCue(payload);
-    } else {
-      delivered = runLinuxCue(payload);
-    }
+  if (process.platform === "win32") {
+    delivered = runWindowsHelper(payload);
+  } else if (process.platform === "darwin") {
+    delivered = runDarwinCue(payload);
+  } else {
+    delivered = runLinuxCue(payload);
   }
 
-  if (!delivered && args.mode !== "none") {
+  if (!delivered) {
     console.log(`${title} - ${message}`);
   }
 }

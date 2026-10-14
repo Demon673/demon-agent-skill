@@ -11,7 +11,7 @@ Scaffold the per-repository conventions the maintenance flow assumes:
 - **Agent Note tree** — the `.agents/notes/{proposed,implemented,rejected,archived}/{class}/` layout and the note format.
 - **Bilingual pairing** — the `foo.md` + `foo.zh.md` + `foo.i18n.yaml` triplet convention and both switcher lines.
 - **Documentation standard** — the `docs/AGENTS.md` structure, tier, budget, and slop rules that `doc-standards` applies.
-- **Session discipline** — the four standing-order lines that gate execution, verification, and destructive actions.
+- **Session discipline** — the five standing-order lines that govern execution, verification, destructive actions, and delegation.
 - **Documentation budget gate** — the self-contained `verify-doc-budgets` script plus its manifest that enforce the standard's ceilings.
 - **Change-scope tool** — the `change-scope` script that reports a change's committed and worktree scope; `pre-push-checks` reads it.
 - **Git hooks** — the `lefthook.yml` jobs that verify translation pairing, archived notes, and whitespace before commit.
@@ -39,13 +39,14 @@ Read what exists; do not assume:
 - **Agent Note tree**: if `.agents/notes/` is absent, create the lifecycle and class directories and a short `README.md` stating the note format — `# Agent Note: <title>` / `Status: <status>`, a first `## Problem` section, then `## Decision` / `## Alternatives considered` / `## Consequences`.
 - **Bilingual pairing**: if no pairing convention exists, record the triplet rule and both switcher lines in a short `docs/i18n/README.md`.
 - **Documentation standard**: if absent, create a short `docs/AGENTS.md` stating the tutorial/reference forms, the one-home-per-fact taxonomy, word budgets, and the slop checklist; `doc-standards` owns the workflow that applies it.
-- **Session discipline**: append the four standing-order lines to the root `AGENTS.md`:
+- **Session discipline**: append the five standing-order lines to the root `AGENTS.md`:
 
 ```
 Act only on an explicit execution signal and confirmed scope; otherwise ask one clarifying question.
-A red check blocks the commit: fix it or explain it in the same turn, and name every failed check in the final report.
-Inspect a file before editing or describing it; never present content as read or work as done that you have not verified.
+Failed checks block commits: fix or explain them this turn and name each failed check in the final report.
+Inspect files before editing or describing them; report only verified reading and completed work.
 Destructive or irreversible actions (deletions, history rewrites, force-push) require an explicit, named confirmation.
+Own small tasks; reuse valid context; delegate substantial independent work. Default: 2–3 active subagents, descendants included; ask before exceeding three. Prioritize fixes and observable real-entry acceptance.
 ```
 
 - **Documentation budget gate**: copy this skill's `scripts/verify-doc-budgets.mjs` into the host's `scripts/` and `scripts/doc-budgets.manifest.template.json` to `scripts/doc-budgets.manifest.json`; then adjust the ceilings to the host's always-loaded docs. The gate runs as `node scripts/verify-doc-budgets.mjs`, and `--list` prints the table.
@@ -57,6 +58,10 @@ Destructive or irreversible actions (deletions, history rewrites, force-push) re
 
 Present each scaffolded piece and its destination; write only after the user confirms.
 
-### 4. Hand off
+### 4. Offer the Claude Code status line
+
+When the agent running this skill is Claude Code, ask whether the user wants the optional status line; then follow [the status-line setup reference](references/statusline.md). Other runtimes skip this step. An installed Claude skill or a `.claude/` directory does not identify the running agent. An existing status line is kept unless the user chooses composition or replacement.
+
+### 5. Hand off
 
 Once scaffolded, the governance run (ask `ask-demon` to govern the docs) audits and enforces the standard going forward.

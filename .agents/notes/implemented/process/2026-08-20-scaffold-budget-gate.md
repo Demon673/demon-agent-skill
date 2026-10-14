@@ -19,5 +19,5 @@ The pack now carries the self-contained budget executor: setup-demon-skills copi
 
 ## Consequences
 
-- Every repository set up by the pack runs a real budget gate from day one; the four standing-order lines all have teeth.
+- Every repository set up by the pack runs a real budget gate from day one; the failed-checks standing order has an enforceable check.
 - The template executor stays functionally identical to this repository's gate (comment lines differ) so fixes propagate by copying the file.

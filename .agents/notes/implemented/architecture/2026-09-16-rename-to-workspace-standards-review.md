@@ -10,7 +10,7 @@ The skill's name and description claimed the same trigger as Matt's `code-review
 
 ## Decision
 
-Rename the skill to [`workspace-standards-review`](../../../../skills/agent/workspace-standards-review/SKILL.md), and narrow its description to what it owns: a change reviewed against this workspace's documented standards — skill frontmatter and bodies, docs and bilingual pairs, Agent Notes, scripts — plus supplying the Standards axis when a two-axis review runs. The flow trigger stays with Matt's `code-review`. The skill's own voice says "workspace", and [CONTEXT.md](../../../../CONTEXT.md) defines **Workspace** as the root a session operates in, with **Host repository** keeping the identity axis.
+Rename the skill to [`workspace-standards-review`](../../../../skills/agent/workspace-standards-review/SKILL.md), and narrow its description to what it owns: a change reviewed against this workspace's documented standards — skill frontmatter and bodies, docs and bilingual pairs, Agent Notes, scripts — plus supplying the Standards axis when a two-axis review runs. The flow trigger stays with Matt's `code-review`. The skill's own voice says "workspace", and [GLOSSARY.md](../../../../GLOSSARY.md) defines **Workspace** as the root a session operates in, with **Host repository** keeping the identity axis.
 
 Wire the governance skills into `## Sources of truth`, each beside the artifact it owns: `doc-standards` (placement, structure, budget audits), `archive-agent-notes` (supersession and archival), `translate-docs` (counterpart updates), `setup-demon-skills` (the scaffold, so a missing convention is reported rather than invented). `pre-push-checks` is named as the owner of which checks cover a diff, and `writing-for-agents` as the owner of the agent-facing delivery frame when Matt's writing pack is installed.
 
@@ -27,4 +27,4 @@ Wire the governance skills into `## Sources of truth`, each beside the artifact 
 - The pack's standards-review skill is `workspace-standards-review`; the current name and path are carried by root `AGENTS.md`, the plugin manifest, the skills map pair, `ask-demon`, `translate-docs`, and the historical Agent Note triplets.
 - Discovery splits by intent: Matt's `code-review` owns a review of the diff since a fixed point, with its Spec axis and smell baseline; this skill owns the workspace's standards sources and the code-facing checklist a standards pass loads.
 - The documentation-governance set is reachable from the review: `doc-standards`, `translate-docs`, `archive-agent-notes`, and `find-simplifications` are named where their judgment applies.
-- `CONTEXT.md` defines **Workspace** — the root a session operates in — beside **Host repository**, which keeps conventions' ownership; the terminology table pins `workspace（工作区）`.
+- `GLOSSARY.md` defines **Workspace** — the root a session operates in — beside **Host repository**, which keeps conventions' ownership; the terminology table pins `workspace（工作区）`.

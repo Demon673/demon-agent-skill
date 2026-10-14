@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/architecture/2026-09-16-rename-to-workspace-standards-review.md
-2026-09-16-rename-to-workspace-standards-review.md: ca8170b1400aaa7db3f4fde352e2aab8b6bc2cd9
-2026-09-16-rename-to-workspace-standards-review.zh.md: f42cb29f2eb36d63bf37abe4fbe45a6dafec7c00
+2026-09-16-rename-to-workspace-standards-review.md: a110b9ae6cf2178dc4d2d4cae0eb35e6c7cf32c4
+2026-09-16-rename-to-workspace-standards-review.zh.md: 3f6fdc6b6587fbc9c185749d788a966f8ffcc2a0

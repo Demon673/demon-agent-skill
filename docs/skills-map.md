@@ -2,7 +2,7 @@
 
 English | [中文](skills-map.zh.md)
 
-This reference maps every deepseek-harness skill to its disposition in this repository. The governing concepts — absorption, seam, host repository — are defined in [CONTEXT.md](../CONTEXT.md).
+This reference maps every deepseek-harness skill to its disposition in this repository. The governing concepts — absorption, seam, host repository — are defined in [GLOSSARY.md](../GLOSSARY.md).
 
 | deepseek-harness skill | Disposition | Counterpart here | Record |
 |---|---|---|---|
