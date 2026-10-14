@@ -11,7 +11,7 @@ export function isScopeFile(file) {
   return file.startsWith('docs/') || file.startsWith('.agents/notes/')
     || /^CONTRIBUTING(.zh)?.md$/.test(file)
     || /^README(.zh)?.md$/i.test(file)
-    || /^CONTEXT(.zh)?.md$/i.test(file)
+    || /^GLOSSARY(\.zh)?\.md$/i.test(file)
 }
 
 /** Recursively list regular files under a directory as posix relative paths. */

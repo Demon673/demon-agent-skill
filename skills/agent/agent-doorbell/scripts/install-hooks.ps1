@@ -117,8 +117,8 @@ function Get-ReasonForEvent {
         "AfterAgent" { return "done" }
         "Elicitation" { return "needs-input" }
         "Notification" { return "needs-input" }
-        "PermissionRequest" { return "needs-input" }
-        "StopFailure" { return "blocked" }
+        "PermissionRequest" { return "approval" }
+        "StopFailure" { return "failed" }
         default { return "done" }
     }
 }

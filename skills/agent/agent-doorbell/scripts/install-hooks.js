@@ -116,8 +116,9 @@ function resolveRunner(runner) {
 
 function reasonForEvent(event) {
   if (event === "AfterAgent") return "done";
-  if (event === "Elicitation" || event === "Notification" || event === "PermissionRequest") return "needs-input";
-  if (event === "StopFailure") return "blocked";
+  if (event === "Elicitation" || event === "Notification") return "needs-input";
+  if (event === "PermissionRequest") return "approval";
+  if (event === "StopFailure") return "failed";
   return "done";
 }
 

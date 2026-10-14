@@ -29,16 +29,31 @@ If the user forbids tool use, shell commands, notifications, or settings changes
 
 | Runtime | Default events | Settings target | Notes |
 | --- | --- | --- | --- |
-| Claude Code | `Elicitation`, `PermissionRequest`, `Stop`, `StopFailure` | `~/.claude/settings.json` | Uses command hooks with `command`, `args`, `async: true`, `timeout`, and `statusMessage`. |
+| Claude Code | `Elicitation`, `PermissionRequest`, `Stop`, `StopFailure` | `~/.claude/settings.json` | Uses executable-form command hooks with `command`, `args`, `async: true`, `timeout`, and `statusMessage`. |
 | Gemini CLI | `AfterAgent`, `Notification` | `~/.gemini/settings.json` | Uses command hooks with a command string and millisecond timeout. The runner emits Gemini-compatible JSON output. |
 | Codex | `Stop` | `~/.codex/hooks.json` | Uses a command string and second-based timeout. `PermissionRequest` is opt-in because it fires for tool approval requests and can be noisy. |
 | Other Agent runtimes | Runtime-specific stop/finalize/input events | Runtime-specific local settings | Configure only when the runtime has documented lifecycle hooks. Connect those hooks to the OS-native runner. |
 
 | Operating system | Default hook runner | Notes |
 | --- | --- | --- |
-| Windows | `powershell.exe` + `scripts/hook-runner.ps1` | Uses `ring.ps1` for native beep and tray/desktop notification. |
-| macOS | `/bin/sh` + `scripts/hook-runner.sh` | Uses `osascript` notification and beep. |
-| Linux | `/bin/sh` + `scripts/hook-runner.sh` | Uses `notify-send` when available, then terminal bell fallback. |
+| Windows | `powershell.exe` + `scripts/hook-runner.ps1` | Uses `ring.ps1` for bundled WAV playback and tray/desktop notification. |
+| macOS | `/bin/sh` + `scripts/hook-runner.sh` | Uses `afplay` for bundled WAVs and `osascript` notifications; system beep is the fallback. |
+| Linux | `/bin/sh` + `scripts/hook-runner.sh` | Uses `paplay` or `aplay` for bundled WAVs, `notify-send` when available, and terminal bell fallback when a controlling terminal is available. |
+
+### Event chimes
+
+Five bundled 44.1 kHz mono PCM WAVs use the doorbell plugin's original soft chime recipe; each lasts less than 0.6 seconds. Native runners play these files directly, so no synthesis runtime or plugin service is required at hook time.
+
+| Event or reason | Chime |
+| --- | --- |
+| `Stop`, `AfterAgent` | `done` |
+| `Elicitation`, `Notification` | `needs-input` |
+| `PermissionRequest` | `approval` |
+| `StopFailure` | `failed` |
+| Explicit `blocked` reason | `blocked` |
+| Explicit `cancelled` reason | Silent |
+
+The hook event determines the sound; the default native runners do not infer a blocked goal from response text. `Elicitation` covers external input requests, not every question in an assistant response. Permission events may include background subagent requests. Claude asynchronous hooks cannot make approval decisions, ignore the hook timeout, and can be terminated during non-interactive CLI shutdown. `quiet` and `normal` play once at system volume; `loud` retains the legacy two-play behavior. System sounds are a fallback when WAV playback fails. Plugin-specific session deduplication, cross-client routing, and a warm player process require the plugin host and are outside this hook manager.
 
 Prefer user-local settings by default because hook commands contain machine-local executable and skill paths. Use project-local settings only when the user asks for per-project behavior.
 

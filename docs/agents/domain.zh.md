@@ -2,52 +2,33 @@
 
 [English](domain.md) | 中文
 
-工程 skills 在探索代码库时如何消费本仓库的领域文档。
+本仓库采用单上下文布局。术语表是 [GLOSSARY.md](../../GLOSSARY.md)，架构决策位于 `docs/adr/` 下。
 
 ## 探索前，先读这些
 
-- 根目录的 **`CONTEXT.md`**，或
-- 若根目录存在 **`CONTEXT-MAP.md`**：它指向每个上下文的 `CONTEXT.md`。读取与主题相关的每一个。
-- **`docs/adr/`**：读取与你要工作的区域相关的 ADR。多上下文仓库还要检查 `src/<context>/docs/adr/` 里的上下文级决策。
+- **术语表**：读取 [GLOSSARY.md](../../GLOSSARY.md)，了解本仓库的领域词汇。
+- **ADR**：读取 `docs/adr/` 下与你要工作的区域相关的决策。
 
-若这些文件都不存在，**静默继续**：`/domain-modeling` skill（经 `/grill-with-docs` 与 `/improve-codebase-architecture` 触达）会在术语或决策真正落定时惰性创建它们。
+ADR 目录不存在时，继续使用已有文档。决策符合 `/domain-modeling` 的条件时，再通过该 skill 惰性创建 ADR。
 
 ## 文件结构
 
-单上下文仓库（多数仓库）：
-
 ```
 /
-├── CONTEXT.md
-├── docs/adr/
-│   ├── 0001-event-sourced-orders.md
-│   └── 0002-postgres-for-write-model.md
-└── src/
+├── GLOSSARY.md
+├── GLOSSARY.zh.md
+├── GLOSSARY.i18n.yaml
+└── docs/adr/
 ```
 
-多上下文仓库（根目录存在 `CONTEXT-MAP.md`）：
-
-```
-/
-├── CONTEXT-MAP.md
-├── docs/adr/                          ← system-wide decisions
-└── src/
-    ├── ordering/
-    │   ├── CONTEXT.md
-    │   └── docs/adr/                  ← context-specific decisions
-    └── billing/
-        ├── CONTEXT.md
-        └── docs/adr/
-```
+在本仓库使用 `/domain-modeling` 时，原位更新术语表及其双语三件套。
 
 ## 使用术语表的词汇
 
-当你的输出命名一个领域概念（issue 标题、重构提案、假设、测试名），使用 `CONTEXT.md` 中定义的术语。不要漂移到术语表明确回避的同义词。
+当你的输出命名领域概念（issue 标题、重构提案、假设或测试名）时，使用 [GLOSSARY.md](../../GLOSSARY.md) 定义的术语。遵守其 Avoid 条目对同义词的排除约定。
 
-如果你需要的概念还不在术语表里，那是一个信号：要么你在发明项目不使用的语言（重新考虑），要么存在真实缺口（记下来交给 `/domain-modeling`）。
+所需概念缺失时，检查它是否属于项目领域。把尚未明确的领域术语交给 `/domain-modeling`。
 
 ## 标记 ADR 冲突
 
-如果你的输出与现有 ADR 矛盾，明确标出而不是静默覆盖：
-
-> _Contradicts ADR-0007 (event-sourced orders), but worth reopening because…_
+如果你的输出与现有 ADR 矛盾，指出冲突，并说明为什么应重新讨论该决策。

@@ -10,7 +10,7 @@ pack 的行为护栏只以正文形式存在于本仓库。采纳 pack 的宿主
 
 ## 决策
 
-四条 standing-order 行随 pack 走：setup-demon-skills 把它们追加进宿主仓库的根 AGENTS.md（常驻上下文，是门唯一能守住的形态）；ask-demon 承载 Session discipline 一节，解释每行如何运转，指向宿主的行而不是把它们重述成第二份规则。不建 confirm-intent skill：必须在误判瞬间生效的纪律属于 standing order，不属于触发式加载的 skill。
+五条 standing-order 行随 pack 走：[setup-demon-skills](../../../../skills/agent/setup-demon-skills/SKILL.md) 把它们追加进宿主仓库的根 AGENTS.md（常驻上下文，是门唯一能守住的形态）；[ask-demon](../../../../skills/agent/ask-demon/SKILL.md) 承载 Session discipline 一节，解释每行如何运转，指向宿主的行而不是把它们重述成第二份规则。不建 confirm-intent skill：必须在误判瞬间生效的纪律属于 standing order，不属于触发式加载的 skill。任务归属与有上限的委派也放在这一块，使独立工作能够并行开展，同时控制协调成本。
 
 ## 备选方案
 
@@ -20,6 +20,6 @@ pack 的行为护栏只以正文形式存在于本仓库。采纳 pack 的宿主
 
 ## 后果
 
-- 每个经 pack 初始化的仓库，standing order 里自带四条会话纪律。
+- 每个经 pack 初始化的仓库，standing order 里自带五条会话纪律。
 - ask-demon 解释纪律而不复制其家；规则保持每行一条、住在宿主 AGENTS.md。
-- 本仓库根 `AGENTS.md` 承载全部四行。
+- 本仓库根 [AGENTS.md](../../../../AGENTS.md#session-discipline) 的 Session discipline 一节承载全部五行。

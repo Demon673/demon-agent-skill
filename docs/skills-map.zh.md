@@ -2,7 +2,7 @@
 
 [English](skills-map.md) | 中文
 
-本参考文档把每个 deepseek-harness skill（技能）对应到它在本仓库的处置结果。治理概念——absorption（吸收）、seam（边界）、host repository（宿主仓库）——定义在 [CONTEXT.md](../CONTEXT.md)。
+本参考文档把每个 deepseek-harness skill（技能）对应到它在本仓库的处置结果。治理概念——absorption（吸收）、seam（边界）、host repository（宿主仓库）——定义在 [GLOSSARY.md](../GLOSSARY.md)。
 
 | deepseek-harness skill | 处置 | 本仓库对应物 | 记录 |
 |---|---|---|---|

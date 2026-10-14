@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-把该 skill 重命名为 [`workspace-standards-review`](../../../../skills/agent/workspace-standards-review/SKILL.md)，并把描述收窄到它真正拥有的面：针对本 workspace 成文标准的变更评审——skill 的 frontmatter 与正文、文档与双语配对、Agent Note、脚本——外加在双轴评审运行时提供 Standards 轴。流程级的触发条件留给 Matt 的 `code-review`。该 skill 自身的措辞用 "workspace"，而 [CONTEXT.md](../../../../CONTEXT.md) 为 pack 定义 **Workspace**（会话操作的根），**Host repository** 保留身份归属那一轴。
+把该 skill 重命名为 [`workspace-standards-review`](../../../../skills/agent/workspace-standards-review/SKILL.md)，并把描述收窄到它真正拥有的面：针对本 workspace 成文标准的变更评审——skill 的 frontmatter 与正文、文档与双语配对、Agent Note、脚本——外加在双轴评审运行时提供 Standards 轴。流程级的触发条件留给 Matt 的 `code-review`。该 skill 自身的措辞用 "workspace"，而 [GLOSSARY.md](../../../../GLOSSARY.md) 为 pack 定义 **Workspace**（会话操作的根），**Host repository** 保留身份归属那一轴。
 
 把治理 skill 接进 `## Sources of truth`，各就各位地挨着它拥有的产物：`doc-standards`（位置、结构、预算审计）、`archive-agent-notes`（替代与归档）、`translate-docs`（对应语言更新）、`setup-demon-skills`（脚手架，使缺失的约定被报告而不是被凭空发明）。`pre-push-checks` 被点名为「哪些检查覆盖某次 diff」的归属者，`writing-for-agents` 则在 Matt 的行文 pack 已安装时被点名为面向 agent 交付框架的归属者。
 
@@ -27,4 +27,4 @@ Status: implemented
 - pack 的标准评审 skill 现为 `workspace-standards-review`；当前的名称与路径由根 `AGENTS.md`、插件清单、技能地图双语对、`ask-demon`、`translate-docs` 以及各组历史 Agent Note 三件套承载。
 - 发现路径按意图分开：Matt 的 `code-review` 拥有「审查自某个固定点以来的 diff」，带它的 Spec 轴与 smell 基线；本 skill 拥有本 workspace 的标准出处，以及标准审查所要加载的代码面检查清单。
 - 文档治理集从评审即可触达：`doc-standards`、`translate-docs`、`archive-agent-notes`、`find-simplifications` 都在其判断适用的位置被点名。
-- `CONTEXT.md` 在 **Host repository**（约定的归属）之外定义 **Workspace**——会话操作的根；术语表固定 `workspace（工作区）`。
+- `GLOSSARY.md` 在 **Host repository**（约定的归属）之外定义 **Workspace**——会话操作的根；术语表固定 `workspace（工作区）`。

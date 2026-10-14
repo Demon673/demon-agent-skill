@@ -1,7 +1,7 @@
 param(
     [string]$AgentName = "Agent",
     [string]$Summary = "Agent stopped",
-    [ValidateSet("done", "blocked", "cancelled", "needs-input")]
+    [ValidateSet("done", "blocked", "cancelled", "needs-input", "approval", "failed")]
     [string]$Reason = "done",
     [ValidateSet("auto", "toast", "sound", "both", "none")]
     [string]$Mode = "both",
@@ -36,76 +36,37 @@ function Get-IconKind {
         "done" { return "Info" }
         "needs-input" { return "Warning" }
         "blocked" { return "Error" }
+        "failed" { return "Error" }
+        "approval" { return "Warning" }
         "cancelled" { return "Warning" }
         default { return "Info" }
     }
 }
 
-function Get-DoorbellPattern {
+function Get-SoundPath {
     param([string]$Reason)
 
-    switch ($Reason) {
-        "done" {
-            return @(
-                @{ Frequency = 880; Duration = 120; Gap = 80 },
-                @{ Frequency = 1175; Duration = 160; Gap = 0 }
-            )
-        }
-        "needs-input" {
-            return @(
-                @{ Frequency = 988; Duration = 90; Gap = 70 },
-                @{ Frequency = 988; Duration = 90; Gap = 70 },
-                @{ Frequency = 1319; Duration = 120; Gap = 0 }
-            )
-        }
-        "blocked" {
-            return @(
-                @{ Frequency = 392; Duration = 160; Gap = 70 },
-                @{ Frequency = 659; Duration = 120; Gap = 70 },
-                @{ Frequency = 392; Duration = 220; Gap = 0 }
-            )
-        }
-        "cancelled" {
-            return @(
-                @{ Frequency = 523; Duration = 120; Gap = 80 },
-                @{ Frequency = 392; Duration = 180; Gap = 0 }
-            )
-        }
-        default {
-            return @(
-                @{ Frequency = 880; Duration = 120; Gap = 80 },
-                @{ Frequency = 1175; Duration = 160; Gap = 0 }
-            )
-        }
-    }
+    if ($Reason -eq "cancelled") { return "" }
+    return Join-Path (Join-Path (Join-Path $PSScriptRoot "..") "assets") "$Reason.wav"
 }
 
-function Invoke-BeepPattern {
+function Invoke-DoorbellSound {
     param(
-        [string]$Reason,
+        [string]$Path,
         [string]$Intensity
     )
 
-    $repeat = switch ($Intensity) {
-        "quiet" { 1 }
-        "normal" { 1 }
-        "loud" { 2 }
-        default { 1 }
-    }
-
-    $pattern = Get-DoorbellPattern -Reason $Reason
-
-    for ($index = 0; $index -lt $repeat; $index++) {
-        foreach ($tone in $pattern) {
-            [Console]::Beep([int]$tone.Frequency, [int]$tone.Duration)
-            if ($tone.Gap -gt 0) {
-                Start-Sleep -Milliseconds ([int]$tone.Gap)
-            }
-        }
-
-        if ($repeat -gt 1) {
+    $player = New-Object System.Media.SoundPlayer $Path
+    try {
+        $player.Load()
+        $player.PlaySync()
+        if ($Intensity -eq "loud") {
             Start-Sleep -Milliseconds 450
+            $player.PlaySync()
         }
+    }
+    finally {
+        $player.Dispose()
     }
 }
 
@@ -114,17 +75,10 @@ function Invoke-SystemFallbackSound {
 
     $sound =
         if ($Reason -eq "done") { [System.Media.SystemSounds]::Asterisk }
-        elseif ($Reason -eq "blocked") { [System.Media.SystemSounds]::Hand }
+        elseif ($Reason -in @("blocked", "failed")) { [System.Media.SystemSounds]::Hand }
         else { [System.Media.SystemSounds]::Exclamation }
 
     $sound.Play()
-}
-
-function Get-PatternSummary {
-    param([string]$Reason)
-
-    $pattern = Get-DoorbellPattern -Reason $Reason
-    return (($pattern | ForEach-Object { "$($_.Frequency)x$($_.Duration)" }) -join ",")
 }
 
 function Show-WindowsBalloon {
@@ -195,9 +149,9 @@ $agent = Limit-Text -Text $AgentName -MaxLength 48
 $summaryText = Limit-Text -Text $Summary -MaxLength 180
 $title = Limit-Text -Text "$agent stopped" -MaxLength 64
 $message = Limit-Text -Text "$Reason - $summaryText" -MaxLength 240
-$patternSummary = Get-PatternSummary -Reason $Reason
-$wantSound = $Mode -in @("auto", "sound", "both")
-$wantToast = $Mode -in @("auto", "toast", "both")
+$soundPath = Get-SoundPath -Reason $Reason
+$wantSound = $Reason -ne "cancelled" -and $Mode -in @("auto", "sound", "both")
+$wantToast = $Reason -ne "cancelled" -and $Mode -in @("auto", "toast", "both")
 
 if ($DryRun) {
     [pscustomobject]@{
@@ -206,7 +160,7 @@ if ($DryRun) {
         summary = $summaryText
         mode = $Mode
         intensity = $Intensity
-        pattern = $patternSummary
+        sound = $soundPath
         title = $title
         message = $message
     } | ConvertTo-Json -Compress
@@ -217,7 +171,7 @@ $delivered = $false
 
 if ($wantSound) {
     try {
-        Invoke-BeepPattern -Reason $Reason -Intensity $Intensity
+        Invoke-DoorbellSound -Path $soundPath -Intensity $Intensity
         $delivered = $true
     }
     catch {
@@ -243,6 +197,6 @@ if ($wantToast) {
     }
 }
 
-if (-not $delivered) {
+if (-not $delivered -and $Mode -ne "none" -and $Reason -ne "cancelled") {
     Write-Host "$title - $message"
 }

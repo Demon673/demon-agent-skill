@@ -2,6 +2,22 @@
 
 Use these checks when changing the skill or helper scripts.
 
+## Silent Acceptance Test
+
+From the skill directory:
+
+```bash
+node scripts/test-doorbell.js
+```
+
+The test loads all five WAVs without playback, checks their PCM format, distinct content and unclipped signal, verifies runtime event mappings, and installs twice then uninstalls in a new temporary repository. It checks unrelated hooks and settings survive, and Claude executable-form hooks carry their arguments in the `args` array. On Windows it also exercises the PowerShell installer and runner under Windows PowerShell 5.1. Temporary settings are retained at the printed path; personal settings are untouched.
+
+Regenerate the bundled sounds after changing the recipe:
+
+```bash
+node scripts/generate-sounds.js
+```
+
 ## Node Syntax Test
 
 From the skill directory:
@@ -125,7 +141,7 @@ From the skill directory:
 ```powershell
 $root = Join-Path $env:TEMP ("agent-doorbell-removal-scope-" + [guid]::NewGuid().ToString("N"))
 New-Item -ItemType Directory -Path (Join-Path $root ".claude") -Force | Out-Null
-$json = '{"hooks":{"Stop":[{"hooks":[{"type":"command","command":"powershell.exe","args":["-File","C:\\Tools\\other\\scripts\\hook-runner.ps1"],"statusMessage":"Other Hook"},{"type":"command","command":"powershell.exe","args":["-File","C:\\Users\\Me\\.agents\\skills\\agent-doorbell\\scripts\\hook-runner.ps1"]}]}]}}'
+$json = '{"hooks":{"Stop":[{"hooks":[{"type":"command","command":"powershell.exe","args":["-File","X:\\fixture\\other\\scripts\\hook-runner.ps1"],"statusMessage":"Other Hook"},{"type":"command","command":"powershell.exe","args":["-File","X:\\fixture\\skills\\agent-doorbell\\scripts\\hook-runner.ps1"]}]}]}}'
 [System.IO.File]::WriteAllText((Join-Path $root ".claude\settings.local.json"), $json, (New-Object System.Text.UTF8Encoding($false)))
 .\scripts\install-hooks.ps1 -Action uninstall -Runtime claude -Scope project-local -ProjectRoot $root | Out-Null
 ```
@@ -165,9 +181,21 @@ node scripts/ring.js --agent-name "Agent A" --summary "Validation dry run" --rea
 Expected behavior:
 
 - The script exits successfully.
-- The output includes agent, reason, summary, mode, title, pattern, and message.
+- The output includes agent, reason, summary, mode, title, sound file path, and message.
 - No desktop notification or sound is emitted.
 - On Windows, real delivery may use `ring.ps1`; hook configs call the OS-native runner, never Python.
+
+## Windows Playback Check
+
+Play each event once without a notification:
+
+```powershell
+foreach ($reason in @("done", "needs-input", "approval", "blocked", "failed")) {
+    .\scripts\ring.ps1 -Reason $reason -Mode sound
+}
+```
+
+Each invocation should finish without fallback warnings. Confirm the five short cues are audible on the intended output device; successful loading and process exit do not establish audibility. Native macOS/Linux playback and actual CLI hook delivery need acceptance on those platforms.
 
 ## Hook Runner Dry Run
 
@@ -191,7 +219,7 @@ Expected behavior:
 
 - Each command exits successfully.
 - `Stop` maps to `done`.
-- `PermissionRequest` maps to `needs-input`.
+- `PermissionRequest` maps to `approval`; `StopFailure` maps to `failed`.
 - `AfterAgent` maps to `done`.
 - `Notification` maps to `needs-input`.
 - Dry-run mode emits JSON describing the Node command and does not ring.
@@ -212,7 +240,7 @@ Expected behavior:
 - Dry runs do not write or modify Claude Code settings files.
 - The default event list is `Elicitation`, `PermissionRequest`, `Stop`, and `StopFailure`.
 - Hook entries use the OS-native runner by default: `powershell.exe` + `hook-runner.ps1` on Windows, or `/bin/sh` + `hook-runner.sh` on macOS/Linux.
-- Hook entries include `async: true`, `timeout`, and `statusMessage`.
+- Hook entries include `command`, a separate `args` array, `async: true`, `timeout`, and `statusMessage`.
 - Re-running install is idempotent: existing Agent Doorbell hooks are removed before replacement.
 - Uninstall targets only hooks identified as Agent Doorbell hooks.
 - Default output contains no `python` or Node hook command.
@@ -257,7 +285,7 @@ Expected behavior:
 
 - The default event list is only `Stop`.
 - `PermissionRequest` remains available only when explicitly requested.
-- Entries use a command string, seconds for `timeout`, and no `async` field because Codex does not support asynchronous command hooks.
+- Entries use a command string and seconds for `timeout`; the installer omits `async` because the runner already starts playback in the background.
 - User scope targets `~/.codex/hooks.json`; project scope targets `<project>/.codex/hooks.json`.
 
 ## Real Install Safety Test

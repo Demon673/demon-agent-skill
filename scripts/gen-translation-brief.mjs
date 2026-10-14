@@ -45,7 +45,7 @@ function discoverAnchors() {
     ...walk(join(root, '.agents/notes'), '.agents/notes', []),
     'README.i18n.yaml',
     'CONTRIBUTING.i18n.yaml',
-    'CONTEXT.i18n.yaml',
+    'GLOSSARY.i18n.yaml',
   ]
   for (const file of all) {
     if (!file.endsWith('.i18n.yaml')) continue

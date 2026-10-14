@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-20-scaffold-budget-gate.md
-2026-08-20-scaffold-budget-gate.md: bf8d41a6a9db497af1d714a974b2104df1c55acf
-2026-08-20-scaffold-budget-gate.zh.md: 3246b6867189f028e3548c3ef7b817912ad8741a
+2026-08-20-scaffold-budget-gate.md: 2e6e1b931629e80eb6eb7da477b8cd9acf14ad28
+2026-08-20-scaffold-budget-gate.zh.md: bd8200b5f41b4a94814c9f8524d29fce55a8d3ad

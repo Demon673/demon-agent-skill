@@ -7,8 +7,10 @@ const REASON_BY_EVENT = {
   AfterAgent: "done",
   Elicitation: "needs-input",
   Notification: "needs-input",
-  PermissionRequest: "needs-input",
-  StopFailure: "blocked",
+  PermissionRequest: "approval",
+  StopFailure: "failed",
+  Stop: "done",
+  SubagentStop: "done",
   TeammateIdle: "done",
 };
 
@@ -72,20 +74,7 @@ function inferAgentName(event) {
 }
 
 function inferReason(event) {
-  const eventName = event.hook_event_name || "";
-  if (REASON_BY_EVENT[eventName]) return REASON_BY_EVENT[eventName];
-
-  const message = eventMessage(event).toLowerCase();
-  if (["blocked", "can't proceed", "cannot proceed", "unable to proceed"].some((token) => message.includes(token))) {
-    return "blocked";
-  }
-  if (["cancelled", "canceled", "stopped by user"].some((token) => message.includes(token))) {
-    return "cancelled";
-  }
-  if (["?", "confirm", "approval", "permission", "choose", "which option"].some((token) => message.includes(token))) {
-    return "needs-input";
-  }
-  return "done";
+  return REASON_BY_EVENT[event.hook_event_name] || "done";
 }
 
 function inferSummary(event, reason) {
@@ -142,6 +131,7 @@ function main() {
       stdio: "ignore",
       windowsHide: true,
     });
+    child.on("error", () => {});
     child.unref();
   } catch (_error) {
     // Hooks must never block or fail the Agent response path.

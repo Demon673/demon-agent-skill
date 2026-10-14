@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write docs/skills-map.md
-skills-map.md: 728575e7a9a6e71b070b6f8fdd20435726455cb9
-skills-map.zh.md: 58d245a08163bfb5549fa30bbbc5ea3267a88761
+skills-map.md: b832a182e253b2903db873c6903edbab2a6ec2ae
+skills-map.zh.md: 57f897044ac595f200967a2494eae08a51f4a3a0

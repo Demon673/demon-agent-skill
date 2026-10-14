@@ -10,7 +10,7 @@ The pack's behavioral guards existed only as prose in this repository. A host re
 
 ## Decision
 
-The pack carries the four standing-order lines: setup-demon-skills appends them to a host repository's root AGENTS.md (always-loaded context, the only place a gate can actually hold), and ask-demon carries a Session discipline section that explains how each line runs, pointing at the host lines rather than restating them as a second rule. No confirm-intent skill: the discipline that must fire at the moment of misjudgment belongs in standing orders, not in a trigger-loaded skill.
+The pack carries five standing-order lines: [setup-demon-skills](../../../../skills/agent/setup-demon-skills/SKILL.md) appends them to a host repository's root AGENTS.md (always-loaded context, the only place a gate can actually hold), and [ask-demon](../../../../skills/agent/ask-demon/SKILL.md) carries a Session discipline section that explains how each line runs, pointing at the host lines rather than restating them as a second rule. No confirm-intent skill: the discipline that must fire at the moment of misjudgment belongs in standing orders, not in a trigger-loaded skill. Task ownership and bounded delegation belong in the same block so independent work can run in parallel while coordination costs remain controlled.
 
 ## Alternatives considered
 
@@ -20,6 +20,6 @@ The pack carries the four standing-order lines: setup-demon-skills appends them 
 
 ## Consequences
 
-- Every repository set up by the pack starts with the four-line session discipline in its standing orders.
+- Every repository set up by the pack starts with the five-line session discipline in its standing orders.
 - ask-demon explains the discipline without duplicating its home; the rules stay one line each in the host AGENTS.md.
-- This repository's root `AGENTS.md` carries all four lines.
+- This repository's root [AGENTS.md](../../../../AGENTS.md#session-discipline) carries all five lines under Session discipline.
