@@ -24,11 +24,30 @@ while [ "$#" -gt 0 ]; do
   shift 2
 done
 
+SKIP=0
+case "$EVENT" in
+  SubagentStart|SubagentStop|subagentStart|subagentStop|TeammateIdle|TaskCreated|TaskCompleted) SKIP=1 ;;
+esac
+SHARED=0
+case "$EVENT" in PermissionRequest|permissionRequest|Elicitation|Notification|notification|errorOccurred) SHARED=1 ;; esac
+# Shared events need structured identity checks; without jq they stay silent.
+if command -v jq >/dev/null 2>&1 && [ ! -t 0 ]; then
+  PAYLOAD=$(jq -ce 'select(type == "object")' 2>/dev/null) || PAYLOAD=""
+  if [ -n "$PAYLOAD" ]; then
+    if printf '%s' "$PAYLOAD" | jq -e '((.agent_id // "") != "") or (.notification_type == "agent_needs_input" or .notification_type == "agent_completed")' >/dev/null; then SKIP=1; fi
+  elif [ "$SHARED" = 1 ]; then SKIP=1; fi
+elif [ "$SHARED" = 1 ]; then SKIP=1; fi
+if [ "$SKIP" = 1 ]; then
+  if [ "$DRY_RUN" = 1 ]; then printf 'skipped=true\n';
+  elif [ "$OUTPUT" = "gemini" ]; then printf '%s\n' '{}'; fi
+  exit 0
+fi
+
 if [ -z "$REASON" ]; then
   case "$EVENT" in
-    Elicitation|Notification) REASON="needs-input" ;;
-    PermissionRequest) REASON="approval" ;;
-    StopFailure) REASON="failed" ;;
+    Elicitation|Notification|notification) REASON="needs-input" ;;
+    PermissionRequest|permissionRequest) REASON="approval" ;;
+    StopFailure|errorOccurred) REASON="failed" ;;
     *) REASON="done" ;;
   esac
 fi
@@ -37,7 +56,7 @@ case "$MODE" in auto|toast|sound|both|none) ;; *) exit 2 ;; esac
 case "$INTENSITY" in quiet|normal|loud) ;; *) exit 2 ;; esac
 case "$OUTPUT" in none|gemini) ;; *) exit 2 ;; esac
 
-[ -n "$SUMMARY" ] || SUMMARY="Agent event: $EVENT"
+if [ -z "$SUMMARY" ]; then SUMMARY="Agent event: $EVENT"; fi
 TITLE="Agent stopped"
 MESSAGE="$REASON - $SUMMARY"
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd) || exit 2
@@ -91,5 +110,5 @@ APPLESCRIPT
 if [ "$MODE" != "none" ] && [ "$REASON" != "cancelled" ]; then
   (ring) >/dev/null 2>&1 &
 fi
-if [ "$OUTPUT" = "gemini" ]; then printf '%s\n' '{"suppressOutput":true}'; fi
+if [ "$OUTPUT" = "gemini" ]; then printf '%s\n' '{}'; fi
 exit 0

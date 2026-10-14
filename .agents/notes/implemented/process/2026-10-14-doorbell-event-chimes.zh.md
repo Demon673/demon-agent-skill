@@ -10,9 +10,13 @@ hook 门铃在 Windows 上的蜂鸣模式和 POSIX 上的系统铃声没有包�
 
 ## 决策
 
-[agent-doorbell](../../../../skills/agent/agent-doorbell/SKILL.md) 保留独立的 hook 管理功能，并自带按 MIT 许可的[门铃声音配方](https://github.com/Demon673/demon-dsh-plugins/blob/ec8c53d/packages/doorbell/src/attention.ts) 渲染的五个短单声道 PCM WAV 文件。原生 runner 通过 Windows SoundPlayer、macOS afplay 或 Linux paplay/aplay 播放文件，以平台声音作为回退。权限请求使用审批提示，运行错误使用失败提示，显式取消保持静默。生成器负责声音配方；运行时播放无需 Node 或插件宿主。
+[agent-doorbell](../../../../skills/agent/agent-doorbell/SKILL.md) 保留独立的 hook 管理功能，并自带按 MIT 许可的[门铃声音配方](https://github.com/Demon673/demon-dsh-plugins/blob/ec8c53d/packages/doorbell/src/attention.ts) 渲染的五个短单声道 PCM WAV 文件。原生 runner 通过 Windows SoundPlayer、macOS afplay 或 Linux paplay/aplay 播放文件，以平台声音作为回退。权限请求使用审批提示，运行错误使用失败提示，显式取消保持静默。生成器负责声音配方；原生播放无需 Node 或插件宿主。
 
-Node 助手在本地声明 CommonJS 模块类型。两个安装器保留 Claude 的可执行文件形式 hook，使用独立参数数组，并继续识别旧 hook，以便替换和卸载。Windows runner 使用编码命令，保留路径和摘要参数。插件拥有的会话状态、客户端路由和常驻播放器留在 skill 之外，因为独立生命周期 hook 没有共同的服务生命周期。
+Node 助手在本地声明 CommonJS 模块类型。两个安装器保留 Claude 的可执行文件形式 hook，使用独立参数数组，并继续识别旧 hook，以便替换和卸载。
+
+提醒只属于主代理：子代理完成、队友空闲和中间任务活动保持静默。安装器排除这些事件并替换旧 Doorbell 注册；runner 也忽略旧配置发出的子代理事件调用。共享注意力事件要求 payload 可解析且不含子代理身份；Claude 提供 `agent_id`，其通知 matcher 也排除后台代理通知。POSIX 使用 `jq` 检查，缺少解析器时共享事件保持静默。其他运行时的共享事件无法识别发出事件的代理时，适配器仅注册完成事件。
+
+Gemini 提醒返回中性 JSON，不控制通知投递。[运行时适配器](../../../../skills/agent/agent-doorbell/references/runtimes.md)记录各运行时的事件覆盖和启用限制。Windows runner 使用编码命令，保留路径和摘要参数。Copilot CLI 使用带版本的扁平 hook 和直接执行参数；Cursor 使用明确选择的 Node runner，依据状态输入区分主代理轮次的完成、失败和取消。插件拥有的会话状态、客户端路由和常驻播放器留在 skill 之外，因为独立生命周期 hook 没有共同的服务生命周期。
 
 ## 备选方案
 
@@ -23,5 +27,5 @@ Node 助手在本地声明 CommonJS 模块类型。两个安装器保留 Claude 
 ## 后果
 
 - WAV 播放可用时，支持的平台拥有可区分的事件声音；Linux 需要 paplay 或 aplay 才能播放该音色，quiet/normal 使用系统音量。
-- CLI 事件决定默认声音；原生 runner 不从响应文本判断目标受阻。跨客户端去重和插件设置仍属于宿主能力。
-- [静默验收检查](../../../../skills/agent/agent-doorbell/references/verification.md) 覆盖 WAV 加载、事件选择、命令格式、安装幂等性、卸载范围及无关设置保留。硬件可听性和真实 CLI 事件投递还需这些检查之外的平台验收。
+- CLI 事件决定默认声音；原生 runner 不从响应文本判断目标受阻。完成和注意力事件可能重叠；显式事件列表可缩小嘈杂配置的范围。跨客户端去重和插件设置仍属于宿主能力。
+- [静默验收检查](../../../../skills/agent/agent-doorbell/references/verification.md) 覆盖 WAV 加载、主代理注意力事件注册、子代理事件静默、Cursor 状态选择、运行时命令格式、安装幂等性、卸载范围及无关设置保留。硬件可听性和真实 CLI 事件投递还需这些检查之外的平台验收。

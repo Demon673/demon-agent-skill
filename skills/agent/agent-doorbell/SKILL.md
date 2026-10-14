@@ -1,12 +1,12 @@
 ---
 name: agent-doorbell
-description: Install, update, or uninstall hook-based desktop and audio reminders for Agent stop and attention events.
+description: Install, update, or uninstall hook-based desktop and audio reminders for main-agent completion and attention events.
 disable-model-invocation: true
 ---
 
 # Agent Doorbell
 
-Use this skill to manage runtime hooks that ring the user's attention back when an Agent stops or needs input. The hook, not the Agent's final-response discipline, owns reliable reminders.
+Use this skill to manage runtime hooks that bring the user's attention back when the main Agent stops or needs input. Child agents, teammates and intermediate task activity stay silent. The runtime hook owns reminders.
 
 ## Core Rule
 
@@ -29,10 +29,12 @@ If the user forbids tool use, shell commands, notifications, or settings changes
 
 | Runtime | Default events | Settings target | Notes |
 | --- | --- | --- | --- |
-| Claude Code | `Elicitation`, `PermissionRequest`, `Stop`, `StopFailure` | `~/.claude/settings.json` | Uses executable-form command hooks with `command`, `args`, `async: true`, `timeout`, and `statusMessage`. |
-| Gemini CLI | `AfterAgent`, `Notification` | `~/.gemini/settings.json` | Uses command hooks with a command string and millisecond timeout. The runner emits Gemini-compatible JSON output. |
-| Codex | `Stop` | `~/.codex/hooks.json` | Uses a command string and second-based timeout. `PermissionRequest` is opt-in because it fires for tool approval requests and can be noisy. |
-| Other Agent runtimes | Runtime-specific stop/finalize/input events | Runtime-specific local settings | Configure only when the runtime has documented lifecycle hooks. Connect those hooks to the OS-native runner. |
+| Claude Code | `Elicitation`, `PermissionRequest`, `Stop`, `StopFailure`, filtered `Notification` | `~/.claude/settings.json` | Uses executable-form command hooks with `command`, `args`, `async: true`, `timeout`, and `statusMessage`. |
+| Gemini CLI | `AfterAgent` | `~/.gemini/settings.json` | Uses a command string, millisecond timeout and neutral JSON output. |
+| Codex | `Stop` | `~/.codex/hooks.json` | Uses a command string and second-based timeout. Review new definitions in `/hooks`. |
+| Copilot CLI | `agentStop` | `<COPILOT_HOME or ~/.copilot>/hooks/agent-doorbell.json` | Uses version-1 flat hooks with direct `exec`, `args`, and `timeoutSec`; project scope is `.github/hooks/agent-doorbell.json`. |
+| Cursor | `stop` | `~/.cursor/hooks.json` | Uses version-1 flat hooks. Explicit `--runner node` is required to read completion status; errors ring `failed`, aborted runs are silent. |
+| Other Agent runtimes | Runtime-specific stop/finalize/input events | Runtime-specific local settings | Configure only when the runtime has documented lifecycle hooks. See [runtime adapters](references/runtimes.md) for plugin-only integration limits. |
 
 | Operating system | Default hook runner | Notes |
 | --- | --- | --- |
@@ -40,20 +42,26 @@ If the user forbids tool use, shell commands, notifications, or settings changes
 | macOS | `/bin/sh` + `scripts/hook-runner.sh` | Uses `afplay` for bundled WAVs and `osascript` notifications; system beep is the fallback. |
 | Linux | `/bin/sh` + `scripts/hook-runner.sh` | Uses `paplay` or `aplay` for bundled WAVs, `notify-send` when available, and terminal bell fallback when a controlling terminal is available. |
 
+Shared Claude attention events require a valid JSON object without child `agent_id`. The POSIX runner uses `jq` for this check; without it, shared events stay silent while completion reminders remain available.
+
 ### Event chimes
 
 Five bundled 44.1 kHz mono PCM WAVs use the doorbell plugin's original soft chime recipe; each lasts less than 0.6 seconds. Native runners play these files directly, so no synthesis runtime or plugin service is required at hook time.
 
 | Event or reason | Chime |
 | --- | --- |
-| `Stop`, `AfterAgent` | `done` |
-| `Elicitation`, `Notification` | `needs-input` |
-| `PermissionRequest` | `approval` |
-| `StopFailure` | `failed` |
+| Main `Stop`, `AfterAgent`, Copilot `agentStop`, Cursor `completed` | `done` |
+| Child, teammate and intermediate task events | Silent |
+| `Elicitation`, filtered attention notifications | `needs-input` |
+| Permission requests | `approval` |
+| Claude `StopFailure`, Cursor `error` | `failed` |
+| Cursor `aborted` | Silent |
 | Explicit `blocked` reason | `blocked` |
 | Explicit `cancelled` reason | Silent |
 
-The hook event determines the sound; the default native runners do not infer a blocked goal from response text. `Elicitation` covers external input requests, not every question in an assistant response. Permission events may include background subagent requests. Claude asynchronous hooks cannot make approval decisions, ignore the hook timeout, and can be terminated during non-interactive CLI shutdown. `quiet` and `normal` play once at system volume; `loud` retains the legacy two-play behavior. System sounds are a fallback when WAV playback fails. Plugin-specific session deduplication, cross-client routing, and a warm player process require the plugin host and are outside this hook manager.
+The hook event determines the sound; runners do not infer a blocked goal from response text. Register only main-agent events and filter shared input or permission payloads by agent identity as described in [runtime adapters](references/runtimes.md). Child, teammate and task lifecycle events remain silent even when an older hook still invokes the runner. Attention matchers exclude background-agent and routine notices. `Elicitation` covers external input requests, not every question in an assistant response.
+
+Claude asynchronous hooks cannot make approval decisions, ignore the hook timeout, and can be terminated during non-interactive CLI shutdown. `quiet` and `normal` play once at system volume; `loud` plays twice. System sounds are a fallback when WAV playback fails. Plugin-specific session deduplication, cross-client routing, and a warm player process require the plugin host and are outside this hook manager.
 
 Prefer user-local settings by default because hook commands contain machine-local executable and skill paths. Use project-local settings only when the user asks for per-project behavior.
 
@@ -66,6 +74,8 @@ Do not chase every Agent runtime. Support only runtimes with documented lifecycl
    - Use `claude` when the request mentions Claude Code or the current surface is Claude Code.
    - Use `gemini` when the request mentions Gemini CLI.
    - Use `codex` when the request mentions Codex or the current surface is Codex.
+   - Use `copilot` for Copilot CLI; this adapter does not configure the cloud agent.
+   - Use `cursor` only with the user's explicit choice of the Node runner; its status payload requires parsing.
    - If the runtime is unclear, ask one short question instead of writing the wrong settings file.
 3. Choose the action.
    - Default action is install/update when the user explicitly invokes `agent-doorbell`.
@@ -115,6 +125,8 @@ node scripts/install-hooks.js --runtime claude --scope user
 node scripts/install-hooks.js uninstall --runtime claude --scope user
 node scripts/install-hooks.js --runtime gemini --scope user
 node scripts/install-hooks.js --runtime codex --scope user
+node scripts/install-hooks.js --runtime copilot --scope user
+node scripts/install-hooks.js --runtime cursor --scope user --runner node
 ```
 
 Project-local examples:
@@ -131,7 +143,7 @@ Use `--dry-run` to preview changes without writing settings:
 .\scripts\install-hooks.ps1 -Runtime claude -Scope user -DryRun
 ```
 
-The installers are convenience tools for writing JSON. The generated hooks default to OS-native runners and do not require Node or Python at stop time. The installer is idempotent: it removes previous Agent Doorbell hook entries before writing the replacement. It removes only hooks identified by `statusMessage`/`name` of `Agent Doorbell` or a command that points to `hook-runner.ps1`, `hook-runner.sh`, or `hook-runner.js`; it also recognizes legacy `hook-runner.py` entries so older Python-based hooks can be replaced cleanly.
+The installers are convenience tools for writing JSON. Claude, Gemini, Codex and Copilot hooks default to OS-native runners and do not require Node or Python at stop time. Cursor requires an explicitly chosen Node runner; the PowerShell installer supports the other four adapters. Copilot's `exec` form is CLI-only; do not reuse that project file for its cloud agent. The installer is idempotent: it removes previous Agent Doorbell hook entries before writing the replacement. It removes only hooks identified by `statusMessage`/`name` of `Agent Doorbell` or a command that points to `hook-runner.ps1`, `hook-runner.sh`, or `hook-runner.js`; it also recognizes legacy `hook-runner.py` entries so older Python-based hooks can be replaced cleanly.
 
 Use `--runner node` only when the user explicitly wants Node-based hooks:
 
@@ -173,8 +185,8 @@ Gemini CLI on Windows uses a `powershell.exe ... hook-runner.ps1 ... -Output gem
 - Do not include secrets, private identifiers, raw logs, or large output in hook summaries.
 - Do not open windows, steal focus, or loop sounds.
 - Keep unsupported runtimes honest: if there is no documented lifecycle hook, say that reliable automatic stop reminders are not available through this skill yet.
-- Do not generate default hook configs that depend on Python or Node. Use OS-native runners by default.
+- Use OS-native runners for adapters that do not require payload parsing. Configure Cursor only after the user selects its Node runner; do not silently add a runtime dependency.
 
 ## Verification
 
-For test commands and expected behavior, see `references/verification.md`.
+For test commands and expected behavior, see [verification](references/verification.md). For event coverage, version constraints and other-runtime limits, read [runtime adapters](references/runtimes.md) when choosing or changing an adapter.

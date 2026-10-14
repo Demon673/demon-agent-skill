@@ -10,7 +10,7 @@ From the skill directory:
 node scripts/test-doorbell.js
 ```
 
-The test loads all five WAVs without playback, checks their PCM format, distinct content and unclipped signal, verifies runtime event mappings, and installs twice then uninstalls in a new temporary repository. It checks unrelated hooks and settings survive, and Claude executable-form hooks carry their arguments in the `args` array. On Windows it also exercises the PowerShell installer and runner under Windows PowerShell 5.1. Temporary settings are retained at the printed path; personal settings are untouched.
+The test loads all five WAVs without playback, checks their PCM format, distinct content and unclipped signal, verifies main completion and attention mappings plus silent child, teammate and task events, and installs twice then uninstalls each supported runtime in a new temporary repository. It checks unrelated hooks and settings survive, Claude executable-form hooks carry their arguments in the `args` array, notification matchers exclude background-agent and routine notices, child `agent_id` payloads never start playback, and Gemini output is neutral JSON. On Windows it also exercises the PowerShell installer and runner under Windows PowerShell 5.1. Temporary settings are retained at the printed path; personal settings are untouched.
 
 Regenerate the bundled sounds after changing the recipe:
 
@@ -55,8 +55,8 @@ Expected behavior:
 
 - The PowerShell runner works on Windows.
 - The PowerShell installer works on Windows without Node or Python.
-- The shell runner works on macOS/Linux.
-- Gemini output mode emits `{"suppressOutput":true}`.
+- The shell runner works on macOS/Linux. Shared Claude attention events require `jq` and a valid JSON object; absent parser or unreadable shared input stays silent. Completion does not require `jq`.
+- Gemini output mode emits `{}` with exit code zero; it neither approves nor suppresses the runtime's notification.
 - No Node or Python runtime is needed for the default hook runners.
 
 ## Installer Event Validation Test
@@ -83,7 +83,7 @@ Expected behavior:
 - Explicit empty event lists are rejected instead of silently falling back to defaults.
 - Dry runs do not write or modify Claude Code or Gemini CLI settings files.
 - The PowerShell installer enforces the same runtime-specific event allowlist as the Node convenience installer.
-- Codex defaults to `Stop`; `PermissionRequest` must be selected explicitly because it fires for tool approvals.
+- Codex defaults to `Stop` only; child and unattributable shared events are rejected.
 
 ## PowerShell Settings Preservation Test
 
@@ -218,7 +218,7 @@ printf '{"hook_event_name":"Notification","message":"Permission required."}' | n
 Expected behavior:
 
 - Each command exits successfully.
-- `Stop` maps to `done`.
+- Main `Stop` maps to `done`; `SubagentStop`, `TeammateIdle` and `TaskCompleted` return a skipped preview with no playback command.
 - `PermissionRequest` maps to `approval`; `StopFailure` maps to `failed`.
 - `AfterAgent` maps to `done`.
 - `Notification` maps to `needs-input`.
@@ -238,7 +238,9 @@ Expected behavior:
 
 - Each command exits successfully and prints JSON.
 - Dry runs do not write or modify Claude Code settings files.
-- The default event list is `Elicitation`, `PermissionRequest`, `Stop`, and `StopFailure`.
+- The default event list is `Elicitation`, `PermissionRequest`, `Stop`, `StopFailure` and `Notification`.
+- The notification group matches permission/input/idle attention types; `agent_needs_input` and routine notices such as authentication success are excluded.
+- Updating an installation removes old Doorbell child, teammate and task hooks while preserving unrelated hooks on those events.
 - Hook entries use the OS-native runner by default: `powershell.exe` + `hook-runner.ps1` on Windows, or `/bin/sh` + `hook-runner.sh` on macOS/Linux.
 - Hook entries include `command`, a separate `args` array, `async: true`, `timeout`, and `statusMessage`.
 - Re-running install is idempotent: existing Agent Doorbell hooks are removed before replacement.
@@ -260,7 +262,7 @@ Expected behavior:
 
 - Each command exits successfully and prints JSON.
 - Dry runs do not write or modify Gemini CLI settings files.
-- The default event list is `AfterAgent` and `Notification`.
+- The default event list is `AfterAgent` only; shared attention events without an agent identity are excluded.
 - Hook entries use a shell-quoted command string containing the OS-native runner: `powershell.exe ... hook-runner.ps1` on Windows, or `/bin/sh ... hook-runner.sh` on macOS/Linux.
 - The command includes `--output gemini` so hook output is Gemini-compatible.
 - Uninstall targets only hooks identified as Agent Doorbell hooks.
@@ -273,20 +275,34 @@ From the skill directory:
 
 ```bash
 node scripts/install-hooks.js --runtime codex --scope user --mode none --dry-run
-node scripts/install-hooks.js --runtime codex --events PermissionRequest --scope user --mode none --dry-run
+node scripts/install-hooks.js --runtime codex --events Stop --scope user --mode none --dry-run
 ```
 
 ```powershell
 .\scripts\install-hooks.ps1 -Runtime codex -Scope user -Mode none -DryRun
-.\scripts\install-hooks.ps1 -Runtime codex -Events PermissionRequest -Scope user -Mode none -DryRun
+.\scripts\install-hooks.ps1 -Runtime codex -Events Stop -Scope user -Mode none -DryRun
 ```
 
 Expected behavior:
 
-- The default event list is only `Stop`.
-- `PermissionRequest` remains available only when explicitly requested.
+- The default and allowed event list is `Stop` only.
+- `PermissionRequest` is excluded because its payload does not identify whether a child emitted it.
+- New unmanaged hook definitions require Codex `/hooks` review before execution; disabled hooks or managed-only policy can suppress user hooks.
 - Entries use a command string and seconds for `timeout`; the installer omits `async` because the runner already starts playback in the background.
 - User scope targets `~/.codex/hooks.json`; project scope targets `<project>/.codex/hooks.json`.
+
+## Copilot CLI and Cursor Adapter Test
+
+```bash
+node scripts/install-hooks.js --runtime copilot --scope user --mode none --dry-run
+node scripts/install-hooks.js --runtime cursor --scope user --runner node --mode none --dry-run
+```
+
+```powershell
+.\scripts\install-hooks.ps1 -Runtime copilot -Scope user -Mode none -DryRun
+```
+
+The acceptance test checks version-1 flat event arrays, direct Copilot executable arguments, unknown-version refusal, unrelated-entry preservation and idempotent uninstall. Both adapters exclude child completion hooks. Cursor main `stop` payload replays verify `completed` → `done`, `error` → `failed`, and `aborted` → silent `cancelled`, with neutral `{}` output. Cursor requires explicit `--runner node` and is not provided by the PowerShell installer. Copilot registers only main `agentStop`; unattributable shared attention and error events are excluded. These local checks do not establish real runtime hook delivery; see [runtime adapters](runtimes.md) for the documented schemas and limits.
 
 ## Real Install Safety Test
 
@@ -314,5 +330,5 @@ Expected behavior:
 - Claude Code-specific text is limited to the Claude adapter.
 - Gemini CLI-specific text is limited to the Gemini adapter.
 - Unsupported runtimes are not described as guaranteed unless a documented lifecycle hook exists.
-- Default hook configs do not depend on Python or Node.
+- Native defaults for Claude, Gemini, Codex and Copilot do not depend on Python or Node; Cursor rejects installation without explicit `--runner node`.
 - macOS is covered through `/bin/sh` plus `osascript` in `hook-runner.sh`.

@@ -14,6 +14,23 @@ param(
 
 $ErrorActionPreference = "SilentlyContinue"
 
+$raw = ($input | Out-String)
+if ([string]::IsNullOrWhiteSpace($raw) -and [Console]::IsInputRedirected) { $raw = [Console]::In.ReadToEnd() }
+$payload = $null
+try {
+    $value = $raw | ConvertFrom-Json -ErrorAction Stop
+    if ($value -is [pscustomobject]) { $payload = $value }
+}
+catch {}
+$sharedEvent = $Event -in @("PermissionRequest", "Elicitation", "Notification", "errorOccurred")
+if ($Event -in @("SubagentStart", "SubagentStop", "TeammateIdle", "TaskCreated", "TaskCompleted") -or
+    $payload.agent_id -or $payload.notification_type -in @("agent_needs_input", "agent_completed") -or
+    ($sharedEvent -and $null -eq $payload)) {
+    if ($DryRun) { @{ event = $Event; skipped = $true } | ConvertTo-Json -Compress }
+    elseif ($Output -eq "gemini") { Write-Output '{}' }
+    exit 0
+}
+
 function Get-ReasonForEvent {
     param([string]$Name)
 
@@ -23,6 +40,7 @@ function Get-ReasonForEvent {
         "Notification" { return "needs-input" }
         "PermissionRequest" { return "approval" }
         "StopFailure" { return "failed" }
+        "errorOccurred" { return "failed" }
         default { return "done" }
     }
 }
@@ -39,6 +57,7 @@ function Get-SummaryForEvent {
         "Notification" { return "Agent notification needs attention" }
         "PermissionRequest" { return "Agent is waiting for permission" }
         "StopFailure" { return "Agent stopped because of an error" }
+        "errorOccurred" { return "Agent stopped because of an error" }
         default {
             if ($ResolvedReason -eq "needs-input") { return "Agent is waiting for user input" }
             if ($ResolvedReason -eq "blocked") { return "Agent is blocked" }
@@ -59,7 +78,7 @@ if ($DryRun) {
     exit 0
 }
 if ($Mode -eq "none" -or $resolvedReason -eq "cancelled") {
-    if ($Output -eq "gemini") { Write-Output '{"suppressOutput":true}' }
+    if ($Output -eq "gemini") { Write-Output '{}' }
     exit 0
 }
 
@@ -73,5 +92,5 @@ catch {
 }
 
 if ($Output -eq "gemini") {
-    Write-Output '{"suppressOutput":true}'
+    Write-Output '{}'
 }

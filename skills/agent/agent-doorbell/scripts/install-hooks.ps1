@@ -1,7 +1,7 @@
 param(
     [ValidateSet("install", "uninstall", "remove")]
     [string]$Action = "install",
-    [ValidateSet("claude", "gemini", "codex")]
+    [ValidateSet("claude", "gemini", "codex", "copilot")]
     [string]$Runtime = "claude",
     [ValidateSet("user", "project-local", "project")]
     [string]$Scope = "user",
@@ -64,33 +64,24 @@ function Get-DefaultEvents {
     param([string]$Name)
 
     if ($Name -eq "claude") {
-        return @("Elicitation", "PermissionRequest", "Stop", "StopFailure")
+        return @("Elicitation", "PermissionRequest", "Stop", "StopFailure", "Notification")
     }
     if ($Name -eq "codex") { return @("Stop") }
-    return @("AfterAgent", "Notification")
+    if ($Name -eq "copilot") { return @("agentStop") }
+    return @("AfterAgent")
 }
 
 function Get-AllowedEvents {
     param([string]$Name)
 
     if ($Name -eq "claude") {
-        return @("Stop", "StopFailure", "SubagentStop", "TeammateIdle", "PermissionRequest", "Elicitation")
+        return @("Elicitation", "PermissionRequest", "Stop", "StopFailure", "Notification")
     }
-    if ($Name -eq "codex") { return @("Stop", "SubagentStop", "PermissionRequest") }
+    # Only Claude payloads identify the emitting agent, so the other adapters expose completion events only.
+    if ($Name -eq "codex") { return @("Stop") }
+    if ($Name -eq "copilot") { return @("agentStop") }
 
-    return @(
-        "SessionStart",
-        "SessionEnd",
-        "BeforeAgent",
-        "AfterAgent",
-        "BeforeModel",
-        "AfterModel",
-        "BeforeToolSelection",
-        "BeforeTool",
-        "AfterTool",
-        "PreCompress",
-        "Notification"
-    )
+    return @("AfterAgent")
 }
 
 function Assert-AllowedEvents {
@@ -119,6 +110,7 @@ function Get-ReasonForEvent {
         "Notification" { return "needs-input" }
         "PermissionRequest" { return "approval" }
         "StopFailure" { return "failed" }
+        "errorOccurred" { return "failed" }
         default { return "done" }
     }
 }
@@ -140,6 +132,15 @@ function Get-SettingsPath {
         if ($ScopeName -eq "project-local") { throw "Codex does not have a project-local hooks file; use user or project scope" }
         if ($ScopeName -eq "user") { return Join-Path $HOME ".codex\hooks.json" }
         return Join-Path $Root ".codex\hooks.json"
+    }
+
+    if ($RuntimeName -eq "copilot") {
+        if ($ScopeName -eq "project-local") { throw "Copilot does not have a project-local hooks file; use user or project scope" }
+        if ($ScopeName -eq "user") {
+            $base = if ($env:COPILOT_HOME) { $env:COPILOT_HOME } else { Join-Path $HOME ".copilot" }
+            return Join-Path $base "hooks\agent-doorbell.json"
+        }
+        return Join-Path $Root ".github\hooks\agent-doorbell.json"
     }
 
     if ($ScopeName -eq "user") { return Join-Path $HOME ".gemini\settings.json" }
@@ -212,6 +213,25 @@ function Remove-DoorbellHooks {
 
     foreach ($event in @($Settings.hooks.Keys)) {
         $groups = @($Settings.hooks[$event])
+        if ($Runtime -eq "copilot") {
+            # Flat schema: event arrays hold hook entries directly, so unrelated entries stay in place.
+            $keptEntries = @()
+            foreach ($hook in $groups) {
+                if (Test-DoorbellHook $hook) {
+                    $removed += 1
+                }
+                else {
+                    $keptEntries += $hook
+                }
+            }
+            if ($keptEntries.Count -gt 0) {
+                $Settings.hooks[$event] = $keptEntries
+            }
+            else {
+                $Settings.hooks.Remove($event)
+            }
+            continue
+        }
         $keptGroups = @()
         foreach ($group in $groups) {
             if (-not ($group -is [System.Collections.IDictionary]) -or -not (Test-JsonArray $group.hooks)) {
@@ -282,6 +302,18 @@ function New-HookEntry {
         $(if ($RuntimeName -eq "gemini") { "gemini" } else { "none" })
     )
 
+    if ($RuntimeName -eq "copilot") {
+        $entry = @{
+            type = "command"
+            exec = "powershell.exe"
+            args = $args
+            timeoutSec = $Timeout
+        }
+        # No statusMessage: Copilot's flat schema does not document it; args carry ownership.
+        if ($EventName -eq "notification") { $entry.matcher = "elicitation_dialog" }
+        return $entry
+    }
+
     if ($RuntimeName -eq "gemini" -or $RuntimeName -eq "codex") {
         $entry = @{
             type = "command"
@@ -316,6 +348,7 @@ function Install-DoorbellHooks {
 
     $removedResult = Remove-DoorbellHooks -Settings $Settings
     $updated = $removedResult.Settings
+    if ($Runtime -eq "copilot") { $updated.version = 1 }
     if (-not $updated.Contains("hooks")) {
         $updated.hooks = @{}
     }
@@ -323,7 +356,16 @@ function Install-DoorbellHooks {
     foreach ($eventName in $EventNames) {
         if (-not $updated.hooks.Contains($eventName)) { $updated.hooks[$eventName] = @() }
         elseif (-not (Test-JsonArray $updated.hooks[$eventName])) { throw "Cannot update hooks.$($eventName): expected a list" }
-        $updated.hooks[$eventName] = @($updated.hooks[$eventName]) + @{ hooks = @(New-HookEntry -RuntimeName $Runtime -EventName $eventName) }
+        $entry = New-HookEntry -RuntimeName $Runtime -EventName $eventName
+        if ($Runtime -eq "copilot") {
+            $updated.hooks[$eventName] = @($updated.hooks[$eventName]) + $entry
+            continue
+        }
+        $group = @{ hooks = @($entry) }
+        if ($Runtime -eq "claude" -and $eventName -eq "Notification") {
+            $group.matcher = "permission_prompt|idle_prompt|elicitation_dialog|elicitation_url_dialog"
+        }
+        $updated.hooks[$eventName] = @($updated.hooks[$eventName]) + $group
     }
 
     return @{ Settings = $updated; Removed = $removedResult.Removed }
@@ -334,6 +376,9 @@ $eventList = @(if (-not $PSBoundParameters.ContainsKey("Events")) { Get-DefaultE
 Assert-AllowedEvents -RuntimeName $Runtime -EventNames $eventList
 $settingsPath = Get-SettingsPath -RuntimeName $Runtime -ScopeName $Scope -Root (Resolve-Path -LiteralPath $ProjectRoot).ProviderPath
 $original = Read-Settings -Path $settingsPath
+if ($Runtime -eq "copilot" -and $original.Contains("version") -and $original.version -ne 1) {
+    throw "Cannot update Copilot hooks: unsupported version $($original.version) in $settingsPath"
+}
 $originalJson = $original | ConvertTo-Json -Depth 50 -Compress
 $result = if ($Action -eq "uninstall") { Remove-DoorbellHooks -Settings $original } else { Install-DoorbellHooks -Settings $original -EventNames $eventList }
 $changed = ($originalJson -ne ($result.Settings | ConvertTo-Json -Depth 50 -Compress))
