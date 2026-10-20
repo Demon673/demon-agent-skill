@@ -15,10 +15,10 @@ A **flow** is a path through the skills. One **main flow** carries the documenta
 Five standing-order lines in the host repository's root `AGENTS.md` govern every action; `setup-demon-skills` writes them into a repository. Operationally:
 
 - **Before acting** — answer questions and analyze proposals without writing; treat only an explicit execution signal with a confirmed scope as authorization; unclear intent gets one clarifying question first.
-- **Before committing** — stop on any red check; the fix or its explanation ships in the same turn, and the final report names every failed check.
-- **Before claiming** — inspect files before editing or describing them; report only work that was actually done.
-- **Before destructive moves** — deletions, history rewrites, and force-push wait for the user to name the action.
-- **When assigning work** — apply the host's task ownership and delegation line; keep the active-agent count within its limit and verify fixes through observable acceptance at the real entry point.
+- **Before committing** — a failed check blocks the commit; the fix or its explanation ships in the same turn, and the final report names each failed check.
+- **Before claiming** — inspect files before editing or describing them; report only verified reading and completed work.
+- **Before destructive moves** — deletions, history rewrites, and force-push require the user to name the action before it runs.
+- **When delegating** — keep bounded work local and reuse valid context; delegate independent expensive work only when the parallel saving beats dispatch and context reconstruction; cap active subagents at three, descendants included; prioritize fixes and acceptance at the real entry point.
 
 Every flow in this pack obeys the gate: findings and plans come first, fixes run after confirmation.
 
