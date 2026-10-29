@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-以 1:1 移植加下述通用化的方式，把它吸收为 `skills/agent/` 下的 [`record-browser-gif`](../../../../skills/agent/record-browser-gif/SKILL.md)。编码器 `scripts/encode_gif.py` 原样复制（它已通用），并按仓库约定新增 `agents/openai.yaml`。通用化处理：宿主的构建命令改为 "the repository's build commands for the recorded tree"；`DSH_HOME`/`DSH_AGENTS_HOME` 改为 "the application's fresh state roots"；"real API key and real model rounds" 改为 "a real server, real credentials, and real data flow (real model rounds where the app is model-backed)"；宿主的 browser-control skill 改为 "the repository's browser-control skill when available, otherwise the repository-declared Playwright dependency"；宿主的 evidence-chain note 链接被删除，因为 staging 规则已经陈述了该理由。保留：面向用户可见 GUI 的 PR（Pull Request）的 MUST-GIF 规则、staging 与证据规则、帧纪律、`GIF_SKILL_DIR` 编码器调用方式、验证步骤、带 `?raw=true` 的 assets 分支发布，以及 PR head 的复查。
+把它吸收为 `skills/agent/` 下的 [`record-browser-gif`](../../../../skills/agent/record-browser-gif/SKILL.md)，附带通用编码器、针对性的媒体测试、上游许可证，以及本地 `agents/openai.yaml`。该 skill 使用仓库自身的构建与浏览器控制流程、全新应用状态和真实服务端行为；发布的工作流不携带宿主专属构建命令、状态根或架构引用。保留：面向用户可见 GUI 的 PR（Pull Request）的 MUST-GIF 规则、staging 与证据规则、连续视频捕获及截图回退、时序披露、`GIF_SKILL_DIR` 编码器调用方式、产物验证，以及被演示 PR head 的复查。发布优先使用受支持的 `gh --attach`，回退到专用 assets 分支。[同步决策](2026-10-30-sync-upstream-skills.md)记录上游版本。
 
 ## 备选方案
 
@@ -21,5 +21,5 @@ Status: implemented
 ## 后果
 
 - 发布的 skill 集合增加一个：`record-browser-gif`。
-- 编码器逐字节保留，其时序、尺寸与大小检查原样迁移。
+- 编码器支持视频和截图输入；针对性的媒体测试固定时序、尺寸、大小限制、无效输入拒绝行为，以及目标文件保留。它按[维护安全决策](../bug-fix/2026-10-30-close-maintenance-gaps.md)验证同目录临时文件，再原子发布。
 - 该 skill 不点名任何 deepseek-harness 特定的路径、命令或状态根；剩余的具体名称是具名示例（`.playwright-mcp/`、基于 GitHub 的 assets 分支工作流）与编码器声明的依赖，属于 skill 主题而非宿主耦合。通用化替换记录于此，供后续移植宿主耦合的 skill 复用。

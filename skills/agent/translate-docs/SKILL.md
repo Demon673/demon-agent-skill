@@ -1,13 +1,13 @@
 ---
 name: translate-docs
-description: Use when maintaining the English ↔ Simplified Chinese bilingual documentation pairs in a repository — writing a new counterpart for a document that lacks one, or auditing and verifying pair consistency on request.
+description: Use for explicitly requested whole-document English ↔ Simplified Chinese translation, batches of bilingual counterparts, or pairing audits.
 ---
 
 # Translating documentation
 
 ## Invocation boundary
 
-Run this workflow when the task is explicitly about maintaining bilingual pairs — a whole-document translation, a batch of new counterparts, or a requested pairing audit. It is model- and user-reachable on purpose, because the `ask-demon` cascade fires it after an earlier flow step touched docs or notes. Routine counterpart updates for a small prose change are made directly in one pass after loading the repository's terminology table; they do not need this skill.
+Run this workflow only for an explicit translation task — a whole-document translation, a batch of counterparts, or a requested pairing audit. It stays model- and user-reachable so `ask-demon` can select it for those tasks. Routine counterpart updates for a small prose change are made directly in one pass after loading the repository's terminology table; complete and record them without loading this extended workflow.
 
 ## What this skill is
 

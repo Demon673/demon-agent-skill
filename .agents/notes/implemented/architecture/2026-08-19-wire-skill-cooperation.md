@@ -14,7 +14,7 @@ Wire four cooperation edges, keeping every skill independently invocable: descri
 
 - `workspace-standards-review` → `find-simplifications`: a review that surfaces dead, duplicated, speculative, or over-built surface hands those candidates to `find-simplifications`.
 - `workspace-standards-review` → `trim-cot-leakage` and `prune-prompt-pollution`: those two own the reasoning-transcript and prompt-pollution smells the review checks.
-- `archive-agent-notes` → `translate-docs`: inbound-link repair that edited an active bilingual doc hands the counterpart update to `translate-docs`.
+- `archive-agent-notes` → pairing verification: inbound-link repair updates the counterpart directly; explicit translation tasks use `translate-docs` under the [conditional routing decision](../bug-fix/2026-10-30-close-maintenance-gaps.md).
 - `pre-push-checks` → `workspace-standards-review`: expressed in the root `AGENTS.md` as a pre-push semantic gate, because `pre-push-checks` is published and self-contained and cannot reference the internal `workspace-standards-review`.
 
 ## Alternatives considered
@@ -24,6 +24,6 @@ Wire four cooperation edges, keeping every skill independently invocable: descri
 
 ## Consequences
 
-- The cooperation graph is explicit: review → simplify → archive → translate, with `prose-standard`/`trim-cot-leakage`/`prune-prompt-pollution` as the shared prose tools.
+- The cooperation graph is explicit: review → simplify → archive → pairing verification, with conditional extended translation and `prose-standard`/`trim-cot-leakage`/`prune-prompt-pollution` as the shared prose tools.
 - Each skill remains independently invocable; handoffs are soft pointers in the body.
 - `pre-push-checks` stays generic; the repo-local pre-push review gate is documented in `AGENTS.md`.

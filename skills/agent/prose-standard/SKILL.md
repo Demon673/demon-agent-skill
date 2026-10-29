@@ -19,7 +19,7 @@ Always exclude `vendor/` from discovery, review, and edits, even when the reques
 
 Also exclude frozen archived notes from review and edits. Archived notes are frozen snapshots; inspect an exact target only to understand a historical inbound citation, never to modernize its prose or outbound links.
 
-Treat generated catalogs, snapshots, and fixtures as derivative. Edit the owning source or scenario first, then regenerate the artifact. When a generator extracts a summary from owner prose, make the extracted sentence complete for that surface. Bilingual pairs have no permanent owner: either language may be the authored side for an update, and the counterpart must follow in the same change.
+Treat generated catalogs, snapshots, and fixtures as derivative. Trace every consumer before editing: source prose may also feed a generated model-visible catalog. Edit the owning source or scenario first, then regenerate every derivative. When a generator extracts a summary from owner prose, make the extracted sentence complete for that surface. Bilingual pairs have no permanent owner: either language may be the authored side for an update; update the counterpart by the host's routine path and refresh its consistency record when one exists.
 
 ## Preserve the complete proposition
 

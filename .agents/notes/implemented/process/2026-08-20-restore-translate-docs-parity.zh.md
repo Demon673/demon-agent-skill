@@ -22,5 +22,5 @@ Status: implemented
 ## 后果
 
 - `skills/agent/translate-docs/SKILL.md` 从 54 行增至 69 行，重新覆盖简报驱动更新路径、委派翻译、配对 gate 细节与回应评审。
-- 本 skill 保持 model 与 user 可达，`ask-demon` 流得以级联进来；来源的仅用户边界刻意不移植。
+- 本 skill 保持 model 与 user 可达，按[条件路由决策](../bug-fix/2026-10-30-close-maintenance-gaps.md)处理明确的翻译任务；常规对应版本编辑不进入扩展工作流。来源的仅用户边界刻意不移植。
 - 本 skill 保持宿主无关：在有 translation-brief 脚本的宿主中走简报路径；没有则回退到手工 diff，并以通用措辞点名配对 gate 的 `.i18n.yaml` 记录与 `--write`/`--list` 标志。

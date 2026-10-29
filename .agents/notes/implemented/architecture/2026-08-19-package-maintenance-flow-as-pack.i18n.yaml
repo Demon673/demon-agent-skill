@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/architecture/2026-08-19-package-maintenance-flow-as-pack.md
-2026-08-19-package-maintenance-flow-as-pack.md: 75ed9956efd3d36a5468c2e20cfb8d26152f112a
-2026-08-19-package-maintenance-flow-as-pack.zh.md: ddbfd7bb2fc34918215501790ffd416bf7fc85a3
+2026-08-19-package-maintenance-flow-as-pack.md: 3bccef037fa45809e8a6d101530bcc1d9b6e5413
+2026-08-19-package-maintenance-flow-as-pack.zh.md: 17929cfcf6887d165011163538c17c89c731d271

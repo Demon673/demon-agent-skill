@@ -178,6 +178,8 @@ Keep the consequence of order, a surprising scope rule, or a security boundary. 
 
 Wording that reaches a model is behavior, but duplication still drifts. Exactness belongs at the owner.
 
+A prose-only audit may identify suspect wording but must not silently change it when no owning runnable scenario is authorized. Leave it unchanged and report the deferral, or expand the authorized change to include the owner scenario and required behavior evidence.
+
 ## Generated summaries must stand alone
 
 **Over-trimmed:** "Approval request and policy service." The owner explains policy order and audit logging later, but the catalog exports only its first sentence.

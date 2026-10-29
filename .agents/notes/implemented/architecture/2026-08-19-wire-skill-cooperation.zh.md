@@ -14,7 +14,7 @@ Status: implemented
 
 - `workspace-standards-review` → `find-simplifications`：审查发现死面、重复、投机或过度构建的表面时，把这些候选交给 `find-simplifications`。
 - `workspace-standards-review` → `trim-cot-leakage` 与 `prune-prompt-pollution`：这两个分别负责审查所检查的「推理转录」和「提示污染」两类臭味。
-- `archive-agent-notes` → `translate-docs`：入链修复若编辑了活跃的双语文档，就把 counterpart 更新交给 `translate-docs`。
+- `archive-agent-notes` → 配对验证：入链修复直接更新对应版本；明确的翻译任务按[条件路由决策](../bug-fix/2026-10-30-close-maintenance-gaps.md)使用 `translate-docs`。
 - `pre-push-checks` → `workspace-standards-review`：因 `pre-push-checks` 是发布且自包含的 skill、不能引用内部的 `workspace-standards-review`，这条边落在根 `AGENTS.md` 里，作为 push 前的语义门禁。
 
 ## 备选方案
@@ -24,6 +24,6 @@ Status: implemented
 
 ## 后果
 
-- 配合图变得显式：审查 → 简化 → 归档 → 翻译，`prose-standard`/`trim-cot-leakage`/`prune-prompt-pollution` 作为共享的 prose 工具。
+- 配合图明确为：审查 → 简化 → 封存 → 配对验证，扩展翻译按条件触发，`prose-standard`/`trim-cot-leakage`/`prune-prompt-pollution` 作为共享的行文工具。
 - 每个 skill 仍独立可调用；交接是正文里的软指针。
 - `pre-push-checks` 保持通用；仓库本地的 push 前审查门禁记录在 `AGENTS.md`。

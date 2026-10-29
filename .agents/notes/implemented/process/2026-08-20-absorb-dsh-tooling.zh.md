@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-把四个工具全部移植进 scripts/，零依赖 ESM。change-scope、gen-translation-brief 与 verify-doc-refs 保持 dsh 输出契约（verify-doc-refs 按本仓库文件类型扫描，而非 dsh 的包布局）；install-lefthook 是刻意精简的安装器——dsh 原版带着 worktree 本地钩子、配对合并驱动与迁移机制，宿主并不需要——lefthook 模板用配对门禁的工作区模式检查暂存文件，因为门禁没有 index 模式。verify-doc-refs 接进 run-doc-gates 成为第七道门禁；change-scope 与 lefthook 模板打包进 setup-demon-skills，让宿主也能获得。verify-mermaid 与 doc-typecheck 继续搁置：本仓库没有 mermaid 栅栏、文档里没有 TypeScript 样例，且两个门禁都带着宿主不应继承的依赖重量。
+把四个工具全部移植进 scripts/，零依赖 ESM。change-scope、gen-translation-brief 与 verify-doc-refs 保持 dsh 输出契约（verify-doc-refs 按本仓库文件类型扫描，而非 dsh 的包布局）；install-lefthook 是刻意精简的安装器——dsh 原版带着 worktree 本地钩子、配对合并驱动与迁移机制，宿主并不需要。setup 默认模板检查暂存空白；[可选文档任务](../../../../skills/agent/setup-demon-skills/references/git-hooks.md)要求宿主自有 gate 已通过验证，配对使用工作区模式，因为 gate 没有 index 模式。verify-doc-refs 接进 run-doc-gates 成为第七道门禁；change-scope 与 lefthook 模板打包进 setup-demon-skills，让宿主也能获得。verify-mermaid 与 doc-typecheck 继续搁置：本仓库没有 mermaid 栅栏、文档里没有 TypeScript 样例，且两个门禁都带着宿主不应继承的依赖重量。
 
 ## 备选方案
 

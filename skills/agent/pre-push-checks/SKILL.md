@@ -25,6 +25,7 @@ Confirm the files the diff actually touches. After merging a changed base, rerun
 There is no universal local baseline. Every behavior change needs the narrowest available test or purpose-built check that would fail for its regression; add broader checks only for surfaces the diff actually reaches.
 
 - **Package or script behavior:** run the owning test file or focused test name. Add adjacent package tests when a shared contract changes; leave repository-wide coverage to CI unless the change is genuinely cross-cutting or the user requests it.
+- **Resource-owning or asynchronous tests and CI:** inspect process and worker topology, resource allocation, global-state restoration, readiness signals, timeout budgets, and teardown completion. Add negative-control or concurrent-process evidence when the changed behavior depends on it.
 - **Model-, editor-, CLI-, or terminal-visible output:** run the focused snapshot or real runnable-example scenario that owns the output.
 - **Package manifests, public exports, build configuration, or built runtime paths:** run the build, the relevant hygiene checks, and the owning built-artifact smoke.
 - **Real provider or agent behavior:** run the relevant end-to-end target when credentials are available; never print secrets.
@@ -34,6 +35,8 @@ There is no universal local baseline. Every behavior change needs the narrowest 
 - **Whitespace and layout:** `git diff --check`.
 
 Do not manually repeat a passing check merely because a commit or push follows, and do not run a broader suite for a change that only touches one skill or one doc.
+
+Use the runner's argument-forwarding syntax and check the reported selected test count. For `pnpm run <vitest-script> <file> -t <name>`, pass filters directly after the script name; a standalone `--` can prevent the name filter from reaching Vitest. Other launchers may require that separator.
 
 ### Focus unit coverage on the affected source
 
@@ -96,5 +99,7 @@ gh pr checks
 ```
 
 Report pending checks as pending. Inspect failures before attributing them to the branch or the environment.
+
+If a GitHub PR has no reported checks and no workflow run for its head, inspect mergeability with `gh pr view <number> --json mergeable,mergeStateStatus`. A merge conflict can prevent `pull_request` workflows from starting. Resolve conflicting paths before retrying those checks; an empty commit does not resolve the conflict.
 
 For a stack-sync push, use the post-sync validation sequence instead of pretending the ordinary order was possible.

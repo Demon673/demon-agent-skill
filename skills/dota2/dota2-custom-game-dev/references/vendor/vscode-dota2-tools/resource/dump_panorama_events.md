@@ -1,4 +1,4 @@
-﻿Event|Panel Event|Panel Event
+Event|Panel Event|Panel Event
 --|--|--
 <code>AddStyle(panoramasymbol class)</code>|Yes|Add a CSS class to a panel.
 <code>AddStyleAfterDelay(panoramasymbol class, float pre-delay)</code>|Yes|Add a CSS class to a panel after a specified delay.

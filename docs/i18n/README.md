@@ -2,7 +2,7 @@
 
 English | [中文](README.zh.md)
 
-This repo's documentation is read by people in both languages, so every in-scope document is maintained in English and Simplified Chinese. This page defines the pairing contract, the gate, scope, and exclusions; [terminology.md](terminology.md) is the terminology source of truth. Routine counterpart updates are made directly; the extended [`translate-docs`](../../skills/agent/translate-docs/SKILL.md) workflow runs only on explicit user invocation.
+This repo's documentation is read by people in both languages, so every in-scope document is maintained in English and Simplified Chinese. This page defines the pairing contract, the gate, scope, and exclusions; [terminology.md](terminology.md) is the terminology source of truth. Routine counterpart updates are made directly; the extended [`translate-docs`](../../skills/agent/translate-docs/SKILL.md) workflow runs only for an explicit whole-document translation, batch of counterparts, or pairing audit.
 
 ## The pairing contract
 

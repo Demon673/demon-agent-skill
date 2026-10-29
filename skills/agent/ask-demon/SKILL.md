@@ -30,9 +30,9 @@ The route documentation work travels: review a change, simplify what it surfaces
 2. **`doc-standards`** — when the change touches documentation, run the structural pass and audit probes so the docs land in the right home, at the right detail, under budget. The review hands off here for doc changes.
 3. **`find-simplifications`** — take the dead, duplicated, speculative, or over-built surface the review surfaced, and turn the worthwhile ones into proposed Agent Notes or TODO markers. The review and docs steps hand off here.
 4. **`archive-agent-notes`** — when a change makes an owning note obsolete, classify and archive the superseded records. A simplification hands off here.
-5. **`translate-docs`** — after the earlier steps touched docs or notes, sync their English↔Chinese pairs. The archive step hands off here when link repair edited a bilingual doc.
+5. **Bilingual pairs** — update routine counterparts directly in the same pass, using the host's terminology and pairing recorder. Invoke `translate-docs` for an explicit whole-document translation, batch of counterparts, or pairing audit.
 
-The flow cascades — `workspace-standards-review → doc-standards (when docs touched) → find-simplifications → archive-agent-notes → translate-docs` — and each step is also independently invocable.
+The flow cascades — `workspace-standards-review → doc-standards (when docs touched) → find-simplifications → archive-agent-notes` — and closes with pairing verification. `translate-docs` is a conditional extension for explicit translation tasks; each skill remains independently invocable.
 
 ## The governance run
 
@@ -40,7 +40,7 @@ A whole-repository pass when asked to govern, standardize, or audit the reposito
 
 1. **Foundation** — the root `AGENTS.md` pointer, the documentation standard, the Agent Note tree, the bilingual pairing contract, the session-discipline lines, and the documentation budget gate must exist; missing ones come from `setup-demon-skills`.
 2. **Audit** — `doc-standards` runs the structural pass and the six corpus probes; report a non-compliance list naming each document, the violated clause, and the owning fix skill.
-3. **Fix by domain, after the user confirms scope** — structure, placement, budgets → `doc-standards`; prose → `prose-standard`; leakage → `trim-cot-leakage`; dead surface → `find-simplifications`; pairs → `translate-docs`; superseded notes → `archive-agent-notes`.
+3. **Fix by domain, after the user confirms scope** — structure, placement, budgets → `doc-standards`; prose → `prose-standard`; leakage → `trim-cot-leakage`; dead surface → `find-simplifications`; routine pairs → direct counterpart updates; explicit translation tasks → `translate-docs`; superseded notes → `archive-agent-notes`.
 4. **Close out** — the documentation gates and `git diff --check`, re-record touched pairs, one Agent Note per non-trivial change, word deltas in the PR body — then the main flow takes the change home.
 
 Every step confirms with the user before writing; a fix that changes promised behavior goes through a proposed Agent Note first.

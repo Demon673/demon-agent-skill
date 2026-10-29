@@ -31,6 +31,6 @@ When the user asks to update this skill's DOTA2 API references, refresh from ups
 powershell -ExecutionPolicy Bypass -File .\skills\dota2\dota2-custom-game-dev\scripts\update_references.ps1
 ```
 
-The script writes `references/vendor/vscode-dota2-tools/UPSTREAM.json` with the upstream commit, update time, source URL, and copied file list.
+The script writes `references/vendor/vscode-dota2-tools/UPSTREAM.json` with the upstream commit, update time, source URL, copied file list, and Markdown normalization policy. Markdown snapshots use LF, omit trailing spaces/tabs and terminal blank lines, and end with one newline when non-empty; JSON snapshots are copied byte-for-byte.
 
 If upstream changes file names or schema, update `scripts/search_dota2_api.py` and this source map in the same change.

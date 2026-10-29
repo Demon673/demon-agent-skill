@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-按 [docs/skills-map.md](../../../../docs/skills-map.md) 的处置表吸收 deepseek-harness 技能集：把漂移的 skill 恢复为泛化的 1:1 移植；把 dsh-code-review 吸收为 workspace-standards-review 下的检查清单参考（review 流程仍归 Matt 的 code-review）；移植 record-browser-gif 及其编码器；等某宿主有文档站点投影时再移植 doc-site-sync；跳过两个 Cordis 产品 skill 与 badge。每个 skill 的变更各自携带 implemented note（决策记录）；本记录保存集合级决策与 seam（边界）。
+按 [docs/skills-map.md](../../../../docs/skills-map.md) 的处置表吸收 deepseek-harness 技能集：维护可移植的适配版本；把 dsh-code-review 吸收为 workspace-standards-review 下的检查清单参考（review 流程仍归 Matt 的 code-review）；移植 record-browser-gif 及其编码器；等宿主提供文档站点投影后再引入该机制；产品专属工作流留在来源仓库。每项能力保留其所属的 implemented note（决策记录）；[同步决策](2026-10-30-sync-upstream-skills.md)记录上游基线与保留差异。
 
 ## 备选方案
 
@@ -20,6 +20,6 @@ Status: implemented
 
 ## 后果
 
-- 十一个 deepseek-harness 维护 skill 中十个已作为 skill 或检查清单参考存在；仅 doc-site-sync 暂缓。
+- 十个已映射的维护工作流已作为 skill 或检查清单参考存在；地图记录上游其他工作流及其各自暂缓或排除的原因。
 - 一个能力一个归属成立：Matt 拥有工程循环，本 pack 拥有维护流；seam 记录在 docs/skills-map.md 与 ask-demon。
-- 每对的 parity 可通过地图与各自 note 核验。
+- 适配范围可通过地图、同步基线与各 skill 所属 note 核验。

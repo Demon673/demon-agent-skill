@@ -32,6 +32,12 @@ Then check constraints that make placement expensive or wrong:
 - Before renaming or moving any doc, grep for inbound references: the repository's Markdown link gate catches link targets AND `#fragment` anchors onto Markdown files (heading slugs and explicit `<a id>`); a doc-refs gate, when present, catches `docs/*.md` citations in code comments; anchors cited from code strings still need a manual grep when their output never reaches gate-scanned Markdown.
 - A move is atomic: remove from the old home, add to the new home, and fix every inbound link in the same change.
 
+## Verify the reader's path
+
+Define the reader's starting state, observable outcome, likely failure, recovery path, and next useful depth. Keep the common path brief and place exhaustive implementation detail with its owner.
+
+Verify operational claims against the current source and exercise the documented command, configuration, or entry path in an isolated environment where needed. State exact observed defaults, outputs, and errors; when credentials, hardware, or authorization prevent execution, name the unverified claim and its verification owner. A neighboring README or an older base is not behavioral evidence.
+
 ## Audit the corpus
 
 After the structural pass, hunt the standard's slop checklist with the cheapest probes first. Verify and fetch the live base when reviewing a change, then run the repository's change-scope tool, when present, to identify committed and dirty paths before applying semantic judgment. After a retarget or base merge, rerun the report and audit prose introduced by the new base.

@@ -14,7 +14,7 @@ Scaffold the per-repository conventions the maintenance flow assumes:
 - **Session discipline** — the five standing-order lines that govern execution, verification, destructive actions, and delegation.
 - **Documentation budget gate** — the self-contained `verify-doc-budgets` script plus its manifest that enforce the standard's ceilings.
 - **Change-scope tool** — the `change-scope` script that reports a change's committed and worktree scope; `pre-push-checks` reads it.
-- **Git hooks** — the `lefthook.yml` jobs that verify translation pairing, archived notes, and whitespace before commit.
+- **Git hooks** — staged whitespace checking, plus documentation checks when the host supplies their gates.
 - **Where they live** — a line in the repository's root `AGENTS.md` pointing at the four doc locations; the tools land in `scripts/` and `lefthook.yml`, which need no pointer.
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
@@ -51,7 +51,7 @@ Own small tasks; reuse valid context; delegate substantial independent work. Def
 
 - **Documentation budget gate**: copy this skill's `scripts/verify-doc-budgets.mjs` into the host's `scripts/` and `scripts/doc-budgets.manifest.template.json` to `scripts/doc-budgets.manifest.json`; then adjust the ceilings to the host's always-loaded docs. The gate runs as `node scripts/verify-doc-budgets.mjs`, and `--list` prints the table.
 - **Change-scope tool**: copy this skill's `scripts/change-scope.mjs` into the host's `scripts/`; `pre-push-checks` runs `node scripts/change-scope.mjs --base <ref>` (optionally with `--head <ref>`) to report the committed and worktree scope of a change.
-- **Git hooks**: copy this skill's `scripts/lefthook.template.yml` to the host's `lefthook.yml` and `scripts/install-lefthook.mjs` beside it; it verifies translation pairing on staged consistency records, verifies archived notes, and checks staged whitespace. The pairing and archive jobs need the host's pairing and archive gates copied into its `scripts/` first; the whitespace job runs everywhere. Activate with `npm run install-lefthook`.
+- **Git hooks**: copy this skill's `scripts/lefthook.template.yml` to the host's `lefthook.yml` and `scripts/install-lefthook.mjs` into its `scripts/`. Merge with existing jobs rather than replacing them. The default template checks staged whitespace using Git alone. When the host provides documentation gates, follow [the optional hook setup](references/git-hooks.md) before enabling their jobs. Once lefthook is available, activate with `node scripts/install-lefthook.mjs`.
 - **Record the pointers**: add a line to the root `AGENTS.md` pointing at the note rules, the pairing contract, the documentation standard, and the session discipline.
 
 ### 3. Confirm before writing

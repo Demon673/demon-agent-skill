@@ -13,11 +13,11 @@ Read the repository's Agent Note rules, archive instructions, and the applicable
 
 ## Check supersession when adding a note
 
-Every new note triggers a scoped audit of active notes covering the same decision or mechanism. Classify each full or partial supersession while writing the new note: archive qualifying implemented triplets in the same PR, retain and cross-link partial supersessions, reject obsolete proposals, and delete rejected notes that no longer prevent a plausible mistake. Apply the consolidation rule when the new owner absorbs every unique proposition, deleting the absorbed triplet whole; do not defer a known match.
+Apply the repository's note-creation criteria before drafting. Every new note triggers a scoped audit of active notes covering the same decision, mechanism, or rejected alternative. Classify each full or partial supersession while writing the new note: archive qualifying implemented triplets in the same PR, retain and cross-link partial supersessions or independently useful rationale, reject obsolete proposals, and delete rejected notes that no longer prevent a plausible mistake. Apply the consolidation rule when the new owner absorbs every unique proposition, deleting the absorbed triplet whole; do not defer a known match.
 
 ## Classify by future value
 
-- **Implemented — keep active:** retain a note when its rationale, alternatives, negative guarantee, ownership boundary, or reintroduction condition is likely to guide a future change.
+- **Implemented — keep active:** retain a note when its rationale, alternatives, negative guarantee, durability or wire semantics, security rule, ownership boundary, or reintroduction condition is likely to guide a future change. Classify the decision rather than the mechanics: a rename can still establish a lasting compatibility rule.
 - **Implemented — archive:** archive a note when the shipped decision is complete and its body is unlikely to guide future work.
 - **Proposed — never archive:** keep a live proposal active; if it is no longer worth pursuing, reject it with an honest reason.
 - **Rejected — keep only as a guardrail:** retain a rejection only when the losing proposal remains a tempting, meaningful mistake.
@@ -32,10 +32,10 @@ Do not archive toward a quota. Inspect every note in scope, classify analogous g
 3. Move the complete `foo.md`, `foo.zh.md`, and `foo.i18n.yaml` triplet from `implemented/{class}/` to `archived/{class}/`; `implemented` is deliberately absent from the archive path.
 4. Search for inbound links from active prose. Redirect them to current authority, retarget them to the archived path only when the historical snapshot is intentionally cited, or delete them. Never verify or repair links out of the archived note.
 
-When inbound-link repair edited an active bilingual doc, hand the counterpart update to `translate-docs` so both sides stay in sync before the pairing gate.
+When inbound-link repair edits an active bilingual doc, follow the repository's lightweight pairing routine and update its counterpart in the same change. Use `translate-docs` for an explicitly requested extended translation workflow.
 
 After the triplet is sealed, never edit, move, translate, reformat, or delete it. Archived notes remain valid inbound-link targets but are historical snapshots, not authority for current behavior.
 
 ## Validate and report
 
-Run the repository's archive seal gate in write mode first: it proves every existing seal still matches, then appends only the newly archived artifacts. Run the gate again normally, then the documentation gates and `git diff --check`. Report active implemented notes kept, implemented notes archived, rejected notes kept/deleted, proposed notes rejected if any, and every genuinely borderline case with its chosen outcome.
+Run the repository's archive seal gate in write mode first: it proves every existing seal still matches, then appends only the newly archived artifacts. Run the gate again normally, then the documentation gates and `git diff --check`. Report active implemented notes kept, implemented notes archived, rejected notes kept/deleted, proposed notes rejected if any, and every genuinely borderline case with its chosen outcome. The archive verifier does not establish the validity of archived outbound links.

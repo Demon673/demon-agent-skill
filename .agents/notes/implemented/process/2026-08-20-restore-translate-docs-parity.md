@@ -22,5 +22,5 @@ Rewrite `translate-docs` to carry the full `dsh-translate-docs` workflow with ho
 ## Consequences
 
 - `skills/agent/translate-docs/SKILL.md` grows from 54 to 69 lines and again covers the briefing-driven update path, delegated translation, pairing-gate specifics, and review response.
-- The skill stays model- and user-reachable, so the `ask-demon` flow can cascade into it; the source's user-only boundary is deliberately not ported.
+- The skill stays model- and user-reachable for explicit translation tasks under the [conditional routing decision](../bug-fix/2026-10-30-close-maintenance-gaps.md); routine counterpart edits do not enter the extended workflow. The source's user-only boundary is deliberately not ported.
 - The skill stays host-agnostic: in a host with a translation-brief script it runs the briefing path; without one it falls back to a manual diff, and it names the pairing gate's `.i18n.yaml` record and `--write`/`--list` flags generically.

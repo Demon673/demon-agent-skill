@@ -10,7 +10,7 @@ pack 会脚手架出 `lefthook.yml` 及其安装器，本仓库也写明了分�
 
 ## 决策
 
-把 `lefthook` 加入 `devDependencies`，使二进制在干净安装后依然存在，并用 `npm run install-lefthook` 激活钩子。pre-commit 的各项 job 现在会针对暂存内容运行：重新校验配对记录、检查封存的 Agent Note、拒绝暂存内容中的空白问题。新增 [.github/workflows/gates.yml](../../../../.github/workflows/gates.yml)，在每次推送到 `main` 以及每个 pull request 上运行 `npm run doc-gates` 与 `.\scripts\validate-skills.ps1`；选用 `windows-latest`，因为校验器解析的是 Windows 的 virtualenv 布局，而维护脚本是 PowerShell。把分工写进 `CONTRIBUTING.md`：CI 跑这两道门禁，钩子是暂存内容的快速路径，每次克隆后运行一次 `npm run install-lefthook` 即可启用。
+把 `lefthook` 保留在 `devDependencies` 中，使二进制在干净安装后依然存在，并用 `npm run install-lefthook` 激活钩子。本仓库的 pre-commit 任务重新校验暂存的配对记录、检查封存的 Agent Note，并拒绝暂存空白问题。[.github/workflows/gates.yml](../../../../.github/workflows/gates.yml) 在推送到 `main` 和 pull request 时运行 `npm run doc-gates`、`.\scripts\validate-skills.ps1` 及 `npm test`；选用 `windows-latest`，因为校验器解析的是 Windows 的 virtualenv 布局，而维护脚本是 PowerShell。skill 校验准备测试运行器的 Python 环境；CI 安装 FFmpeg 以运行媒体回归测试。[CONTRIBUTING.md](../../../../CONTRIBUTING.md) 记录分工：CI 运行测试及两道 gate，钩子是暂存内容的快速路径，每次克隆后运行一次 `npm run install-lefthook` 即可启用。
 
 ## 备选方案
 

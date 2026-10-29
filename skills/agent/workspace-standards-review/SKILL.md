@@ -16,7 +16,7 @@ For code-facing reviews — lifecycle, concurrency, invariants, disposal, and ot
 - `prose-standard`: required coverage and editorial judgment.
 - `trim-cot-leakage` and `prune-prompt-pollution`: reasoning-transcript and prompt-pollution smells respectively.
 - The Agent Note rules (usually `.agents/notes/README.md`), with `archive-agent-notes` for supersession and archival. Treat disagreement with a note as a design discussion, not an automatic veto.
-- The bilingual pairing contract and terminology table (usually `docs/i18n/README.md` and `docs/i18n/terminology.md`), with `translate-docs` for counterpart updates.
+- The bilingual pairing contract and terminology table (usually `docs/i18n/README.md` and `docs/i18n/terminology.md`), with `translate-docs` for explicit extended translation tasks.
 - `setup-demon-skills`: the scaffold that installs the conventions above. When a workspace lacks one, report the gap rather than inventing a standard.
 - `pre-push-checks`: which checks cover a given diff, so the review can ask what the change should have carried before it was pushed.
 

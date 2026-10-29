@@ -30,3 +30,8 @@ jobs:
       - name: Skill validation
         shell: pwsh
         run: .\scripts\validate-skills.ps1
+      - name: Install media test dependencies
+        shell: pwsh
+        run: choco install ffmpeg --yes --no-progress
+      - name: Regression tests
+        run: npm test

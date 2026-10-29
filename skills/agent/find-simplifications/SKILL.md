@@ -5,14 +5,14 @@ description: Use when working in a repository to find non-obvious simplification
 
 # Finding simplifications
 
-Turn a broad "find things to simplify" request into evidence-backed Agent Notes that remove or collapse existing surface across code, docs, and skills. It is guidance, not a checklist: follow the code, keep judgment active, and prefer a few well-proven candidates over a pile of thin guesses.
+Find changes that remove maintained obligations: APIs, representations, lifecycle states, configuration paths, dependencies, tests, or documentation. It is guidance, not a checklist: prefer a few well-proven candidates over a count of deletions, and distinguish a survey from permission to implement its proposals.
 
 ## Start with repo context
 
 - Read the root `AGENTS.md` — the pre-release stance when present, and conventions such as tests-are-not-golden-truth and Agent Notes-are-not-golden-truth doctrines — plus the repository's defensive-patterns and testing docs when they exist.
 - Skim the architecture doc before judging core code; simplifications that fight the service map or event taxonomy need extra evidence.
 - Use the Agent Note tree and its rules to understand intentional architecture; a recorded decision needs new evidence to overturn, not a "looks complex" flag. Start with high-signal implemented examples — capability seams, twin adapters, and persistence notes — when the tree has them.
-- Treat recorded architectural twins — dual LLM adapters and dual persistence backends — as intentional by default. Do not propose deleting either side as "low effort" unless the user explicitly overrides that constraint. Removing an unused method or hook inside a protected seam can still be valid if it does not collapse the protected design.
+- Treat the repository's recorded adapter, persistence, and extension boundaries as intentional. Removing unused members within one can be valid when it preserves the recorded obligation; changing that obligation needs explicit scope and evidence.
 
 ## What counts as a strong candidate
 
@@ -29,6 +29,15 @@ A strong simplification removes, folds, or demotes something real and has clear 
 - The simplified behavior may differ slightly, but the new behavior is still reasonable and easier to explain.
 
 Thin candidates are usually not enough for an Agent Note: deleting one typo, running a dead-code tool once, removing an intentionally documented backend or adapter, or flagging "this looks complex" without call-site proof.
+
+Trace the complete effect path before judging necessity:
+
+- Follow producers, transformations, provider support, and observable results. A field copied everywhere may have no setter or reader; forwarded configuration may be shadowed before its authoritative read.
+- Ask which distinctions change a consumer's action. Compare existing fields and discriminants before adding a marker, and distinguish deleting a concept from relocating its declaration.
+- Compare a smaller explicit behavior with the whole subsystem it replaces. Name the capability lost and include residual glue in the maintenance cost.
+- Check whether consumers can read the authoritative value at the required time instead of keeping copied history, caches, invalidation events, or recovery state.
+- Separate availability from deployment policy. Optional service presence does not establish which behavior a caller requested.
+- Assess requirements, checks, and notes added by the change as design choices; they do not independently prove the new machinery is necessary.
 
 ## Survey broadly
 
@@ -69,11 +78,11 @@ For every symbol or behavior, classify consumers before writing:
 - Non-production corpus: tests, README/docs, Agent Notes, snapshots, generated expected outputs, and comments.
 - Ambiguous corpus: examples and scripts that may be product smoke paths. Inspect usage before classifying.
 
-Use `rg` first. Good searches include the exact symbol, event name, package name, config key, method name with both `.name(` and `name(`, and any wire strings. Then read the call sites. A dead-code tool such as `knip` can help, but it is not a substitute for understanding public interfaces, dynamic event names, tests, docs, and loader paths.
+Use `rg` first. Good searches include the exact symbol, property reads and writes, discriminant emitters, event name, package name, config key, method name with both `.name(` and `name(`, and any wire strings. Then read the call sites, manifests, exports, generated runtime assets, and installed-package consumers. A catalog used by runtime or model-generated configuration can be a dynamic API; a public extension point can be intentional despite zero repository callers. A dead-code tool such as `knip` does not replace this reachability check.
 
 Reject or downgrade a candidate when:
 
-- A production caller exists and the simplification would be a feature decision rather than a cleanup.
+- A production caller exists and the proposed capability loss is outside the authorized scope. Record an explicitly requested narrower behavior as a behavior decision, not as dead-code cleanup.
 - The API is explicitly justified by an implemented Agent Note or a hard-won defensive pattern, and the new evidence does not beat that reason.
 - The removal would force unrelated churn without actually reducing the public API or required behavior.
 - The idea is correct but tiny. Add a targeted TODO/FIXME/XXX instead, using the urgency semantics in the repository's conventions doc.
@@ -92,6 +101,7 @@ Prefer this structure, adjusting when the idea needs it:
 - `Status: proposed`
 - `## Problem`: name the current API, cite the relevant files, and state the consumer evidence. Separate production callers from tests/docs.
 - `## Proposal`: say exactly what to remove, fold, demote, or rehome. Include tests, docs, READMEs, JSDoc, event-taxonomy, snapshot, and generated-file cleanup when relevant.
+- `## Alternatives considered`: name genuine alternatives and why they lose, following the repository's required note format.
 - `## Why not keep it?` or `## What we give up`: make the strongest counterargument legible.
 - `## Acceptance criteria`: observable end state and gates.
 - `## Risks`: public API changes, behavior changes, future product wants, and why the tradeoff is still reasonable.

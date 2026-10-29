@@ -21,5 +21,5 @@ Publish the flow as a coordinated pack. Move the four flow skills into `skills/a
 ## Consequences
 
 - The published manifest grows from 11 to 17 skills; the internal `.agents/skills/` set is empty and removed.
-- `ask-demon` is the single entry point; the maintenance flow cascades `workspace-standards-review` → `find-simplifications` → `archive-agent-notes` → `translate-docs`.
+- `ask-demon` is the single entry point; the maintenance flow cascades `workspace-standards-review` → `find-simplifications` → `archive-agent-notes`, then verifies bilingual pairing. Explicit translation tasks use `translate-docs` under the [conditional routing decision](../bug-fix/2026-10-30-close-maintenance-gaps.md).
 - The historical "internal vs published" notes are superseded by this decision; their links now point at `skills/agent/`.

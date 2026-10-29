@@ -21,5 +21,5 @@ Status: implemented
 ## 后果
 
 - 发布清单从 11 增至 17 个 skill；内部 `.agents/skills/` 集合清空并移除。
-- `ask-demon` 是唯一入口；维护流程级联 `workspace-standards-review` → `find-simplifications` → `archive-agent-notes` → `translate-docs`。
+- `ask-demon` 是唯一入口；维护流程级联 `workspace-standards-review` → `find-simplifications` → `archive-agent-notes`，随后验证双语配对。明确的翻译任务按[条件路由决策](../bug-fix/2026-10-30-close-maintenance-gaps.md)使用 `translate-docs`。
 - 历史「内部 vs 发布」note 被本决策取代；其链接现在指向 `skills/agent/`。

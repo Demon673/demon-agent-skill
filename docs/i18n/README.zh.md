@@ -2,7 +2,7 @@
 
 [English](README.md) | 中文
 
-本仓库的文档同时面向两种语言的使用者，因此每个纳入范围的文档都同时维护英文和简体中文两个版本。本页定义配对契约、门禁、范围和排除项；[terminology.md](terminology.md) 是术语的权威来源。常规的对应版本更新直接进行；扩展的 [`translate-docs`](../../skills/agent/translate-docs/SKILL.md) 工作流仅在用户显式调用时运行。
+本仓库的文档同时面向两种语言的使用者，因此每个纳入范围的文档都同时维护英文和简体中文两个版本。本页定义配对契约、门禁、范围和排除项；[terminology.md](terminology.md) 是术语的权威来源。常规的对应版本更新直接进行；扩展的 [`translate-docs`](../../skills/agent/translate-docs/SKILL.md) 工作流仅用于明确要求的整篇翻译、批量对应版本更新或配对审计。
 
 ## 配对契约
 

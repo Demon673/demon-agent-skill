@@ -10,7 +10,7 @@ The 2026-08-17 port from deepseek-harness rewrote nine maintenance skills into r
 
 ## Decision
 
-Absorb the deepseek-harness skill set per the disposition table in [docs/skills-map.md](../../../../docs/skills-map.md): restore the drifted skills as generalized 1:1 ports, absorb dsh-code-review as a checklist reference under workspace-standards-review (the review flow stays with Matt's code-review), port record-browser-gif with its encoder, defer doc-site-sync until a host has a docs-site projection, and skip the Cordis product skills and the badge. Each skill change carries its own implemented note; this note records the set-level decisions and seams.
+Absorb the deepseek-harness skill set per the disposition table in [docs/skills-map.md](../../../../docs/skills-map.md): maintain portable adaptations, absorb dsh-code-review as a checklist reference under workspace-standards-review (the review flow stays with Matt's code-review), port record-browser-gif with its encoder, exclude website projection until a host provides it, and leave product-only workflows with their source. Each capability keeps its owning implemented note; the [synchronization decision](2026-10-30-sync-upstream-skills.md) records the upstream baseline and retained differences.
 
 ## Alternatives considered
 
@@ -20,6 +20,6 @@ Absorb the deepseek-harness skill set per the disposition table in [docs/skills-
 
 ## Consequences
 
-- Ten of the eleven deepseek-harness maintenance skills are present as skills or as a checklist reference; only doc-site-sync is deferred.
+- Ten mapped maintenance workflows are present as skills or as a checklist reference; the map records additional upstream workflows and their individual deferrals or exclusions.
 - One home per capability holds: Matt owns the engineering loop, this pack owns the maintenance flow; the seams are recorded in docs/skills-map.md and ask-demon.
-- Parity is checkable per pair through the map and each skill's note.
+- Adaptation scope is checkable through the map, the synchronization baseline, and each skill's owning note.

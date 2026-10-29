@@ -28,4 +28,4 @@ Comments and scripts document non-obvious contracts and rationale, not what the 
 ## Config and strings
 
 - **Examples and configuration comments:** explain access limits, non-obvious wiring or load order, security stance, replay behavior, exceptions, and likely misuse. Do not narrate entries that the configuration already shows.
-- **Prompts and visible strings:** treat wording as behavior. Inspect generated output and run behavior validation or state why no snapshot applies.
+- **Prompts and visible strings:** treat wording as behavior. Inspect text, accessibility names, tooltips, placeholders, and format templates together. Run the owning behavior validation and update any generated evidence. If a prose-only scope has no authorized owning scenario, leave the wording unchanged and report the deferral.

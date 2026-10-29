@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/architecture/2026-08-19-wire-skill-cooperation.md
-2026-08-19-wire-skill-cooperation.md: 2c04b0759d6a7f0184f1ad616066180d30d028ae
-2026-08-19-wire-skill-cooperation.zh.md: d2d5a43e91db3933b48047b898c2466f141c53d9
+2026-08-19-wire-skill-cooperation.md: 3ae769b2e45abf4162721bde0b41a0c051d407f7
+2026-08-19-wire-skill-cooperation.zh.md: cfe7dd9570ae1b410fbb12765ffba3e8dfe695f4
