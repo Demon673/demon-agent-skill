@@ -12,6 +12,8 @@ The pack scaffolds `lefthook.yml` and its installer, and this repository documen
 
 Keep `lefthook` in `devDependencies`, so the binary survives a clean install, and activate the hooks with `npm run install-lefthook`. This repository's pre-commit jobs re-verify staged pairing records, check archived notes, and reject staged whitespace. [.github/workflows/gates.yml](../../../../.github/workflows/gates.yml) runs `npm run doc-gates`, `.\scripts\validate-skills.ps1`, and `npm test` on pushes to `main` and pull requests, on `windows-latest` because the validator resolves a Windows virtualenv layout and the maintenance scripts are PowerShell. Skill validation prepares the test runner's Python environment; CI installs FFmpeg for media regression tests. [CONTRIBUTING.md](../../../../CONTRIBUTING.md) records the division: CI runs tests and both gates, hooks are the staged fast path, and `npm run install-lefthook` activates them once per clone.
 
+The official checkout and language-setup actions use Node.js 24, requiring Actions runner v2.327.1 or later. `windows-latest` supplies the managed runner; the job's toolchain uses Node.js 22 and Python 3.12 independently of the actions' runtime.
+
 ## Alternatives considered
 
 - **Install lefthook with `--no-save`.** Rejected: the binary disappears on the next clean install and the hooks return to failing silently, which is the state being fixed.
