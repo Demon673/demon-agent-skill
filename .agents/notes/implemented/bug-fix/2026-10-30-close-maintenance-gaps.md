@@ -12,11 +12,13 @@ A fresh host can receive hooks that reference gates it does not have. Empty skil
 
 The setup template enables only staged whitespace checking. Optional documentation jobs require host-owned scripts, helpers, manifests, dependencies, and a successful gate run before activation. The [tooling port](../process/2026-08-20-absorb-dsh-tooling.md) retains its generic installer and optional-gate boundary.
 
-The validator rejects empty names and descriptions after stripping whitespace. The Markdown link gate includes both root contribution and glossary pairs. `npm test` runs the Node entry-path checks, Python validator regressions, and real media tests; [CI](../../../../.github/workflows/gates.yml) prepares the validator environment and FFmpeg before running them.
+The validator rejects empty names and descriptions after stripping whitespace. The Markdown link gate includes both root contribution and glossary pairs. `npm test` runs the Node entry-path checks, Python regressions, real media tests, and existing skill acceptance entrypoints; [CI](../../../../.github/workflows/gates.yml) prepares the validator environment and FFmpeg before running them.
 
 Routine counterpart edits remain with the owning change and finish with pairing verification. `translate-docs` stays model- and user-reachable for explicit whole-document translations, batches, and pairing audits. This narrows the translation handoff in the [cooperation graph](../architecture/2026-08-19-wire-skill-cooperation.md) while preserving the [pack's shared entry points](../architecture/2026-08-19-package-maintenance-flow-as-pack.md) and the [extended translation machinery](../process/2026-08-20-restore-translate-docs-parity.md).
 
 The GIF encoder validates a temporary sibling before publication. Forced output uses atomic replacement; ordinary output uses hard-link creation so a concurrently created target is preserved. Failed encoding or verification cleans the owned temporary file without changing the target. The [GIF port](../process/2026-08-20-absorb-record-browser-gif.md) keeps its capture and publication rules.
+
+Installation path and Dota reference safeguards follow the [maintenance input decision](2026-10-30-protect-maintenance-inputs.md).
 
 ## Alternatives considered
 

@@ -14,6 +14,8 @@ Keep `lefthook` in `devDependencies`, so the binary survives a clean install, an
 
 The official checkout and language-setup actions use Node.js 24, requiring Actions runner v2.327.1 or later. `windows-latest` supplies the managed runner; the job's toolchain uses Node.js 22 and Python 3.12 independently of the actions' runtime.
 
+The `posix-installer` job runs the isolated installer regressions on `ubuntu-latest`, exercising the native Bash branch. The full Windows matrix also covers the Git Bash delegation to PowerShell; Windows-only installer cases are skipped in the POSIX job.
+
 ## Alternatives considered
 
 - **Install lefthook with `--no-save`.** Rejected: the binary disappears on the next clean install and the hooks return to failing silently, which is the state being fixed.
@@ -26,4 +28,4 @@ The official checkout and language-setup actions use Node.js 24, requiring Actio
 - A commit that stages a pairing record, an archived note, or trailing whitespace is blocked locally; the same defects also fail in CI for a clone whose hooks were never activated.
 - The repository-wide matrix runs on every push to `main` and every pull request, so a green local run is no longer the only evidence.
 - `npm ci` does not activate the hooks: a fresh clone needs one `npm run install-lefthook`.
-- Windows runners carry the CI cost — the price of the PowerShell and virtualenv tooling the maintenance scripts assume.
+- Windows runners carry the full matrix cost — the price of the PowerShell and virtualenv tooling the maintenance scripts assume; the focused POSIX job requires only Node and Bash.

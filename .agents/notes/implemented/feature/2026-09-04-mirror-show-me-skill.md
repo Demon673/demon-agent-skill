@@ -21,7 +21,7 @@ Publish the upstream [`show-me` SKILL.md](../../../../skills/agent/show-me/SKILL
 ## Consequences
 
 - Upstream content ships verbatim, so the platform-specific `open` command embedded in the SKILL.md remains uncorrected.
-- The upstream `disable-model-invocation: true` setting makes `show-me` a manual command; it is not part of the maintenance cascade.
+- The upstream `disable-model-invocation: true` setting and local Codex invocation policy make `show-me` a manual command under the [metadata mapping](../process/2026-08-19-codex-metadata.md); it is not part of the maintenance cascade.
 - Synchronization is manual; the mirror drifts until `sync-show-me.ps1` is run.
 - The upstream license is retained for attribution.
 - Local Codex metadata and the plugin manifest entry are not upstream-owned.

@@ -21,5 +21,5 @@ Absorb it as [`record-browser-gif`](../../../../skills/agent/record-browser-gif/
 ## Consequences
 
 - The published skill set grows by one: `record-browser-gif`.
-- The encoder supports video and screenshot input; focused media tests pin timing, dimensions, size limits, invalid-input rejection, and target preservation. It validates a temporary sibling before atomic publication under the [maintenance safety decision](../bug-fix/2026-10-30-close-maintenance-gaps.md).
+- The encoder supports video and screenshot input; focused media tests pin timing, dimensions, size limits, invalid-input rejection, target preservation, concurrent publication, and quoted frame paths. It validates a temporary sibling before atomic publication under the [maintenance safety decision](../bug-fix/2026-10-30-close-maintenance-gaps.md).
 - The skill names no deepseek-harness-specific paths, commands, or state roots; the remaining concrete names are labeled examples (`.playwright-mcp/`, the GitHub assets-branch workflow) and the encoder's declared dependencies, which are the skill's subject rather than host coupling. The generalization substitutions are recorded here so later ports of host-coupled skills can reuse them.

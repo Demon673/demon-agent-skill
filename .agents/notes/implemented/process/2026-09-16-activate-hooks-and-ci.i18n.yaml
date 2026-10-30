@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-09-16-activate-hooks-and-ci.md
-2026-09-16-activate-hooks-and-ci.md: 90b31d87f62c0af5c67f79aca2cebf5425ecd644
-2026-09-16-activate-hooks-and-ci.zh.md: 112d5a4f7a4303a9a4ae096e9d4105f28058884b
+2026-09-16-activate-hooks-and-ci.md: fae190b30469acf256cadf72ba4a25debbbffa14
+2026-09-16-activate-hooks-and-ci.zh.md: bace29b6cd563098383228fbe2e8d6708684f497

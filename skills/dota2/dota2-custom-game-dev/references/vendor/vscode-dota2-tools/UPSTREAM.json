@@ -3,8 +3,9 @@
   "sourceUrl": "https://github.com/BigCiba/vscode-dota2-tools.git",
   "ref": "main",
   "commit": "7488fc4583868ef2014dee88a0eb0f729170df0e",
-  "updatedAt": "2026-10-29T23:08:50.9308618Z",
+  "updatedAt": "2026-10-30T00:14:50.1592011Z",
   "copiedFiles": [
+    "LICENSE",
     "resource/dota_script_help2.json",
     "resource/cl_panorama_script_help_2.json",
     "resource/dump_panorama_css_properties.json",

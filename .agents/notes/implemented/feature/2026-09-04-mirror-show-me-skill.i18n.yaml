@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/feature/2026-09-04-mirror-show-me-skill.md
-2026-09-04-mirror-show-me-skill.md: 2e62a2fb89a17bbc4d43bb79b366286edf1153ab
-2026-09-04-mirror-show-me-skill.zh.md: 5cc6e6a2eaf2ad1190ef23a85a3828076ee7c48d
+2026-09-04-mirror-show-me-skill.md: 35d4d50afcbe0bdd5d50a6cc7678c47252e19e53
+2026-09-04-mirror-show-me-skill.zh.md: 86fd3f9480b183eaf5e152ec50f8c0cdf1794bd5

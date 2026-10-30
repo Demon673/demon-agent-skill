@@ -14,6 +14,8 @@ const commands = [
   [process.execPath, ['--test', ...nodeTests.map((name) => join(root, 'scripts', name))]],
   [python, ['-m', 'unittest', 'discover', '-s', 'scripts', '-p', 'test_*.py', '-v']],
   [python, ['-m', 'unittest', 'discover', '-s', 'skills/agent/record-browser-gif/scripts', '-p', 'test_*.py', '-v']],
+  [process.execPath, ['skills/agent/agent-doorbell/scripts/test-doorbell.js']],
+  [python, ['-I', 'skills/agent/setup-demon-skills/scripts/test-statusline.py']],
 ]
 
 let failed = false

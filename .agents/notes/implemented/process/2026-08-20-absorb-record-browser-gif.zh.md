@@ -21,5 +21,5 @@ Status: implemented
 ## 后果
 
 - 发布的 skill 集合增加一个：`record-browser-gif`。
-- 编码器支持视频和截图输入；针对性的媒体测试固定时序、尺寸、大小限制、无效输入拒绝行为，以及目标文件保留。它按[维护安全决策](../bug-fix/2026-10-30-close-maintenance-gaps.md)验证同目录临时文件，再原子发布。
+- 编码器支持视频和截图输入；针对性的媒体测试固定时序、尺寸、大小限制、无效输入拒绝行为、目标文件保留、并发发布，以及带引号的帧路径。它按[维护安全决策](../bug-fix/2026-10-30-close-maintenance-gaps.md)验证同目录临时文件，再原子发布。
 - 该 skill 不点名任何 deepseek-harness 特定的路径、命令或状态根；剩余的具体名称是具名示例（`.playwright-mcp/`、基于 GitHub 的 assets 分支工作流）与编码器声明的依赖，属于 skill 主题而非宿主耦合。通用化替换记录于此，供后续移植宿主耦合的 skill 复用。

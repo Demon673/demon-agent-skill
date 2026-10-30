@@ -14,6 +14,8 @@ pack 会脚手架出 `lefthook.yml` 及其安装器，本仓库也写明了分�
 
 官方的检出与语言环境设置 Actions 使用 Node.js 24，要求 Actions runner 为 v2.327.1 或更高版本。`windows-latest` 提供托管 runner；任务工具链使用 Node.js 22 和 Python 3.12，其版本独立于 Actions 运行时。
 
+`posix-installer` 任务在 `ubuntu-latest` 上运行隔离的安装器回归测试，覆盖原生 Bash 分支。完整 Windows 矩阵也覆盖 Git Bash 到 PowerShell 的委托路径；仅限 Windows 的安装器用例在 POSIX 任务中跳过。
+
 ## 备选方案
 
 - **用 `--no-save` 安装 lefthook。** 否决：二进制会在下一次干净安装后消失，钩子又回到静默失效的状态，而那正是要修的东西。
@@ -26,4 +28,4 @@ pack 会脚手架出 `lefthook.yml` 及其安装器，本仓库也写明了分�
 - 暂存了配对记录、封存 note 或行尾空白的提交会在本地被拦住；对于从未启用钩子的克隆，同样的缺陷也会在 CI 上失败。
 - 全仓库矩阵现在会在每次推送到 `main` 和每个 pull request 上运行，本地跑绿不再是唯一的证据。
 - `npm ci` 不会激活钩子：全新的克隆需要跑一次 `npm run install-lefthook`。
-- CI 成本落在 Windows runner 上——这是维护脚本所假定的 PowerShell 与 virtualenv 工具链的代价。
+- 完整矩阵的成本落在 Windows runner 上——这是维护脚本所假定的 PowerShell 与 virtualenv 工具链的代价；针对性的 POSIX 任务仅需要 Node 和 Bash。

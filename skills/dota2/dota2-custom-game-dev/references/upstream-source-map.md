@@ -11,6 +11,7 @@ The upstream README describes DOTA2 documentation support for Lua API, JS API, C
 
 The refresh script copies these files into `references/vendor/vscode-dota2-tools/`:
 
+- `LICENSE`: the upstream MIT copyright and license text.
 - `resource/dota_script_help2.json`: DOTA2 Lua API classes, functions, constants, return types, parameter metadata, descriptions, and examples.
 - `resource/cl_panorama_script_help_2.json`: Panorama JavaScript API classes and functions.
 - `resource/dump_panorama_css_properties.json`: Panorama CSS property list and descriptions.
@@ -31,6 +32,10 @@ When the user asks to update this skill's DOTA2 API references, refresh from ups
 powershell -ExecutionPolicy Bypass -File .\skills\dota2\dota2-custom-game-dev\scripts\update_references.ps1
 ```
 
-The script writes `references/vendor/vscode-dota2-tools/UPSTREAM.json` with the upstream commit, update time, source URL, copied file list, and Markdown normalization policy. Markdown snapshots use LF, omit trailing spaces/tabs and terminal blank lines, and end with one newline when non-empty; JSON snapshots are copied byte-for-byte.
+The script verifies that the source is a clean Git checkout, records its full commit ID, and preflights every required snapshot before changing the existing vendor directory. It replaces the snapshot as a unit. A failed publication restores the previous directory when the destination is still absent; a destination recreated by another writer and the previous backup are both retained.
+
+The script writes `references/vendor/vscode-dota2-tools/UPSTREAM.json` with the upstream commit, update time, source URL, copied file list, and Markdown normalization policy. Markdown snapshots use LF, omit trailing spaces/tabs and terminal blank lines, and end with one newline when non-empty; JSON snapshots and `LICENSE` are copied byte-for-byte.
+
+Repeating a refresh with unchanged inputs preserves every copied snapshot file; `UPSTREAM.json` records a new update time.
 
 If upstream changes file names or schema, update `scripts/search_dota2_api.py` and this source map in the same change.

@@ -12,11 +12,13 @@ Status: implemented
 
 setup 模板只启用暂存空白检查。可选文档任务要求宿主已有脚本、辅助模块、清单及依赖，并在启用前成功运行对应 gate。[工具链移植](../process/2026-08-20-absorb-dsh-tooling.md)保留通用安装器，以及可选 gate 的归属边界。
 
-校验器在去除首尾空白后拒绝空名称和描述。Markdown 链接 gate 纳入根目录贡献指南和术语表的两组双语对。`npm test` 运行 Node 真实入口检查、Python 校验器回归测试及真实媒体测试；[CI](../../../../.github/workflows/gates.yml) 在运行前准备校验器环境和 FFmpeg。
+校验器在去除首尾空白后拒绝空名称和描述。Markdown 链接 gate 纳入根目录贡献指南和术语表的两组双语对。`npm test` 运行 Node 真实入口检查、Python 回归测试、真实媒体测试，以及现有技能验收入口；[CI](../../../../.github/workflows/gates.yml) 在运行前准备校验器环境和 FFmpeg。
 
 常规对应版本编辑随其所属变更完成，并以配对验证收尾。`translate-docs` 保持 model 与 user 可达，用于明确的整篇翻译、批量更新和配对审计。这收窄了[配合图](../architecture/2026-08-19-wire-skill-cooperation.md)中的翻译交接，同时保留 [pack 的共享入口](../architecture/2026-08-19-package-maintenance-flow-as-pack.md)及[扩展翻译机制](../process/2026-08-20-restore-translate-docs-parity.md)。
 
 GIF 编码器先验证同目录临时文件，再发布输出。强制输出采用原子替换；普通输出通过创建硬链接发布，因此保留并发创建的目标。编码或验证失败时，仅清理本次拥有的临时文件，目标不变。[GIF 移植](../process/2026-08-20-absorb-record-browser-gif.md)保留捕获与发布规则。
+
+安装路径与 Dota 引用保护遵循[维护输入决策](2026-10-30-protect-maintenance-inputs.md)。
 
 ## 备选方案
 

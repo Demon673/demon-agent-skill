@@ -19,5 +19,5 @@ Every skill carries a Codex metadata file `agents/openai.yaml` beside `SKILL.md`
 
 ## Consequences
 
-- Every skill carries `agents/openai.yaml`; `allow_implicit_invocation: false` is set on the three pack flow skills alone (`agent-doorbell`, `ask-demon`, `setup-demon-skills`), and the flow skills' default invocation is recorded in [restore-flow-cascade](2026-08-19-restore-flow-cascade.md).
+- Every skill carries `agents/openai.yaml`. Manual-only skills, including upstream mirrors, set `allow_implicit_invocation: false`; the [validator](../../../../scripts/quick_validate.py) checks this mapping. The flow skills' default invocation is recorded in [restore-flow-cascade](2026-08-19-restore-flow-cascade.md).
 - The two-harness mapping is durable documentation, so future skills keep it without re-deriving it.

@@ -21,7 +21,7 @@ Status: implemented
 ## 后果
 
 - 上游内容逐字节发布，因此嵌入 SKILL.md 的平台专属 `open` 命令未被修正。
-- 上游的 `disable-model-invocation: true` 设置使 `show-me` 成为手动命令；它不属于维护级联流程。
+- 上游的 `disable-model-invocation: true` 设置与本地 Codex 调用策略按[元数据映射](../process/2026-08-19-codex-metadata.md)使 `show-me` 成为手动命令；它不属于维护级联流程。
 - 同步是手动的；镜像会漂移，直到运行 `sync-show-me.ps1`。
 - 保留上游许可证用于署名。
 - 本地 Codex 元数据和插件清单条目不属于上游。

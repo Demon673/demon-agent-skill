@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/bug-fix/2026-10-30-close-maintenance-gaps.md
-2026-10-30-close-maintenance-gaps.md: ea5613467fa9c20d4bee543b0d7d2fc5580865ad
-2026-10-30-close-maintenance-gaps.zh.md: 7ffb06788803df5ab627d0806d636ea9b25710eb
+2026-10-30-close-maintenance-gaps.md: 0d0d32d2fb683ebec44a05db865347d70dbc96ca
+2026-10-30-close-maintenance-gaps.zh.md: 30710a8db51ce55974a1c1f1679fd508fdd76a98

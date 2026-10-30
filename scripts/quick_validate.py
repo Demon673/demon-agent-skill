@@ -19,13 +19,37 @@ ALLOWED_PROPERTIES = {
 BOOLEAN_FIELDS = {"disable-model-invocation", "user-invocable"}
 
 
+def validate_codex_policy(skill_path, frontmatter):
+    """Keep the frontmatter invocation policy consistent with Codex metadata."""
+    if frontmatter.get("disable-model-invocation") is not True:
+        return True, None
+
+    metadata_path = skill_path / "agents" / "openai.yaml"
+    if not metadata_path.exists():
+        return False, "Codex metadata not found at agents/openai.yaml"
+    try:
+        metadata = yaml.safe_load(metadata_path.read_text(encoding="utf-8"))
+    except yaml.YAMLError as e:
+        return False, f"Invalid YAML in agents/openai.yaml: {e}"
+    if not isinstance(metadata, dict):
+        return False, "agents/openai.yaml must be a YAML dictionary"
+
+    policy = metadata.get("policy")
+    if not isinstance(policy, dict) or policy.get("allow_implicit_invocation") is not False:
+        return False, (
+            "agents/openai.yaml must set policy.allow_implicit_invocation: false "
+            "when disable-model-invocation is true"
+        )
+    return True, None
+
+
 def validate_skill(skill_path):
     skill_path = Path(skill_path)
     skill_md = skill_path / "SKILL.md"
     if not skill_md.exists():
         return False, "SKILL.md not found"
 
-    content = skill_md.read_text()
+    content = skill_md.read_text(encoding="utf-8")
     if not content.startswith("---"):
         return False, "No YAML frontmatter found"
 
@@ -77,6 +101,10 @@ def validate_skill(skill_path):
     for field in BOOLEAN_FIELDS:
         if field in frontmatter and not isinstance(frontmatter[field], bool):
             return False, f"'{field}' must be a boolean"
+
+    valid, message = validate_codex_policy(skill_path, frontmatter)
+    if not valid:
+        return valid, message
 
     return True, "Skill is valid!"
 

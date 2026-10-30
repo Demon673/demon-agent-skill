@@ -4,7 +4,9 @@ import json
 import subprocess
 import sys
 import tempfile
+import threading
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 SCRIPT = Path(__file__).with_name('encode_gif.py')
@@ -29,7 +31,7 @@ class EncodeGifTest(unittest.TestCase):
     def encode(self, source=None, *options):
         return subprocess.run([
             sys.executable, str(SCRIPT), str(source or self.video), str(self.output), *options,
-        ], capture_output=True, text=True)
+        ], capture_output=True, text=True, timeout=30)
 
     def assert_color(self, seconds, channel):
         result = subprocess.run([
@@ -74,10 +76,12 @@ class EncodeGifTest(unittest.TestCase):
                 self.assertFalse(self.output.exists())
 
     def test_screenshot_durations_and_video_flag_rejection(self):
-        frames = self.root / 'frames'
+        frames = self.root / "frames with spaces and 'apostrophe'"
         frames.mkdir()
         for index, color in enumerate([b'\xff\x00\x00', b'\x00\x00\xff']):
-            (frames / f'{index}.ppm').write_bytes(b'P6\n64 48\n255\n' + color * (64 * 48))
+            (frames / f"{index} special's frame.ppm").write_bytes(
+                b'P6\n64 48\n255\n' + color * (64 * 48)
+            )
         rejected = self.encode(frames, '--speed', '1')
         self.assertNotEqual(rejected.returncode, 0)
         self.assertIn('require a video file', rejected.stderr)
@@ -91,6 +95,33 @@ class EncodeGifTest(unittest.TestCase):
         self.assertEqual(json.loads(result.stdout)['sourceFrames'], 2)
         self.assert_color(0.1, 0)
         self.assert_color(1.8, 2)
+
+    def test_concurrent_publish_has_one_winner_and_cleans_temporaries(self):
+        barrier = threading.Barrier(2)
+
+        def encode(options):
+            barrier.wait(timeout=5)
+            return self.encode(None, *options)
+
+        common = ('--start', '0.1', '--end', '1.1', '--speed', '2', '--final-hold', '0')
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            futures = [
+                executor.submit(encode, (*common, '--max-width', '16')),
+                executor.submit(encode, (*common, '--max-width', '32')),
+            ]
+            results = [future.result(timeout=30) for future in futures]
+
+        winners = [result for result in results if result.returncode == 0]
+        losers = [result for result in results if result.returncode != 0]
+        self.assertEqual(len(winners), 1, [result.stderr for result in results])
+        self.assertEqual(len(losers), 1, [result.stderr for result in results])
+        self.assertIn('output already exists', losers[0].stderr)
+
+        summary = json.loads(winners[0].stdout)
+        published = self.output.read_bytes()
+        self.assertEqual(int.from_bytes(published[6:8], 'little'), summary['width'])
+        self.assertEqual(len(published), summary['bytes'])
+        self.assert_no_temporary_output()
 
     def test_size_rejection_does_not_create_or_replace_output(self):
         missing = self.encode(None, '--max-bytes', '1', '--final-hold', '0.0')

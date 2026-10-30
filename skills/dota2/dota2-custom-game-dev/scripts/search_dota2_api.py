@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
-"""Search bundled DOTA2 custom game API reference snapshots."""
+"""Search bundled DOTA2 custom game API reference snapshots.
+
+Enum-name matches return the full enum. Value-only matches return only the
+matching enum members. Lua parameters are ordered by their numeric declaration
+suffix (their argument position), not by object enumeration order.
+"""
 
 from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -28,6 +34,20 @@ def contains_query(value: Any, query: str) -> bool:
     return query in str(value).lower()
 
 
+def parameter_sort_key(item: tuple[str, dict[str, Any]]) -> tuple[int, int]:
+    key, _ = item
+    suffix = key.rpartition("_")[2]
+    return (0, int(suffix)) if suffix.isdigit() else (1, 0)
+
+
+def matching_enum_values(enum_values: Any, query: str) -> Any:
+    if isinstance(enum_values, dict):
+        return {key: value for key, value in enum_values.items() if query in key.lower() or contains_query(value, query)}
+    if isinstance(enum_values, list):
+        return [value for value in enum_values if contains_query(value, query)]
+    return enum_values if contains_query(enum_values, query) else None
+
+
 def iter_lua(query: str) -> Iterable[dict[str, Any]]:
     data = load_json(RESOURCE_ROOT / "dota_script_help2.json")
     for class_name, functions in data.get("class_list", {}).items():
@@ -40,7 +60,7 @@ def iter_lua(query: str) -> Iterable[dict[str, Any]]:
                         "type": p.get("type", ""),
                         "description": p.get("description", ""),
                     }
-                    for key, p in sorted(params.items())
+                    for key, p in sorted(params.items(), key=parameter_sort_key)
                 ]
                 yield {
                     "kind": "lua",
@@ -54,9 +74,12 @@ def iter_lua(query: str) -> Iterable[dict[str, Any]]:
                     "example": item.get("example"),
                 }
     for enum_name, enum_values in data.get("enum_list", {}).items():
-        payload = {"enum": enum_name, "values": enum_values}
-        if query in enum_name.lower() or contains_query(enum_values, query):
-            yield {"kind": "lua-enum", **payload}
+        if query in enum_name.lower():
+            yield {"kind": "lua-enum", "enum": enum_name, "values": enum_values}
+            continue
+        matches = matching_enum_values(enum_values, query)
+        if matches not in (None, [], {}):
+            yield {"kind": "lua-enum", "enum": enum_name, "values": matches}
 
 
 def iter_js(query: str) -> Iterable[dict[str, Any]]:
@@ -113,6 +136,12 @@ def compact_result(result: dict[str, Any], max_chars: int) -> dict[str, Any]:
     return {k: trim(v, max_chars) for k, v in result.items() if v not in (None, "", [], {})}
 
 
+def write_json(value: dict[str, Any]) -> None:
+    line = json.dumps(value, ensure_ascii=False) + "\n"
+    sys.stdout.buffer.write(line.encode("utf-8"))
+    sys.stdout.buffer.flush()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--kind", choices=["all", "lua", "js", "css", "panel"], default="all")
@@ -135,13 +164,13 @@ def main() -> int:
     count = 0
     for iterator in iterators:
         for result in iterator:
-            print(json.dumps(compact_result(result, args.max_chars), ensure_ascii=False))
+            write_json(compact_result(result, args.max_chars))
             count += 1
             if count >= args.limit:
                 return 0
 
     if count == 0:
-        print(json.dumps({"matches": 0, "query": args.query}, ensure_ascii=False))
+        write_json({"matches": 0, "query": args.query})
     return 0
 
 
