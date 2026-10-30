@@ -14,6 +14,8 @@ Keep `lefthook` in `devDependencies`, so the binary survives a clean install, an
 
 The official checkout and language-setup actions use Node.js 24, requiring Actions runner v2.327.1 or later. `windows-latest` supplies the managed runner; the job's toolchain uses Node.js 22 and Python 3.12 independently of the actions' runtime.
 
+Media dependencies come from a pinned `GyanD/codexffmpeg` release ZIP package. CI verifies its SHA-256 before extraction, checks that `ffmpeg` and `ffprobe` execute, and adds their directory to `PATH`. Version updates change the package URL and digest together.
+
 The `posix-installer` job runs the isolated installer regressions on `ubuntu-latest`, exercising the native Bash branch. The full Windows matrix also covers the Git Bash delegation to PowerShell; Windows-only installer cases are skipped in the POSIX job.
 
 ## Alternatives considered

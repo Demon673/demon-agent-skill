@@ -14,6 +14,8 @@ pack 会脚手架出 `lefthook.yml` 及其安装器，本仓库也写明了分�
 
 官方的检出与语言环境设置 Actions 使用 Node.js 24，要求 Actions runner 为 v2.327.1 或更高版本。`windows-latest` 提供托管 runner；任务工具链使用 Node.js 22 和 Python 3.12，其版本独立于 Actions 运行时。
 
+媒体依赖来自固定版本的 `GyanD/codexffmpeg` 发布 ZIP 压缩包。CI 在解压前验证其 SHA-256，检查 `ffmpeg` 和 `ffprobe` 能否执行，并将其目录加入 `PATH`。更新版本时同时修改压缩包 URL 与摘要。
+
 `posix-installer` 任务在 `ubuntu-latest` 上运行隔离的安装器回归测试，覆盖原生 Bash 分支。完整 Windows 矩阵也覆盖 Git Bash 到 PowerShell 的委托路径；仅限 Windows 的安装器用例在 POSIX 任务中跳过。
 
 ## 备选方案

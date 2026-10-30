@@ -32,7 +32,20 @@ jobs:
         run: .\scripts\validate-skills.ps1
       - name: Install media test dependencies
         shell: pwsh
-        run: choco install ffmpeg --yes --no-progress
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP 'ffmpeg.zip'
+          Invoke-WebRequest 'https://github.com/GyanD/codexffmpeg/releases/download/9.0.2/ffmpeg-9.0.2-essentials_build.zip' -OutFile $archive
+          if ((Get-FileHash $archive -Algorithm SHA256).Hash -ne '60f467265b1e312373dbcd92200c2618a74850f98d3d078e94296bb3fa2047ba') {
+            throw 'FFmpeg archive checksum mismatch'
+          }
+          $destination = Join-Path $env:RUNNER_TEMP 'ffmpeg'
+          Expand-Archive -LiteralPath $archive -DestinationPath $destination
+          $bin = Join-Path $destination 'ffmpeg-9.0.2-essentials_build/bin'
+          & (Join-Path $bin 'ffmpeg.exe') -version
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & (Join-Path $bin 'ffprobe.exe') -version
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Add-Content -LiteralPath $env:GITHUB_PATH -Value $bin
       - name: Regression tests
         run: npm test
 
