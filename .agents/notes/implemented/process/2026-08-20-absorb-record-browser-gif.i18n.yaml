@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   node scripts/verify-translation-pairing.mjs --write .agents/notes/implemented/process/2026-08-20-absorb-record-browser-gif.md
-2026-08-20-absorb-record-browser-gif.md: 351594c10c4fbe3316e3c84a0de5cfc0a5e8e5e0
-2026-08-20-absorb-record-browser-gif.zh.md: 3c5e470da2ff0443515524602fb0656f2885184f
+2026-08-20-absorb-record-browser-gif.md: 09d0a8a5afee05f0d93cb7bb7ed12be8a3dd1e65
+2026-08-20-absorb-record-browser-gif.zh.md: b586188907d560a7456e4829a82cc8e74f68fd51
