@@ -1,6 +1,6 @@
 ---
 name: record-browser-gif
-description: Record browser or Web UI interaction demos as optimized GIFs using the available browser tooling, optional video capture, state-based screenshots, and deterministic encoding, then attach the GIF to a pull request with `gh --attach`, falling back to a dedicated assets branch where attach cannot apply. Use when asked to make, record, or generate a GIF that demonstrates a browser workflow, and for every pull request that changes product-user-visible GUI behavior.
+description: Record browser or Web UI interaction demos as optimized GIFs and publish authorized PR media through the repository host's native attachments. Use for requested browser demos and pull requests with user-visible GUI changes.
 ---
 
 # Record Browser GIF
@@ -16,7 +16,7 @@ The recording itself is part of the evidence: use a real server booted from that
 ## Keep recording separate from publication
 
 - Recording produces local video or screenshots and one `.gif` artifact only; it never mutates remote state.
-- Publication — attaching the GIF to a pull request body with `gh --attach`, or pushing it to an assets branch and embedding its URL where attach cannot apply — is the separate final step, performed only when the task includes attaching the GIF to a pull request. It never touches the pull request's own branch.
+- Publication uploads the GIF to the repository host's native attachment storage and embeds its returned URL in the pull request body. Perform it only when the task includes attaching the GIF to a pull request.
 - Preserve the requested recording conditions. A real-server or real-API demo must not use fixture queries, mock transports, synthetic event injection, or test-only hooks. If credentials or the server are unavailable, report that limitation instead of substituting a fixture.
 - Never read or expose credential values. Use the application's normal configuration path and a benign demonstration prompt.
 
@@ -117,7 +117,14 @@ The encoder and its regression tests retain their upstream MIT terms in [LICENSE
 
 Perform this step only when the task includes attaching the GIF to a pull request.
 
-Never commit a GIF to the pull request's own branch or any branch that merges into a long-lived branch: binary media committed there bloats repository history for every future clone. Prefer `gh --attach`, which uploads the GIF to GitHub and rewrites the body reference in one command, so no branch carries the media.
+Keep PR media in ignored local output and the repository host's native attachment storage. Creating or pushing a media-only Git branch requires an explicit user request.
+
+1. Identify the actual repository host, existing authenticated client, native attachment API or upload UI, and file-size limits. A missing `gh --attach` capability is a client limitation; check the actual host's attachment workflow.
+2. Immediately before uploading, compare the demonstrated pull request's live head (or its pushed branch tip before PR creation) with the commit recorded beside the artifact. Re-record when the demonstrated tree changed. A tooling PR may embed a clearly labeled example from another PR; identify that source PR and use its live head for these checks.
+3. Upload through the host's native attachment workflow. Embed the returned media URL in the PR body using supported image or video syntax. Confirm a reused attachment belongs to the intended PR and matches the verified local artifact.
+4. Re-read the live head and body after publication. Require the head to remain at the recorded commit, confirm that the body references the uploaded attachment, and inspect the rendered PR to verify inline display. Fetch the attachment through the intended authenticated reader path and check its response, media type, byte size, and checksum. A body containing Markdown or an anonymous `404` alone does not verify display.
+
+When upload tooling, authentication, permissions, or host limits prevent publication, retain the verified local artifact and report attachment publication as pending with the concrete blocker. Continue independent authorized work and keep publication status separate from recording and code checks. Credentials stay in the host's normal authentication flow.
 
 ### Attach with gh
 
@@ -129,40 +136,17 @@ Write the GIF into the body file as an ordinary local-path reference, using the 
 ![<alt text>](<path/to/demo.gif>)
 ```
 
-The demonstrated pull request is normally the publication target. A tooling pull request may instead embed a clearly labeled example from another pull request; name that source pull request and compare its live head in every check below. Never attribute the example to the tooling branch.
-
-Immediately before attaching, re-read the demonstrated pull request's live head — for a new demonstrated pull request, the pushed branch tip — and compare it with the commit recorded next to the GIF. Stop and re-record when it moved. Then attach:
+After the live-head check, attach:
 
 ```sh
 gh pr create --body-file <body.md> --attach <path/to/demo.gif>     # new pull request
 gh pr edit <pr> --body-file <body.md> --attach <path/to/demo.gif>  # existing pull request
 ```
 
-`--attach` is repeatable but refuses the same file twice. A GIF the body does not reference is appended at the end, where alt text set on the flag (`--attach '<path>#<alt text>'`) applies; a rewritten reference keeps the body's alt text. After attaching, re-read the demonstrated live head and require it to remain at that recorded commit. Re-read the live body and confirm the reference now points at the uploaded URL, render the body through GitHub's Markdown API and confirm the expected `<img>`, and fetch the uploaded URL once to confirm `200` and `image/gif`.
+`--attach` is repeatable but refuses the same file twice. A GIF the body does not reference is appended at the end, where alt text set on the flag (`--attach '<path>#<alt text>'`) applies; a rewritten reference keeps the body's alt text. Complete the publication checks above.
 
-### Fall back to an assets branch
+### Attach on Gitea and other hosts
 
-Use the assets-branch workflow only when `gh --attach` cannot apply: the GIF still exceeds 10 MB, `gh` is older than v2.99.0, or the repository host does not support attachments. GIFs then live on a dedicated orphan assets branch — a branch with no parent commit and nothing but media — and one assets branch serves a whole pull request series (named `<series>-assets`; list existing ones with `git ls-remote --heads origin '*assets*'`).
+Use the current host's attachment client or documented API. Gitea provides [issue attachment uploads](https://docs.gitea.com/api/operations/issue-create-issue-attachment/) at `POST /api/v1/repos/{owner}/{repo}/issues/{index}/assets`; a PR uses its issue index. Send the verified file as the multipart `attachment` field and embed the returned `browser_download_url`. Confirm the endpoint and allowed media types against the target server's API documentation. A JSON-only CLI request is insufficient for multipart file upload; use an authenticated client that supports it or report publication pending.
 
-Before pushing, verify that the assets branch contains media only and that the staged GIF's checksum matches the verified local artifact. For an existing assets branch, work in a shallow single-branch scratch clone so publication cannot touch your working tree:
-
-```sh
-git clone --branch <assets-branch> --single-branch --depth 1 <repo-url> <scratch-dir>/assets
-git -C <scratch-dir>/assets add <name>.gif
-git -C <scratch-dir>/assets commit -m "assets: <what it shows> gif (#<pr>)"
-git -C <scratch-dir>/assets push origin <assets-branch>
-```
-
-Copy the GIF into `<scratch-dir>/assets/<name>.gif` before staging it. For a new series, clone without a branch, run `git switch --orphan <assets-branch>` in `<scratch-dir>/assets`, then add the GIF, commit, and push the same way.
-
-After pushing, use authenticated GitHub API or raw requests to confirm the remote path, byte size, checksum, `200` response, and `image/gif` content type. An anonymous `404` does not disprove a private-repository asset; authenticate the verification instead. This proves the repository-member review path, not public availability.
-
-Immediately before editing the pull-request body, re-read the demonstrated pull request's live head and compare it with the commit recorded next to the GIF. Stop and re-record when it moved. After the edit, re-read the demonstrated live head and require it to remain at that recorded commit. Separately, render the body through GitHub's Markdown API and confirm that the expected `<img>` is present.
-
-From the repository used for the assets branch, read its canonical web URL with `gh repo view --json url --jq .url` and use that exact host and repository path as `<repository-web-url>`. Embed the GIF in the pull request body with the raw blob URL; the `?raw=true` suffix is required, because the plain blob URL renders GitHub's file page instead of the image:
-
-```markdown
-![<alt text>](<repository-web-url>/blob/<assets-branch>/<name>.gif?raw=true)
-```
-
-Never delete or rewrite an assets branch, and never force-push it: merged pull request bodies reference its URLs forever. Append new commits only.
+Use the same native-attachment and rendered-display checks on other hosts. Keep existing published media references intact until replacements have been uploaded and verified; historical media cleanup is separate from recording a new demo.
